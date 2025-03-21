@@ -60,6 +60,7 @@
             guna2ControlBox2 = new Guna.UI2.WinForms.Guna2ControlBox();
             guna2DragControl1 = new Guna.UI2.WinForms.Guna2DragControl(components);
             guna2MessageDialog1 = new Guna.UI2.WinForms.Guna2MessageDialog();
+            label3 = new Label();
             guna2ShadowPanel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -79,6 +80,7 @@
             // guna2ShadowPanel1
             // 
             guna2ShadowPanel1.BackColor = Color.FromArgb(16, 18, 41);
+            guna2ShadowPanel1.Controls.Add(label3);
             guna2ShadowPanel1.Controls.Add(label2);
             guna2ShadowPanel1.Controls.Add(guna2ToggleSwitch1);
             guna2ShadowPanel1.Controls.Add(guna2GradientButton1);
@@ -291,6 +293,17 @@
             guna2MessageDialog1.Style = Guna.UI2.WinForms.MessageDialogStyle.Default;
             guna2MessageDialog1.Text = null;
             // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.ForeColor = SystemColors.AppWorkspace;
+            label3.Location = new Point(329, 450);
+            label3.Name = "label3";
+            label3.Size = new Size(126, 21);
+            label3.TabIndex = 10;
+            label3.Text = "Create Account";
+            // 
             // LoginForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -329,5 +342,6 @@
         private Guna.UI2.WinForms.Guna2ControlBox guna2ControlBox2;
         private Guna.UI2.WinForms.Guna2DragControl guna2DragControl1;
         private Guna.UI2.WinForms.Guna2MessageDialog guna2MessageDialog1;
+        private Label label3;
     }
 }
