@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace WeatherSphereV4
 {
-    public partial class AccountForm: UserControl
+    public partial class AccountForm : UserControl
     {
         public AccountForm()
         {
             InitializeComponent();
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

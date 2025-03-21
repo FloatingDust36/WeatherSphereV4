@@ -287,6 +287,7 @@
             guna2TextBox1.ShadowDecoration.CustomizableEdges = customizableEdges2;
             guna2TextBox1.Size = new Size(259, 53);
             guna2TextBox1.TabIndex = 1;
+            guna2TextBox1.TextOffset = new Point(10, 0);
             // 
             // panel1
             // 
