@@ -28,7 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BaseForm));
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             panelTitleBar = new Panel();
             btnMinimize = new FontAwesome.Sharp.IconButton();
             btnMaximize = new FontAwesome.Sharp.IconButton();
@@ -37,7 +40,6 @@
             pictureLogo = new PictureBox();
             buttonMenu = new FontAwesome.Sharp.IconButton();
             panelContents = new Panel();
-            pictureBox1 = new PictureBox();
             buttonHome = new FontAwesome.Sharp.IconButton();
             buttonMaps = new FontAwesome.Sharp.IconButton();
             buttonHourlyForecast = new FontAwesome.Sharp.IconButton();
@@ -48,11 +50,12 @@
             buttonAccount = new FontAwesome.Sharp.IconButton();
             panelMenu = new Panel();
             separator1 = new ReaLTaiizor.Controls.Separator();
+            guna2ImageButton1 = new Guna.UI2.WinForms.Guna2ImageButton();
+            guna2ImageButton2 = new Guna.UI2.WinForms.Guna2ImageButton();
+            guna2ImageButton3 = new Guna.UI2.WinForms.Guna2ImageButton();
             panelTitleBar.SuspendLayout();
             panelTitle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureLogo).BeginInit();
-            panelContents.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panelMenu.SuspendLayout();
             SuspendLayout();
             // 
@@ -123,6 +126,9 @@
             // panelTitle
             // 
             panelTitle.BackColor = Color.FromArgb(49, 56, 100);
+            panelTitle.Controls.Add(guna2ImageButton3);
+            panelTitle.Controls.Add(guna2ImageButton2);
+            panelTitle.Controls.Add(guna2ImageButton1);
             panelTitle.Controls.Add(pictureLogo);
             panelTitle.Controls.Add(buttonMenu);
             panelTitle.Dock = DockStyle.Top;
@@ -163,24 +169,11 @@
             // panelContents
             // 
             panelContents.BackColor = Color.FromArgb(50, 50, 79);
-            panelContents.Controls.Add(pictureBox1);
             panelContents.Dock = DockStyle.Fill;
             panelContents.Location = new Point(100, 121);
             panelContents.Name = "panelContents";
             panelContents.Size = new Size(1182, 744);
             panelContents.TabIndex = 3;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox1.Dock = DockStyle.Fill;
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(0, 0);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(1182, 744);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
             // 
             // buttonHome
             // 
@@ -369,6 +362,57 @@
             separator1.TabIndex = 8;
             separator1.Text = "separator1";
             // 
+            // guna2ImageButton1
+            // 
+            guna2ImageButton1.CheckedState.ImageSize = new Size(64, 64);
+            guna2ImageButton1.Dock = DockStyle.Right;
+            guna2ImageButton1.HoverState.ImageSize = new Size(64, 64);
+            guna2ImageButton1.Image = (Image)resources.GetObject("guna2ImageButton1.Image");
+            guna2ImageButton1.ImageOffset = new Point(0, 0);
+            guna2ImageButton1.ImageRotate = 0F;
+            guna2ImageButton1.ImageSize = new Size(45, 45);
+            guna2ImageButton1.Location = new Point(1186, 0);
+            guna2ImageButton1.Name = "guna2ImageButton1";
+            guna2ImageButton1.Padding = new Padding(0, 0, 100, 0);
+            guna2ImageButton1.PressedState.ImageSize = new Size(64, 64);
+            guna2ImageButton1.ShadowDecoration.CustomizableEdges = customizableEdges3;
+            guna2ImageButton1.Size = new Size(96, 73);
+            guna2ImageButton1.TabIndex = 2;
+            // 
+            // guna2ImageButton2
+            // 
+            guna2ImageButton2.CheckedState.ImageSize = new Size(64, 64);
+            guna2ImageButton2.Dock = DockStyle.Right;
+            guna2ImageButton2.HoverState.ImageSize = new Size(64, 64);
+            guna2ImageButton2.Image = (Image)resources.GetObject("guna2ImageButton2.Image");
+            guna2ImageButton2.ImageOffset = new Point(0, 0);
+            guna2ImageButton2.ImageRotate = 0F;
+            guna2ImageButton2.ImageSize = new Size(45, 45);
+            guna2ImageButton2.Location = new Point(1090, 0);
+            guna2ImageButton2.Name = "guna2ImageButton2";
+            guna2ImageButton2.Padding = new Padding(0, 0, 100, 0);
+            guna2ImageButton2.PressedState.ImageSize = new Size(64, 64);
+            guna2ImageButton2.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            guna2ImageButton2.Size = new Size(96, 73);
+            guna2ImageButton2.TabIndex = 3;
+            // 
+            // guna2ImageButton3
+            // 
+            guna2ImageButton3.CheckedState.ImageSize = new Size(64, 64);
+            guna2ImageButton3.Dock = DockStyle.Right;
+            guna2ImageButton3.HoverState.ImageSize = new Size(64, 64);
+            guna2ImageButton3.Image = (Image)resources.GetObject("guna2ImageButton3.Image");
+            guna2ImageButton3.ImageOffset = new Point(0, 0);
+            guna2ImageButton3.ImageRotate = 0F;
+            guna2ImageButton3.ImageSize = new Size(50, 50);
+            guna2ImageButton3.Location = new Point(994, 0);
+            guna2ImageButton3.Name = "guna2ImageButton3";
+            guna2ImageButton3.Padding = new Padding(0, 0, 100, 0);
+            guna2ImageButton3.PressedState.ImageSize = new Size(64, 64);
+            guna2ImageButton3.ShadowDecoration.CustomizableEdges = customizableEdges1;
+            guna2ImageButton3.Size = new Size(96, 73);
+            guna2ImageButton3.TabIndex = 4;
+            // 
             // BaseForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -388,8 +432,6 @@
             panelTitleBar.ResumeLayout(false);
             panelTitle.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureLogo).EndInit();
-            panelContents.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panelMenu.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -414,6 +456,8 @@
         private FontAwesome.Sharp.IconButton buttonAccount;
         private Panel panelMenu;
         private ReaLTaiizor.Controls.Separator separator1;
-        private PictureBox pictureBox1;
+        private Guna.UI2.WinForms.Guna2ImageButton guna2ImageButton3;
+        private Guna.UI2.WinForms.Guna2ImageButton guna2ImageButton2;
+        private Guna.UI2.WinForms.Guna2ImageButton guna2ImageButton1;
     }
 }

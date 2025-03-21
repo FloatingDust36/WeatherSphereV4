@@ -18,6 +18,8 @@ namespace WeatherSphereV4
         public BaseForm()
         {
             InitializeComponent();
+            LoadUserControl("Home", new HomeForm());
+            buttonHome.PerformClick();
 
             this.Padding = new Padding(borderSize);//Border size
             this.BackColor = Color.FromArgb(25, 25, 50);//Border color
@@ -80,41 +82,50 @@ namespace WeatherSphereV4
         private void buttonHome_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color1);
+            LoadUserControl("Home", new HomeForm());
+            SetGifBackground();
         }
 
         private void buttonMaps_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color2);
+            LoadUserControl("Maps", new MapsForm());
         }
 
         private void buttonHourlyForecast_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color3);
+            LoadUserControl("HourlyForecast", new HourlyForecastForm());
         }
 
         private void buttonMonthlyForecast_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color4);
+            LoadUserControl("MonthlyForecast", new MonthlyForecastForm());
         }
 
         private void buttonLife_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color5);
+            LoadUserControl("Life", new LifeForm());
         }
 
         private void buttonFavorites_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color6);
+            LoadUserControl("Favorites", new FavoritesForm());
         }
 
         private void buttonAccount_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color1);
+            LoadUserControl("Account", new AccountForm());
         }
 
         private void buttonSettings_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color2);
+            LoadUserControl("Settings", new SettingsForm());
         }
         #endregion
 
@@ -296,6 +307,56 @@ namespace WeatherSphereV4
                 //Activate the last selected button
                 if (currentbutton != null)
                     ActivateButton(currentbutton, currentbutton.ForeColor);
+            }
+        }
+
+        private Dictionary<string, UserControl> userControls = new Dictionary<string, UserControl>();
+
+        private void LoadUserControl(string key, UserControl control)
+        {
+            panelContents.Controls.Clear(); // Remove existing content
+
+            if (!userControls.ContainsKey(key))
+            {
+                control.Dock = DockStyle.Fill;
+                userControls[key] = control;
+                panelContents.Controls.Add(control);
+            }
+            else
+            {
+                panelContents.Controls.Add(userControls[key]);
+            }
+
+            userControls[key].BringToFront();
+        }
+
+        private void SetGifBackground()
+        {
+            try
+            {
+                // Ensure the panel is initialized
+                if (panelContents == null)
+                {
+                    throw new InvalidOperationException("panel1 is not initialized.");
+                }
+
+                // Create PictureBox to display the GIF
+                PictureBox gifBackground = new PictureBox
+                {
+                    Dock = DockStyle.Fill,
+                    Image = Properties.Resources.Untitled_design,  // Use the added gif
+                    SizeMode = PictureBoxSizeMode.StretchImage  // Fit the panel size
+                };
+
+                // Add the PictureBox to the panel
+                panelContents.Controls.Add(gifBackground);
+
+                // Send the GIF to the background
+                gifBackground.SendToBack();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
