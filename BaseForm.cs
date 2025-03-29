@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 using FontAwesome.Sharp;
+using WeatherSphereV4.CustomControls;
 
 namespace WeatherSphereV4
 {
@@ -19,7 +20,7 @@ namespace WeatherSphereV4
         {
             InitializeComponent();
             LoadUserControl("Home", new HomeForm());
-            buttonHome.PerformClick();
+            //buttonHome.PerformClick();
 
             this.Padding = new Padding(borderSize);//Border size
             this.BackColor = Color.FromArgb(25, 25, 50);//Border color
@@ -56,7 +57,10 @@ namespace WeatherSphereV4
                 currentbutton.IconColor = color;
                 currentbutton.TextImageRelation = TextImageRelation.TextBeforeImage;
                 if (this.panelMenu.Width > 100)
+                {
                     currentbutton.ImageAlign = ContentAlignment.MiddleRight;
+                }
+
                 //Left Border Button
                 leftBorderButton.BackColor = color;
                 leftBorderButton.Location = new Point(0, currentbutton.Location.Y);
@@ -83,7 +87,6 @@ namespace WeatherSphereV4
         {
             ActivateButton(sender, RGBColors.color1);
             LoadUserControl("Home", new HomeForm());
-            SetGifBackground();
         }
 
         private void buttonMaps_Click(object sender, EventArgs e)
@@ -314,7 +317,7 @@ namespace WeatherSphereV4
 
         private void LoadUserControl(string key, UserControl control)
         {
-            panelContents.Controls.Clear(); // Remove existing content
+            //panelContents.Controls.Clear(); // Remove existing content
 
             if (!userControls.ContainsKey(key))
             {
@@ -330,34 +333,34 @@ namespace WeatherSphereV4
             userControls[key].BringToFront();
         }
 
-        private void SetGifBackground()
+        private void buttonNightDayToggle_MouseHover(object sender, EventArgs e)
         {
-            try
-            {
-                // Ensure the panel is initialized
-                if (panelContents == null)
-                {
-                    throw new InvalidOperationException("panel1 is not initialized.");
-                }
+            buttonNightDayToggle.IconSize = 70;
+        }
 
-                // Create PictureBox to display the GIF
-                PictureBox gifBackground = new PictureBox
-                {
-                    Dock = DockStyle.Fill,
-                    Image = Properties.Resources.Untitled_design,  // Use the added gif
-                    SizeMode = PictureBoxSizeMode.StretchImage  // Fit the panel size
-                };
+        private void buttonNightDayToggle_MouseLeave(object sender, EventArgs e)
+        {
+            buttonNightDayToggle.IconSize = 55;
+        }
 
-                // Add the PictureBox to the panel
-                panelContents.Controls.Add(gifBackground);
+        private void buttonAddRemoveFavorites_MouseHover(object sender, EventArgs e)
+        {
+            buttonAddRemoveFavorites.IconSize = 70;
+        }
 
-                // Send the GIF to the background
-                gifBackground.SendToBack();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+        private void buttonAddRemoveFavorites_MouseLeave(object sender, EventArgs e)
+        {
+            buttonAddRemoveFavorites.IconSize = 55;
+        }
+
+        private void buttonRefresh_MouseHover(object sender, EventArgs e)
+        {
+            buttonRefresh.IconSize = 70;
+        }
+
+        private void buttonRefresh_MouseLeave(object sender, EventArgs e)
+        {
+            buttonRefresh.IconSize = 55;
         }
     }
 }

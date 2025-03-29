@@ -28,15 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BaseForm));
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             panelTitleBar = new Panel();
             btnMinimize = new FontAwesome.Sharp.IconButton();
             btnMaximize = new FontAwesome.Sharp.IconButton();
             btnClose = new FontAwesome.Sharp.IconButton();
             panelTitle = new Panel();
+            buttonRefresh = new FontAwesome.Sharp.IconButton();
+            buttonAddRemoveFavorites = new FontAwesome.Sharp.IconButton();
+            buttonNightDayToggle = new FontAwesome.Sharp.IconButton();
             pictureLogo = new PictureBox();
             buttonMenu = new FontAwesome.Sharp.IconButton();
             panelContents = new Panel();
@@ -49,10 +49,7 @@
             buttonSettings = new FontAwesome.Sharp.IconButton();
             buttonAccount = new FontAwesome.Sharp.IconButton();
             panelMenu = new Panel();
-            separator1 = new ReaLTaiizor.Controls.Separator();
-            guna2ImageButton1 = new Guna.UI2.WinForms.Guna2ImageButton();
-            guna2ImageButton2 = new Guna.UI2.WinForms.Guna2ImageButton();
-            guna2ImageButton3 = new Guna.UI2.WinForms.Guna2ImageButton();
+            menuSeparator = new ReaLTaiizor.Controls.Separator();
             panelTitleBar.SuspendLayout();
             panelTitle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureLogo).BeginInit();
@@ -126,9 +123,9 @@
             // panelTitle
             // 
             panelTitle.BackColor = Color.FromArgb(49, 56, 100);
-            panelTitle.Controls.Add(guna2ImageButton3);
-            panelTitle.Controls.Add(guna2ImageButton2);
-            panelTitle.Controls.Add(guna2ImageButton1);
+            panelTitle.Controls.Add(buttonRefresh);
+            panelTitle.Controls.Add(buttonAddRemoveFavorites);
+            panelTitle.Controls.Add(buttonNightDayToggle);
             panelTitle.Controls.Add(pictureLogo);
             panelTitle.Controls.Add(buttonMenu);
             panelTitle.Dock = DockStyle.Top;
@@ -136,6 +133,60 @@
             panelTitle.Name = "panelTitle";
             panelTitle.Size = new Size(1282, 73);
             panelTitle.TabIndex = 1;
+            // 
+            // buttonRefresh
+            // 
+            buttonRefresh.BackColor = Color.FromArgb(49, 56, 100);
+            buttonRefresh.Dock = DockStyle.Right;
+            buttonRefresh.FlatStyle = FlatStyle.Flat;
+            buttonRefresh.ForeColor = Color.FromArgb(49, 56, 100);
+            buttonRefresh.IconChar = FontAwesome.Sharp.IconChar.Refresh;
+            buttonRefresh.IconColor = Color.Gainsboro;
+            buttonRefresh.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            buttonRefresh.IconSize = 55;
+            buttonRefresh.Location = new Point(982, 0);
+            buttonRefresh.Name = "buttonRefresh";
+            buttonRefresh.Size = new Size(100, 73);
+            buttonRefresh.TabIndex = 4;
+            buttonRefresh.UseVisualStyleBackColor = false;
+            buttonRefresh.MouseLeave += buttonRefresh_MouseLeave;
+            buttonRefresh.MouseHover += buttonRefresh_MouseHover;
+            // 
+            // buttonAddRemoveFavorites
+            // 
+            buttonAddRemoveFavorites.BackColor = Color.FromArgb(49, 56, 100);
+            buttonAddRemoveFavorites.Dock = DockStyle.Right;
+            buttonAddRemoveFavorites.FlatStyle = FlatStyle.Flat;
+            buttonAddRemoveFavorites.ForeColor = Color.FromArgb(49, 56, 100);
+            buttonAddRemoveFavorites.IconChar = FontAwesome.Sharp.IconChar.Star;
+            buttonAddRemoveFavorites.IconColor = Color.Gainsboro;
+            buttonAddRemoveFavorites.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            buttonAddRemoveFavorites.IconSize = 55;
+            buttonAddRemoveFavorites.Location = new Point(1082, 0);
+            buttonAddRemoveFavorites.Name = "buttonAddRemoveFavorites";
+            buttonAddRemoveFavorites.Size = new Size(100, 73);
+            buttonAddRemoveFavorites.TabIndex = 3;
+            buttonAddRemoveFavorites.UseVisualStyleBackColor = false;
+            buttonAddRemoveFavorites.MouseLeave += buttonAddRemoveFavorites_MouseLeave;
+            buttonAddRemoveFavorites.MouseHover += buttonAddRemoveFavorites_MouseHover;
+            // 
+            // buttonNightDayToggle
+            // 
+            buttonNightDayToggle.BackColor = Color.FromArgb(49, 56, 100);
+            buttonNightDayToggle.Dock = DockStyle.Right;
+            buttonNightDayToggle.FlatStyle = FlatStyle.Flat;
+            buttonNightDayToggle.ForeColor = Color.FromArgb(49, 56, 100);
+            buttonNightDayToggle.IconChar = FontAwesome.Sharp.IconChar.Moon;
+            buttonNightDayToggle.IconColor = Color.Gainsboro;
+            buttonNightDayToggle.IconFont = FontAwesome.Sharp.IconFont.Solid;
+            buttonNightDayToggle.IconSize = 55;
+            buttonNightDayToggle.Location = new Point(1182, 0);
+            buttonNightDayToggle.Name = "buttonNightDayToggle";
+            buttonNightDayToggle.Size = new Size(100, 73);
+            buttonNightDayToggle.TabIndex = 2;
+            buttonNightDayToggle.UseVisualStyleBackColor = false;
+            buttonNightDayToggle.MouseLeave += buttonNightDayToggle_MouseLeave;
+            buttonNightDayToggle.MouseHover += buttonNightDayToggle_MouseHover;
             // 
             // pictureLogo
             // 
@@ -168,7 +219,7 @@
             // 
             // panelContents
             // 
-            panelContents.BackColor = Color.FromArgb(50, 50, 79);
+            panelContents.BackColor = Color.White;
             panelContents.Dock = DockStyle.Fill;
             panelContents.Location = new Point(100, 121);
             panelContents.Name = "panelContents";
@@ -282,9 +333,10 @@
             buttonFavorites.FlatStyle = FlatStyle.Flat;
             buttonFavorites.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             buttonFavorites.ForeColor = Color.Gainsboro;
-            buttonFavorites.IconChar = FontAwesome.Sharp.IconChar.Star;
+            buttonFavorites.IconChar = FontAwesome.Sharp.IconChar.BookBookmark;
             buttonFavorites.IconColor = Color.Gainsboro;
             buttonFavorites.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            buttonFavorites.IconSize = 43;
             buttonFavorites.Location = new Point(0, 365);
             buttonFavorites.Name = "buttonFavorites";
             buttonFavorites.Size = new Size(100, 73);
@@ -337,7 +389,7 @@
             // panelMenu
             // 
             panelMenu.BackColor = Color.FromArgb(25, 25, 50);
-            panelMenu.Controls.Add(separator1);
+            panelMenu.Controls.Add(menuSeparator);
             panelMenu.Controls.Add(buttonAccount);
             panelMenu.Controls.Add(buttonSettings);
             panelMenu.Controls.Add(buttonFavorites);
@@ -352,66 +404,15 @@
             panelMenu.Size = new Size(100, 744);
             panelMenu.TabIndex = 2;
             // 
-            // separator1
+            // menuSeparator
             // 
-            separator1.Dock = DockStyle.Bottom;
-            separator1.LineColor = Color.Gray;
-            separator1.Location = new Point(0, 583);
-            separator1.Name = "separator1";
-            separator1.Size = new Size(100, 15);
-            separator1.TabIndex = 8;
-            separator1.Text = "separator1";
-            // 
-            // guna2ImageButton1
-            // 
-            guna2ImageButton1.CheckedState.ImageSize = new Size(64, 64);
-            guna2ImageButton1.Dock = DockStyle.Right;
-            guna2ImageButton1.HoverState.ImageSize = new Size(64, 64);
-            guna2ImageButton1.Image = (Image)resources.GetObject("guna2ImageButton1.Image");
-            guna2ImageButton1.ImageOffset = new Point(0, 0);
-            guna2ImageButton1.ImageRotate = 0F;
-            guna2ImageButton1.ImageSize = new Size(45, 45);
-            guna2ImageButton1.Location = new Point(1186, 0);
-            guna2ImageButton1.Name = "guna2ImageButton1";
-            guna2ImageButton1.Padding = new Padding(0, 0, 100, 0);
-            guna2ImageButton1.PressedState.ImageSize = new Size(64, 64);
-            guna2ImageButton1.ShadowDecoration.CustomizableEdges = customizableEdges3;
-            guna2ImageButton1.Size = new Size(96, 73);
-            guna2ImageButton1.TabIndex = 2;
-            // 
-            // guna2ImageButton2
-            // 
-            guna2ImageButton2.CheckedState.ImageSize = new Size(64, 64);
-            guna2ImageButton2.Dock = DockStyle.Right;
-            guna2ImageButton2.HoverState.ImageSize = new Size(64, 64);
-            guna2ImageButton2.Image = (Image)resources.GetObject("guna2ImageButton2.Image");
-            guna2ImageButton2.ImageOffset = new Point(0, 0);
-            guna2ImageButton2.ImageRotate = 0F;
-            guna2ImageButton2.ImageSize = new Size(45, 45);
-            guna2ImageButton2.Location = new Point(1090, 0);
-            guna2ImageButton2.Name = "guna2ImageButton2";
-            guna2ImageButton2.Padding = new Padding(0, 0, 100, 0);
-            guna2ImageButton2.PressedState.ImageSize = new Size(64, 64);
-            guna2ImageButton2.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            guna2ImageButton2.Size = new Size(96, 73);
-            guna2ImageButton2.TabIndex = 3;
-            // 
-            // guna2ImageButton3
-            // 
-            guna2ImageButton3.CheckedState.ImageSize = new Size(64, 64);
-            guna2ImageButton3.Dock = DockStyle.Right;
-            guna2ImageButton3.HoverState.ImageSize = new Size(64, 64);
-            guna2ImageButton3.Image = (Image)resources.GetObject("guna2ImageButton3.Image");
-            guna2ImageButton3.ImageOffset = new Point(0, 0);
-            guna2ImageButton3.ImageRotate = 0F;
-            guna2ImageButton3.ImageSize = new Size(50, 50);
-            guna2ImageButton3.Location = new Point(994, 0);
-            guna2ImageButton3.Name = "guna2ImageButton3";
-            guna2ImageButton3.Padding = new Padding(0, 0, 100, 0);
-            guna2ImageButton3.PressedState.ImageSize = new Size(64, 64);
-            guna2ImageButton3.ShadowDecoration.CustomizableEdges = customizableEdges1;
-            guna2ImageButton3.Size = new Size(96, 73);
-            guna2ImageButton3.TabIndex = 4;
+            menuSeparator.Dock = DockStyle.Bottom;
+            menuSeparator.LineColor = Color.Gray;
+            menuSeparator.Location = new Point(0, 583);
+            menuSeparator.Name = "menuSeparator";
+            menuSeparator.Size = new Size(100, 15);
+            menuSeparator.TabIndex = 8;
+            menuSeparator.Text = "separator1";
             // 
             // BaseForm
             // 
@@ -455,9 +456,9 @@
         private FontAwesome.Sharp.IconButton buttonSettings;
         private FontAwesome.Sharp.IconButton buttonAccount;
         private Panel panelMenu;
-        private ReaLTaiizor.Controls.Separator separator1;
-        private Guna.UI2.WinForms.Guna2ImageButton guna2ImageButton3;
-        private Guna.UI2.WinForms.Guna2ImageButton guna2ImageButton2;
-        private Guna.UI2.WinForms.Guna2ImageButton guna2ImageButton1;
+        private ReaLTaiizor.Controls.Separator menuSeparator;
+        private FontAwesome.Sharp.IconButton buttonNightDayToggle;
+        private FontAwesome.Sharp.IconButton buttonAddRemoveFavorites;
+        private FontAwesome.Sharp.IconButton buttonRefresh;
     }
 }

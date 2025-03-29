@@ -14,7 +14,22 @@ namespace WeatherSphereV4
     {
         public HomeForm()
         {
-            InitializeComponent(); 
+            InitializeComponent();
+        }
+
+        private void buttonHomeSearch_MouseHover(object sender, EventArgs e)
+        {
+            buttonHomeSearch.IconSize = 45;
+        }
+
+        private void buttonHomeSearch_MouseEnter(object sender, EventArgs e)
+        {
+            buttonHomeSearch.IconSize = 45;
+        }
+
+        private void buttonHomeSearch_MouseLeave(object sender, EventArgs e)
+        {
+            buttonHomeSearch.IconSize = 35;
         }
     }
 }
