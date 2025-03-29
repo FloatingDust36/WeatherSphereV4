@@ -16,21 +16,5 @@ namespace WeatherSphereV4
         {
             InitializeComponent();
         }
-
-        private void guna2GradientButton1_Click(object sender, EventArgs e)
-        {
-            if (tbxUsername.Text == "Pedro" && tbxPassword.Text == "123")
-            {
-                MessageBox.Show("Login successful", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Hide();
-                var BaseForm = new BaseForm();
-                BaseForm.Closed += (s, args) => this.Close();
-                BaseForm.Show();
-            }
-            else
-            {
-                MessageBox.Show("Login failed", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
     }
 }
