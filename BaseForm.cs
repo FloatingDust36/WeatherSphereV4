@@ -92,7 +92,7 @@ namespace WeatherSphereV4
         private void buttonMaps_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color2);
-            LoadUserControl("Maps", new MapsForm());
+            LoadUserControl("Settings", new MapsForm());
         }
 
         private void buttonHourlyForecast_Click(object sender, EventArgs e)

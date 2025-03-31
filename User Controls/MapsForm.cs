@@ -18,14 +18,14 @@ namespace WeatherSphereV4
             webView21.Source = new Uri("https://www.google.com/maps");
         }
 
-        private void buttonSearch_MouseEnter(object sender, EventArgs e)
+        private void buttonHomeSearch_MouseEnter(object sender, EventArgs e)
         {
-            buttonSearch.IconSize = 45;
+            buttonHomeSearch.IconSize = 45;
         }
 
-        private void buttonSearch_MouseLeave(object sender, EventArgs e)
+        private void buttonHomeSearch_MouseLeave(object sender, EventArgs e)
         {
-            buttonSearch.IconSize = 35;
+            buttonHomeSearch.IconSize = 35;
         }
     }
 }

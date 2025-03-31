@@ -499,8 +499,6 @@
         }
 
         #endregion
-        private Guna.UI2.WinForms.Guna2GradientButton guna2GradientButton1;
-        private Guna.UI2.WinForms.Guna2CircleButton guna2CircleButton2;
         private PictureBox buttonClose;
         private PictureBox buttonMinimize;
         private Panel panelImage2;

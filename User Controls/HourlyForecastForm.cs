@@ -17,15 +17,11 @@ namespace WeatherSphereV4
             InitializeComponent();
         }
 
-
-        private void guna2HtmlLabel1_Click(object sender, EventArgs e)
+        private void cyberScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
-
-        }
-
-        private void guna2HtmlLabel9_Click(object sender, EventArgs e)
-        {
-
+            // Adjust the panel's vertical scroll position based on the scrollbar's value
+            flowLayoutPanel2.VerticalScroll.Value = e.NewValue;
+            flowLayoutPanel2.PerformLayout();
         }
     }
 }
