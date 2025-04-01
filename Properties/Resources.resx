@@ -118,7 +118,175 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="clear-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\clear-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="clear-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\clear-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="mainly-clear-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mainly-clear-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="mainly-clear-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mainly-clear-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="overcast-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\overcast-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="overcast-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\overcast-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="partly-cloudy-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\partly-cloudy-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="partly-cloudy-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\partly-cloudy-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Untitled design" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Untitled design.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="depositing-rime-fog-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\depositing-rime-fog-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="depositing-rime-fog-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\depositing-rime-fog-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="drizzle-dense-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\drizzle-dense-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="drizzle-dense-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\drizzle-dense-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="drizzle-light-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\drizzle-light-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="drizzle-light-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\drizzle-light-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="drizzle-moderate-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\drizzle-moderate-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="drizzle-moderate-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\drizzle-moderate-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fog-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fog-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fog-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fog-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="freezing-drizzle-dense-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\freezing-drizzle-dense-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="freezing-drizzle-dense-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\freezing-drizzle-dense-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="freezing-drizzle-light-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\freezing-drizzle-light-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="freezing-drizzle-light-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\freezing-drizzle-light-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="freezing-rain-heavy-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\freezing-rain-heavy-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="freezing-rain-heavy-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\freezing-rain-heavy-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="freezing-rain-light-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\freezing-rain-light-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="freezing-rain-light-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\freezing-rain-light-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="rain-heavy-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rain-heavy-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="rain-heavy-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rain-heavy-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="rain-moderate-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rain-moderate-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="rain-moderate-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rain-moderate-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="rain-showers-moderate-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rain-showers-moderate-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="rain-showers-moderate-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rain-showers-moderate-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="rain-showers-slight-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rain-showers-slight-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="rain-showers-slight-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rain-showers-slight-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="rain-showers-violent-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rain-showers-violent-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="rain-showers-violent-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rain-showers-violent-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="rain-slight-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rain-slight-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="rain-slight-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rain-slight-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="snow-grains-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\snow-grains-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="snow-grains-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\snow-grains-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="snow-heavy-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\snow-heavy-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="snow-heavy-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\snow-heavy-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="snow-moderate-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\snow-moderate-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="snow-moderate-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\snow-moderate-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="snow-showers-heavy-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\snow-showers-heavy-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="snow-showers-heavy-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\snow-showers-heavy-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="snow-showers-slight-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\snow-showers-slight-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="snow-showers-slight-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\snow-showers-slight-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="snow-slight-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\snow-slight-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="snow-slight-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\snow-slight-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="thunderstorm-heavy-hail-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\thunderstorm-heavy-hail-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="thunderstorm-heavy-hail-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\thunderstorm-heavy-hail-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="thunderstorm-slight-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\thunderstorm-slight-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="thunderstorm-slight-hail-day" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\thunderstorm-slight-hail-day.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="thunderstorm-slight-hail-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\thunderstorm-slight-hail-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="thunderstorm-slight-night" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\thunderstorm-slight-night.gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

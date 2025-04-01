@@ -15,9 +15,9 @@ namespace WeatherSphereV4
     public partial class HomeForm : UserControl
     {
         private string siteUrl = "https://api.open-meteo.com/v1/forecast";
-
         private ProcessCurrentWeatherData processCurrentWeatherData;
         private ProcessGeocoding processGeocoding;
+
         public HomeForm()
         {
             InitializeComponent();
@@ -44,41 +44,75 @@ namespace WeatherSphereV4
 
             string jsonString = await processCurrentWeatherData.GetJsonString(siteUrl, final);
 
-            if (!string.IsNullOrEmpty(jsonString))
-            {
-                CurrentWeatherData currentWeatherData = processCurrentWeatherData.DeserializeCurrentWeatherData(jsonString);
-                CurrentWeather currentWeather = currentWeatherData.currentWeather;
-                DailyWeather dailyWeather = currentWeatherData.dailyWeather;
-
-                // 🌡️ Display weather data
-                labelTemperature.Text = $"{currentWeather.temperature_2m}°C";
-                labelFeelsLike.Text = $"Feels like {currentWeather.apparent_temperature}°C";
-                labelHumidity.Text = $"{currentWeather.relative_humidity_2m}%";
-                labelWindSpeed.Text = $"{currentWeather.wind_speed_10m} m/s";
-                labelCloudCover.Text = $"{currentWeather.cloud_cover}%";
-                labelPressure.Text = $"{currentWeather.pressure_msl} hPa";
-
-                labelSunrise.Text = dailyWeather.sunrise[0].Substring(11, 5) + " AM";
-                labelSunset.Text = dailyWeather.sunset[0].Substring(11, 5) + " PM";
-                labelUVIndex.Text = dailyWeather.uv_index_max[0].ToString();
-
-                // 📅 Display formatted date
-                DateTime date = DateTime.Parse(currentWeather.time);
-                labelCurrentDate.Text = date.ToString("dddd, MMMM dd, yyyy");
-
-                // 🌦️ Weather description
-                labelDescription.Text = WeatherCodeDescription.GetDescription(currentWeather.weather_code);
-
-                // 🌍 Get complete address using reverse geocoding
-                string address = await processGeocoding.GetCompleteAddress(location);
-                labelLocation.Text = address;
-            }
-            else
+            if(string.IsNullOrEmpty(jsonString))
             {
                 MessageBox.Show("Failed to load weather data.");
+                return;
+            }
+
+            // 🌥️ Deserialize weather data
+            CurrentWeatherData weatherData = processCurrentWeatherData.DeserializeCurrentWeatherData(jsonString);
+            CurrentWeather currentWeather = weatherData.currentWeather;
+            DailyWeather dailyWeather = weatherData.dailyWeather;
+
+            // ✅ Update UI with weather data
+            UpdateWeatherUI(currentWeather, dailyWeather, location);
+        }
+
+        private async void UpdateWeatherUI(CurrentWeather current, DailyWeather daily, string location)
+        {
+            labelTemperature.Text = $"{current.temperature_2m}°C";
+            labelFeelsLike.Text = $"Feels like {current.apparent_temperature}°C";
+            labelHumidity.Text = $"{current.relative_humidity_2m}%";
+            labelWindSpeed.Text = $"{current.wind_speed_10m} m/s";
+            labelCloudCover.Text = $"{current.cloud_cover}%";
+            labelPressure.Text = $"{current.pressure_msl} hPa";
+
+            labelSunrise.Text = daily.sunrise[0].Substring(11, 5) + " AM";
+            labelSunset.Text = daily.sunset[0].Substring(11, 5) + " PM";
+            labelUVIndex.Text = daily.uv_index_max[0].ToString();
+
+            // 🕰️ Display the current date
+            DateTime date = DateTime.Parse(current.time);
+            labelCurrentDate.Text = date.ToString("dddd, MMMM dd, yyyy");
+
+            // 🌤️ Display weather description and GIF icon
+            bool isDay = date.Hour >= 6 && date.Hour <= 18;  // Daytime check
+            var condition = WeatherCodeDescription.GetCondition(current.weather_code);
+
+            labelDescription.Text = condition.Description;
+
+            // 🌟 Display GIF icon dynamically
+            string icon = isDay ? condition.DayIcon : condition.NightIcon;
+            DisplayWeatherIcon(icon);
+
+            // 📍 Display location
+            string address = await processGeocoding.GetCompleteAddress(location);
+            labelLocation.Text = address;
+        }
+
+        // 🌤️ Display weather icon GIF dynamically
+        private void DisplayWeatherIcon(string icon)
+        {
+            try
+            {
+                string iconPath = $@"{Application.StartupPath}\Icons\{icon}.gif";
+                if (System.IO.File.Exists(iconPath))
+                {
+                    pictureWeatherIcon.ImageLocation = iconPath;
+                }
+                else
+                {
+                    pictureWeatherIcon.ImageLocation = $@"{Application.StartupPath}\Icons\unknown.gif";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading icon: {ex.Message}");
             }
         }
 
+        // 🔍 Search button click event
         private async void buttonHomeSearch_Click(object sender, EventArgs e)
         {
             string location = textboxHomeSearch.Text;
@@ -89,7 +123,6 @@ namespace WeatherSphereV4
                 return;
             }
 
-            // 🌍 Get latitude and longitude using geocoding
             var (lat, lon) = await processGeocoding.GetCoordinates(location);
 
             if (!string.IsNullOrEmpty(lat) && !string.IsNullOrEmpty(lon))
@@ -103,3 +136,4 @@ namespace WeatherSphereV4
         }
     }
 }
+

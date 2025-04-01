@@ -1,57 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WeatherSphereV4.Models
 {
+    public class WeatherCondition
+    {
+        public int Code { get; }
+        public string Description { get; }
+        public string DayIcon { get; }
+        public string NightIcon { get; }
+
+        public WeatherCondition(int code, string description, string dayIcon, string nightIcon)
+        {
+            Code = code;
+            Description = description;
+            DayIcon = dayIcon;
+            NightIcon = nightIcon;
+        }
+    }
+
     public static class WeatherCodeDescription
     {
-        private static readonly Dictionary<int, (string Description, string DayPicture, string NightPicture)> weatherCodeDescriptions = new Dictionary<int, (string, string, string)>
-            {
-                { 0, ("Clear sky", "clear_sky_day.png", "clear_sky_night.png") },
-                { 1, ("Mainly clear", "mainly_clear_day.png", "mainly_clear_night.png") },
-                { 2, ("Partly cloudy", "partly_cloudy_day.png", "partly_cloudy_night.png") },
-                { 3, ("Overcast", "overcast_day.png", "overcast_night.png") },
-                { 45, ("Fog", "fog_day.png", "fog_night.png") },
-                { 48, ("Depositing rime fog", "depositing_rime_fog_day.png", "depositing_rime_fog_night.png") },
-                { 51, ("Drizzle: Light intensity", "drizzle_light_day.png", "drizzle_light_night.png") },
-                { 53, ("Drizzle: Moderate intensity", "drizzle_moderate_day.png", "drizzle_moderate_night.png") },
-                { 55, ("Drizzle: Dense intensity", "drizzle_dense_day.png", "drizzle_dense_night.png") },
-                { 56, ("Freezing Drizzle: Light intensity", "freezing_drizzle_light_day.png", "freezing_drizzle_light_night.png") },
-                { 57, ("Freezing Drizzle: Dense intensity", "freezing_drizzle_dense_day.png", "freezing_drizzle_dense_night.png") },
-                { 61, ("Rain: Slight intensity", "rain_slight_day.png", "rain_slight_night.png") },
-                { 63, ("Rain: Moderate intensity", "rain_moderate_day.png", "rain_moderate_night.png") },
-                { 65, ("Rain: Heavy intensity", "rain_heavy_day.png", "rain_heavy_night.png") },
-                { 66, ("Freezing Rain: Light intensity", "freezing_rain_light_day.png", "freezing_rain_light_night.png") },
-                { 67, ("Freezing Rain: Heavy intensity", "freezing_rain_heavy_day.png", "freezing_rain_heavy_night.png") },
-                { 71, ("Snow fall: Slight intensity", "snow_slight_day.png", "snow_slight_night.png") },
-                { 73, ("Snow fall: Moderate intensity", "snow_moderate_day.png", "snow_moderate_night.png") },
-                { 75, ("Snow fall: Heavy intensity", "snow_heavy_day.png", "snow_heavy_night.png") },
-                { 77, ("Snow grains", "snow_grains_day.png", "snow_grains_night.png") },
-                { 80, ("Rain showers: Slight intensity", "rain_showers_slight_day.png", "rain_showers_slight_night.png") },
-                { 81, ("Rain showers: Moderate intensity", "rain_showers_moderate_day.png", "rain_showers_moderate_night.png") },
-                { 82, ("Rain showers: Violent intensity", "rain_showers_violent_day.png", "rain_showers_violent_night.png") },
-                { 85, ("Snow showers: Slight intensity", "snow_showers_slight_day.png", "snow_showers_slight_night.png") },
-                { 86, ("Snow showers: Heavy intensity", "snow_showers_heavy_day.png", "snow_showers_heavy_night.png") },
-                { 95, ("Thunderstorm: Slight or moderate", "thunderstorm_slight_day.png", "thunderstorm_slight_night.png") },
-                { 96, ("Thunderstorm with slight hail", "thunderstorm_slight_hail_day.png", "thunderstorm_slight_hail_night.png") },
-                { 99, ("Thunderstorm with heavy hail", "thunderstorm_heavy_hail_day.png", "thunderstorm_heavy_hail_night.png") }
-            };
-
-        public static string GetDescription(int weatherCode)
+        private static readonly Dictionary<int, WeatherCondition> WeatherData = new()
         {
-            return weatherCodeDescriptions.TryGetValue(weatherCode, out var description) ? description.Description : "Unknown weather code";
-        }
+            { 0, new WeatherCondition(0, "Clear sky", "clear-day", "clear-night") },
+            { 1, new WeatherCondition(1, "Mainly clear", "mainly-clear-day", "mainly-clear-night") },
+            { 2, new WeatherCondition(2, "Partly cloudy", "partly-cloudy-day", "partly-cloudy-night") },
+            { 3, new WeatherCondition(3, "Overcast", "overcast-day", "overcast-night") },
+            { 45, new WeatherCondition(45, "Fog", "fog-day", "fog-night") },
+            { 48, new WeatherCondition(48, "Rime fog", "rime-fog-day", "rime-fog-night") },
+            { 51, new WeatherCondition(51, "Light drizzle", "drizzle-light-day", "drizzle-light-night") },
+            { 53, new WeatherCondition(53, "Moderate drizzle", "drizzle-moderate-day", "drizzle-moderate-night") },
+            { 65, new WeatherCondition(65, "Heavy rain", "rain-heavy-day", "rain-heavy-night") },
+            { 95, new WeatherCondition(95, "Thunderstorm: Slight", "thunderstorm-slight-day", "thunderstorm-slight-night") },
+            { 99, new WeatherCondition(99, "Thunderstorm: Heavy hail", "thunderstorm-heavy-hail-day", "thunderstorm-heavy-hail-night") }
+        };
 
-        public static string GetPicture(int weatherCode, bool isDay)
-        {
-            if (weatherCodeDescriptions.TryGetValue(weatherCode, out var description))
-            {
-                return isDay ? description.DayPicture : description.NightPicture;
-            }
-            return isDay ? "unknown_day.png" : "unknown_night.png";
-        }
+        public static string GetDescription(int code) =>
+            WeatherData.TryGetValue(code, out var condition) ? condition.Description : "Unknown weather";
+
+        public static string GetIcon(int code, bool isDay) =>
+            WeatherData.TryGetValue(code, out var condition) ? (isDay ? condition.DayIcon : condition.NightIcon) : (isDay ? "unknown-day" : "unknown-night");
+
+        public static WeatherCondition GetCondition(int code) =>
+            WeatherData.TryGetValue(code, out var condition) ? condition : new WeatherCondition(code, "Unknown weather", "unknown-day", "unknown-night");
     }
 }

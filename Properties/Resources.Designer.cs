@@ -61,6 +61,566 @@ namespace WeatherSphereV4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] clear_day {
+            get {
+                object obj = ResourceManager.GetObject("clear-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] clear_night {
+            get {
+                object obj = ResourceManager.GetObject("clear-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] depositing_rime_fog_day {
+            get {
+                object obj = ResourceManager.GetObject("depositing-rime-fog-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] depositing_rime_fog_night {
+            get {
+                object obj = ResourceManager.GetObject("depositing-rime-fog-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] drizzle_dense_day {
+            get {
+                object obj = ResourceManager.GetObject("drizzle-dense-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] drizzle_dense_night {
+            get {
+                object obj = ResourceManager.GetObject("drizzle-dense-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] drizzle_light_day {
+            get {
+                object obj = ResourceManager.GetObject("drizzle-light-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] drizzle_light_night {
+            get {
+                object obj = ResourceManager.GetObject("drizzle-light-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] drizzle_moderate_day {
+            get {
+                object obj = ResourceManager.GetObject("drizzle-moderate-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] drizzle_moderate_night {
+            get {
+                object obj = ResourceManager.GetObject("drizzle-moderate-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] fog_day {
+            get {
+                object obj = ResourceManager.GetObject("fog-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] fog_night {
+            get {
+                object obj = ResourceManager.GetObject("fog-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] freezing_drizzle_dense_day {
+            get {
+                object obj = ResourceManager.GetObject("freezing-drizzle-dense-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] freezing_drizzle_dense_night {
+            get {
+                object obj = ResourceManager.GetObject("freezing-drizzle-dense-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] freezing_drizzle_light_day {
+            get {
+                object obj = ResourceManager.GetObject("freezing-drizzle-light-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] freezing_drizzle_light_night {
+            get {
+                object obj = ResourceManager.GetObject("freezing-drizzle-light-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] freezing_rain_heavy_day {
+            get {
+                object obj = ResourceManager.GetObject("freezing-rain-heavy-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] freezing_rain_heavy_night {
+            get {
+                object obj = ResourceManager.GetObject("freezing-rain-heavy-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] freezing_rain_light_day {
+            get {
+                object obj = ResourceManager.GetObject("freezing-rain-light-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] freezing_rain_light_night {
+            get {
+                object obj = ResourceManager.GetObject("freezing-rain-light-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] mainly_clear_day {
+            get {
+                object obj = ResourceManager.GetObject("mainly-clear-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] mainly_clear_night {
+            get {
+                object obj = ResourceManager.GetObject("mainly-clear-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] overcast_day {
+            get {
+                object obj = ResourceManager.GetObject("overcast-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] overcast_night {
+            get {
+                object obj = ResourceManager.GetObject("overcast-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] partly_cloudy_day {
+            get {
+                object obj = ResourceManager.GetObject("partly-cloudy-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] partly_cloudy_night {
+            get {
+                object obj = ResourceManager.GetObject("partly-cloudy-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] rain_heavy_day {
+            get {
+                object obj = ResourceManager.GetObject("rain-heavy-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] rain_heavy_night {
+            get {
+                object obj = ResourceManager.GetObject("rain-heavy-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] rain_moderate_day {
+            get {
+                object obj = ResourceManager.GetObject("rain-moderate-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] rain_moderate_night {
+            get {
+                object obj = ResourceManager.GetObject("rain-moderate-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] rain_showers_moderate_day {
+            get {
+                object obj = ResourceManager.GetObject("rain-showers-moderate-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] rain_showers_moderate_night {
+            get {
+                object obj = ResourceManager.GetObject("rain-showers-moderate-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] rain_showers_slight_day {
+            get {
+                object obj = ResourceManager.GetObject("rain-showers-slight-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] rain_showers_slight_night {
+            get {
+                object obj = ResourceManager.GetObject("rain-showers-slight-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] rain_showers_violent_day {
+            get {
+                object obj = ResourceManager.GetObject("rain-showers-violent-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] rain_showers_violent_night {
+            get {
+                object obj = ResourceManager.GetObject("rain-showers-violent-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] rain_slight_day {
+            get {
+                object obj = ResourceManager.GetObject("rain-slight-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] rain_slight_night {
+            get {
+                object obj = ResourceManager.GetObject("rain-slight-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] snow_grains_day {
+            get {
+                object obj = ResourceManager.GetObject("snow-grains-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] snow_grains_night {
+            get {
+                object obj = ResourceManager.GetObject("snow-grains-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] snow_heavy_day {
+            get {
+                object obj = ResourceManager.GetObject("snow-heavy-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] snow_heavy_night {
+            get {
+                object obj = ResourceManager.GetObject("snow-heavy-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] snow_moderate_day {
+            get {
+                object obj = ResourceManager.GetObject("snow-moderate-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] snow_moderate_night {
+            get {
+                object obj = ResourceManager.GetObject("snow-moderate-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] snow_showers_heavy_day {
+            get {
+                object obj = ResourceManager.GetObject("snow-showers-heavy-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] snow_showers_heavy_night {
+            get {
+                object obj = ResourceManager.GetObject("snow-showers-heavy-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] snow_showers_slight_day {
+            get {
+                object obj = ResourceManager.GetObject("snow-showers-slight-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] snow_showers_slight_night {
+            get {
+                object obj = ResourceManager.GetObject("snow-showers-slight-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] snow_slight_day {
+            get {
+                object obj = ResourceManager.GetObject("snow-slight-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] snow_slight_night {
+            get {
+                object obj = ResourceManager.GetObject("snow-slight-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] thunderstorm_heavy_hail_day {
+            get {
+                object obj = ResourceManager.GetObject("thunderstorm-heavy-hail-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] thunderstorm_heavy_hail_night {
+            get {
+                object obj = ResourceManager.GetObject("thunderstorm-heavy-hail-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] thunderstorm_slight_day {
+            get {
+                object obj = ResourceManager.GetObject("thunderstorm-slight-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] thunderstorm_slight_hail_day {
+            get {
+                object obj = ResourceManager.GetObject("thunderstorm-slight-hail-day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] thunderstorm_slight_hail_night {
+            get {
+                object obj = ResourceManager.GetObject("thunderstorm-slight-hail-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] thunderstorm_slight_night {
+            get {
+                object obj = ResourceManager.GetObject("thunderstorm-slight-night", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Untitled_design {
