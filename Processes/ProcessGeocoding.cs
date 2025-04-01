@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace WeatherSphereV4.Processes
@@ -24,8 +22,8 @@ namespace WeatherSphereV4.Processes
             return (null, null);  // No result found
         }
 
-        // 🌍 Geocoding method to get complete address
-        public async Task<string> GetCompleteAddress(string location)
+        // 🌍 Geocoding method to get complete address from search term
+        public async Task<string> GetCompleteAddressFromSearchTerm(string location)
         {
             var result = await GetGeocodingData(location);
             if (result != null)
@@ -48,7 +46,37 @@ namespace WeatherSphereV4.Processes
             return "No result found";  // No result found
         }
 
-        // 🌍 Private method to get geocoding data
+        // 🌍 Reverse geocoding method to get complete address from latitude and longitude
+        public async Task<string> GetCompleteAddressFromLatLon(string lat, string lon)
+        {
+            try
+            {
+                // 🌐 OpenStreetMap Nominatim API for reverse geocoding
+                string url = $"https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lon}&format=json&addressdetails=1";
+
+                HttpResponseMessage response = await client.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string jsonResponse = await response.Content.ReadAsStringAsync();
+                    var json = JObject.Parse(jsonResponse);
+
+                    string address = json["display_name"]?.ToString();
+                    return address ?? "No address found";  // Return the address if found
+                }
+                else
+                {
+                    Console.WriteLine($"Error: {response.StatusCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            return "No result found";  // No result found
+        }
+
+        // 🌍 Private method to get geocoding data (for search term-based geocoding)
         private async Task<JToken> GetGeocodingData(string location)
         {
             try

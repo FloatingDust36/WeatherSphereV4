@@ -29,42 +29,28 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MapsForm));
-            webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             panelMain = new Panel();
             panelSearch = new WeatherSphereV4.CustomControls.CustomPanel();
             buttonHomeSearch = new FontAwesome.Sharp.IconButton();
             textboxHomeSearch = new TextBox();
             labelLocation = new Label();
-            labelCurrentDateTime = new Label();
+            labelCurrentDate = new Label();
             labelDescription = new Label();
             labelFeelsLike = new Label();
             labelTemperature = new Label();
             pictureWeatherIcon = new PictureBox();
-            ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
+            gMapControl = new GMap.NET.WindowsForms.GMapControl();
             panelMain.SuspendLayout();
             panelSearch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureWeatherIcon).BeginInit();
             SuspendLayout();
-            // 
-            // webView21
-            // 
-            webView21.AllowExternalDrop = true;
-            webView21.BackColor = Color.White;
-            webView21.CreationProperties = null;
-            webView21.DefaultBackgroundColor = Color.White;
-            webView21.Dock = DockStyle.Fill;
-            webView21.Location = new Point(335, 0);
-            webView21.Name = "webView21";
-            webView21.Size = new Size(847, 744);
-            webView21.TabIndex = 3;
-            webView21.ZoomFactor = 1D;
             // 
             // panelMain
             // 
             panelMain.BackColor = Color.FromArgb(50, 50, 79);
             panelMain.Controls.Add(panelSearch);
             panelMain.Controls.Add(labelLocation);
-            panelMain.Controls.Add(labelCurrentDateTime);
+            panelMain.Controls.Add(labelCurrentDate);
             panelMain.Controls.Add(labelDescription);
             panelMain.Controls.Add(labelFeelsLike);
             panelMain.Controls.Add(labelTemperature);
@@ -86,12 +72,10 @@
             panelSearch.ColorOrientation = System.Drawing.Drawing2D.LinearGradientMode.Horizontal;
             panelSearch.Controls.Add(buttonHomeSearch);
             panelSearch.Controls.Add(textboxHomeSearch);
-            panelSearch.Location = new Point(31, 90);
+            panelSearch.Location = new Point(35, 91);
             panelSearch.Name = "panelSearch";
             panelSearch.Size = new Size(273, 53);
-            panelSearch.TabIndex = 34;
-            panelSearch.MouseEnter += buttonHomeSearch_MouseEnter;
-            panelSearch.MouseLeave += buttonHomeSearch_MouseLeave;
+            panelSearch.TabIndex = 48;
             // 
             // buttonHomeSearch
             // 
@@ -108,59 +92,62 @@
             buttonHomeSearch.Size = new Size(63, 47);
             buttonHomeSearch.TabIndex = 5;
             buttonHomeSearch.UseVisualStyleBackColor = false;
+            buttonHomeSearch.Click += buttonHomeSearch_Click;
+            buttonHomeSearch.MouseEnter += buttonHomeSearch_MouseEnter;
+            buttonHomeSearch.MouseLeave += buttonHomeSearch_MouseLeave;
             // 
             // textboxHomeSearch
             // 
             textboxHomeSearch.BorderStyle = BorderStyle.None;
             textboxHomeSearch.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textboxHomeSearch.Location = new Point(12, 13);
+            textboxHomeSearch.Location = new Point(18, 13);
             textboxHomeSearch.Name = "textboxHomeSearch";
             textboxHomeSearch.PlaceholderText = "Search Location...";
-            textboxHomeSearch.Size = new Size(212, 24);
+            textboxHomeSearch.Size = new Size(206, 24);
             textboxHomeSearch.TabIndex = 1;
             // 
             // labelLocation
             // 
             labelLocation.AutoSize = true;
-            labelLocation.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelLocation.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelLocation.ForeColor = Color.Gainsboro;
-            labelLocation.Location = new Point(30, 629);
+            labelLocation.Location = new Point(21, 628);
             labelLocation.Name = "labelLocation";
-            labelLocation.Size = new Size(274, 25);
-            labelLocation.TabIndex = 33;
+            labelLocation.Size = new Size(242, 21);
+            labelLocation.TabIndex = 47;
             labelLocation.Text = "Cebu, Central Visayas, Philippines";
             // 
-            // labelCurrentDateTime
+            // labelCurrentDate
             // 
-            labelCurrentDateTime.AutoSize = true;
-            labelCurrentDateTime.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelCurrentDateTime.ForeColor = Color.Gainsboro;
-            labelCurrentDateTime.Location = new Point(31, 586);
-            labelCurrentDateTime.Name = "labelCurrentDateTime";
-            labelCurrentDateTime.Size = new Size(258, 28);
-            labelCurrentDateTime.TabIndex = 32;
-            labelCurrentDateTime.Text = "Friday, March 21 of 7:28 AM";
+            labelCurrentDate.AutoSize = true;
+            labelCurrentDate.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelCurrentDate.ForeColor = Color.Gainsboro;
+            labelCurrentDate.Location = new Point(22, 585);
+            labelCurrentDate.Name = "labelCurrentDate";
+            labelCurrentDate.Size = new Size(210, 28);
+            labelCurrentDate.TabIndex = 46;
+            labelCurrentDate.Text = "Friday, March 21, 2021";
             // 
             // labelDescription
             // 
             labelDescription.AutoSize = true;
-            labelDescription.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelDescription.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelDescription.ForeColor = Color.Gainsboro;
-            labelDescription.Location = new Point(31, 544);
+            labelDescription.Location = new Point(22, 543);
             labelDescription.Name = "labelDescription";
-            labelDescription.Size = new Size(146, 32);
-            labelDescription.TabIndex = 31;
-            labelDescription.Text = "Partly Sunny";
+            labelDescription.Size = new Size(291, 28);
+            labelDescription.TabIndex = 45;
+            labelDescription.Text = "Freezing Drizzle: Dense intensity";
             // 
             // labelFeelsLike
             // 
             labelFeelsLike.AutoSize = true;
             labelFeelsLike.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelFeelsLike.ForeColor = Color.Gainsboro;
-            labelFeelsLike.Location = new Point(31, 501);
+            labelFeelsLike.Location = new Point(22, 500);
             labelFeelsLike.Name = "labelFeelsLike";
             labelFeelsLike.Size = new Size(169, 32);
-            labelFeelsLike.TabIndex = 30;
+            labelFeelsLike.TabIndex = 44;
             labelFeelsLike.Text = "Feels like 82°C";
             // 
             // labelTemperature
@@ -168,32 +155,58 @@
             labelTemperature.AutoSize = true;
             labelTemperature.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelTemperature.ForeColor = Color.Gainsboro;
-            labelTemperature.Location = new Point(107, 393);
+            labelTemperature.Location = new Point(111, 394);
             labelTemperature.Name = "labelTemperature";
             labelTemperature.Size = new Size(123, 65);
-            labelTemperature.TabIndex = 29;
+            labelTemperature.TabIndex = 43;
             labelTemperature.Text = "78°F";
             // 
             // pictureWeatherIcon
             // 
             pictureWeatherIcon.Image = (Image)resources.GetObject("pictureWeatherIcon.Image");
-            pictureWeatherIcon.Location = new Point(31, 242);
+            pictureWeatherIcon.Location = new Point(35, 243);
             pictureWeatherIcon.Name = "pictureWeatherIcon";
             pictureWeatherIcon.Size = new Size(273, 185);
             pictureWeatherIcon.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureWeatherIcon.TabIndex = 28;
+            pictureWeatherIcon.TabIndex = 42;
             pictureWeatherIcon.TabStop = false;
+            // 
+            // gMapControl
+            // 
+            gMapControl.Bearing = 0F;
+            gMapControl.CanDragMap = true;
+            gMapControl.Dock = DockStyle.Fill;
+            gMapControl.EmptyTileColor = Color.Navy;
+            gMapControl.GrayScaleMode = false;
+            gMapControl.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
+            gMapControl.LevelsKeepInMemory = 5;
+            gMapControl.Location = new Point(335, 0);
+            gMapControl.MarkersEnabled = true;
+            gMapControl.MaxZoom = 2;
+            gMapControl.MinZoom = 2;
+            gMapControl.MouseWheelZoomEnabled = true;
+            gMapControl.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
+            gMapControl.Name = "gMapControl";
+            gMapControl.NegativeMode = false;
+            gMapControl.PolygonsEnabled = true;
+            gMapControl.RetryLoadTile = 0;
+            gMapControl.RoutesEnabled = true;
+            gMapControl.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
+            gMapControl.SelectedAreaFillColor = Color.FromArgb(33, 65, 105, 225);
+            gMapControl.ShowTileGridLines = false;
+            gMapControl.Size = new Size(847, 744);
+            gMapControl.TabIndex = 5;
+            gMapControl.Zoom = 0D;
             // 
             // MapsForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(50, 50, 79);
-            Controls.Add(webView21);
+            Controls.Add(gMapControl);
             Controls.Add(panelMain);
             Name = "MapsForm";
             Size = new Size(1182, 744);
-            ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
             panelMain.ResumeLayout(false);
             panelMain.PerformLayout();
             panelSearch.ResumeLayout(false);
@@ -203,17 +216,16 @@
         }
 
         #endregion
-
-        public Microsoft.Web.WebView2.WinForms.WebView2 webView21;
         private Panel panelMain;
         private CustomControls.CustomPanel panelSearch;
         private FontAwesome.Sharp.IconButton buttonHomeSearch;
         private TextBox textboxHomeSearch;
         private Label labelLocation;
-        private Label labelCurrentDateTime;
+        private Label labelCurrentDate;
         private Label labelDescription;
         private Label labelFeelsLike;
         private Label labelTemperature;
         private PictureBox pictureWeatherIcon;
+        private GMap.NET.WindowsForms.GMapControl gMapControl;
     }
 }

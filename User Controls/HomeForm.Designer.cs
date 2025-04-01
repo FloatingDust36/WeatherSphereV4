@@ -43,40 +43,54 @@
             panelForecast = new Panel();
             panelForecastTable = new TableLayoutPanel();
             panel7 = new WeatherSphereV4.CustomControls.CustomPanel();
-            label7Date = new Label();
+            tableLayoutPanel7 = new TableLayoutPanel();
+            label7Temperature = new Label();
             label7Day = new Label();
             label7Description = new Label();
+            label7Date = new Label();
             picture7 = new PictureBox();
             panel6 = new WeatherSphereV4.CustomControls.CustomPanel();
-            label6Date = new Label();
+            tableLayoutPanel6 = new TableLayoutPanel();
+            label6Temperature = new Label();
             label6Day = new Label();
             label6Description = new Label();
+            label6Date = new Label();
             picture6 = new PictureBox();
             panel5 = new WeatherSphereV4.CustomControls.CustomPanel();
+            tableLayoutPanel5 = new TableLayoutPanel();
+            label5Temperature = new Label();
             label5Day = new Label();
-            label5Date = new Label();
             label5Description = new Label();
+            label5Date = new Label();
             picture5 = new PictureBox();
             panel4 = new WeatherSphereV4.CustomControls.CustomPanel();
+            tableLayoutPanel4 = new TableLayoutPanel();
+            label4Temperature = new Label();
             label4Day = new Label();
-            label4Date = new Label();
             label4Description = new Label();
+            label4Date = new Label();
             picture4 = new PictureBox();
             panel3 = new WeatherSphereV4.CustomControls.CustomPanel();
+            tableLayoutPanel3 = new TableLayoutPanel();
+            label3Temperature = new Label();
             label3Day = new Label();
-            label3Date = new Label();
             label3Description = new Label();
+            label3Date = new Label();
             picture3 = new PictureBox();
             panel2 = new WeatherSphereV4.CustomControls.CustomPanel();
+            tableLayoutPanel2 = new TableLayoutPanel();
+            label2Temperature = new Label();
             label2Day = new Label();
-            label2Date = new Label();
             label2Description = new Label();
+            label2Date = new Label();
             picture2 = new PictureBox();
             panel1 = new WeatherSphereV4.CustomControls.CustomPanel();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            label1Temperature = new Label();
             label1Day = new Label();
             label1Date = new Label();
-            label1Description = new Label();
             picture1 = new PictureBox();
+            label1Description = new Label();
             labelForecast = new Label();
             panelDetails = new Panel();
             panelDetailsTable = new TableLayoutPanel();
@@ -115,18 +129,25 @@
             panelForecast.SuspendLayout();
             panelForecastTable.SuspendLayout();
             panel7.SuspendLayout();
+            tableLayoutPanel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picture7).BeginInit();
             panel6.SuspendLayout();
+            tableLayoutPanel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picture6).BeginInit();
             panel5.SuspendLayout();
+            tableLayoutPanel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picture5).BeginInit();
             panel4.SuspendLayout();
+            tableLayoutPanel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picture4).BeginInit();
             panel3.SuspendLayout();
+            tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picture3).BeginInit();
             panel2.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picture2).BeginInit();
             panel1.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picture1).BeginInit();
             panelDetails.SuspendLayout();
             panelDetailsTable.SuspendLayout();
@@ -209,11 +230,11 @@
             // labelLocation
             // 
             labelLocation.AutoSize = true;
-            labelLocation.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelLocation.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelLocation.ForeColor = Color.Gainsboro;
             labelLocation.Location = new Point(17, 627);
             labelLocation.Name = "labelLocation";
-            labelLocation.Size = new Size(274, 25);
+            labelLocation.Size = new Size(242, 21);
             labelLocation.TabIndex = 40;
             labelLocation.Text = "Cebu, Central Visayas, Philippines";
             // 
@@ -328,39 +349,59 @@
             panel7.Color1 = Color.Navy;
             panel7.Color2 = Color.FromArgb(25, 25, 50);
             panel7.ColorOrientation = System.Drawing.Drawing2D.LinearGradientMode.Horizontal;
-            panel7.Controls.Add(label7Date);
-            panel7.Controls.Add(label7Day);
-            panel7.Controls.Add(label7Description);
-            panel7.Controls.Add(picture7);
+            panel7.Controls.Add(tableLayoutPanel7);
             panel7.Dock = DockStyle.Fill;
             panel7.Location = new Point(729, 3);
             panel7.Name = "panel7";
+            panel7.Padding = new Padding(0, 20, 0, 38);
             panel7.Size = new Size(115, 305);
             panel7.TabIndex = 2;
             // 
-            // label7Date
+            // tableLayoutPanel7
             // 
-            label7Date.Anchor = AnchorStyles.None;
-            label7Date.AutoSize = true;
-            label7Date.BackColor = Color.Transparent;
-            label7Date.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7Date.ForeColor = Color.Gainsboro;
-            label7Date.Location = new Point(9, 57);
-            label7Date.Name = "label7Date";
-            label7Date.Size = new Size(90, 28);
-            label7Date.TabIndex = 25;
-            label7Date.Text = "March 3";
+            tableLayoutPanel7.BackColor = Color.Transparent;
+            tableLayoutPanel7.ColumnCount = 1;
+            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel7.Controls.Add(label7Temperature, 0, 3);
+            tableLayoutPanel7.Controls.Add(label7Day, 0, 0);
+            tableLayoutPanel7.Controls.Add(label7Description, 0, 4);
+            tableLayoutPanel7.Controls.Add(label7Date, 0, 1);
+            tableLayoutPanel7.Controls.Add(picture7, 0, 2);
+            tableLayoutPanel7.Dock = DockStyle.Fill;
+            tableLayoutPanel7.Location = new Point(0, 20);
+            tableLayoutPanel7.Name = "tableLayoutPanel7";
+            tableLayoutPanel7.RowCount = 5;
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanel7.Size = new Size(115, 247);
+            tableLayoutPanel7.TabIndex = 6;
+            // 
+            // label7Temperature
+            // 
+            label7Temperature.Anchor = AnchorStyles.None;
+            label7Temperature.AutoSize = true;
+            label7Temperature.BackColor = Color.Transparent;
+            label7Temperature.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label7Temperature.ForeColor = Color.Gainsboro;
+            label7Temperature.Location = new Point(32, 184);
+            label7Temperature.Name = "label7Temperature";
+            label7Temperature.Size = new Size(50, 25);
+            label7Temperature.TabIndex = 27;
+            label7Temperature.Text = "20°C";
             // 
             // label7Day
             // 
             label7Day.Anchor = AnchorStyles.None;
             label7Day.AutoSize = true;
             label7Day.BackColor = Color.Transparent;
-            label7Day.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label7Day.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label7Day.ForeColor = Color.Gainsboro;
-            label7Day.Location = new Point(23, 29);
+            label7Day.Location = new Point(25, 2);
             label7Day.Name = "label7Day";
-            label7Day.Size = new Size(70, 28);
+            label7Day.Size = new Size(64, 25);
             label7Day.TabIndex = 23;
             label7Day.Text = "Friday";
             // 
@@ -369,22 +410,35 @@
             label7Description.Anchor = AnchorStyles.None;
             label7Description.AutoSize = true;
             label7Description.BackColor = Color.Transparent;
-            label7Description.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label7Description.Font = new Font("Segoe UI Semibold", 8F, FontStyle.Bold);
             label7Description.ForeColor = Color.Gainsboro;
-            label7Description.Location = new Point(9, 237);
+            label7Description.Location = new Point(16, 221);
             label7Description.Name = "label7Description";
-            label7Description.Size = new Size(98, 25);
+            label7Description.Size = new Size(82, 21);
             label7Description.TabIndex = 22;
             label7Description.Text = "Light Rain";
+            // 
+            // label7Date
+            // 
+            label7Date.Anchor = AnchorStyles.None;
+            label7Date.AutoSize = true;
+            label7Date.BackColor = Color.Transparent;
+            label7Date.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            label7Date.ForeColor = Color.Gainsboro;
+            label7Date.Location = new Point(17, 37);
+            label7Date.Name = "label7Date";
+            label7Date.Size = new Size(81, 25);
+            label7Date.TabIndex = 25;
+            label7Date.Text = "March 3";
             // 
             // picture7
             // 
             picture7.Anchor = AnchorStyles.None;
             picture7.BackColor = Color.Transparent;
             picture7.Image = (Image)resources.GetObject("picture7.Image");
-            picture7.Location = new Point(4, 111);
+            picture7.Location = new Point(3, 77);
             picture7.Name = "picture7";
-            picture7.Size = new Size(112, 93);
+            picture7.Size = new Size(109, 93);
             picture7.SizeMode = PictureBoxSizeMode.Zoom;
             picture7.TabIndex = 21;
             picture7.TabStop = false;
@@ -398,39 +452,59 @@
             panel6.Color1 = Color.Navy;
             panel6.Color2 = Color.FromArgb(25, 25, 50);
             panel6.ColorOrientation = System.Drawing.Drawing2D.LinearGradientMode.Horizontal;
-            panel6.Controls.Add(label6Date);
-            panel6.Controls.Add(label6Day);
-            panel6.Controls.Add(label6Description);
-            panel6.Controls.Add(picture6);
+            panel6.Controls.Add(tableLayoutPanel6);
             panel6.Dock = DockStyle.Fill;
             panel6.Location = new Point(608, 3);
             panel6.Name = "panel6";
+            panel6.Padding = new Padding(0, 20, 0, 38);
             panel6.Size = new Size(115, 305);
             panel6.TabIndex = 2;
             // 
-            // label6Date
+            // tableLayoutPanel6
             // 
-            label6Date.Anchor = AnchorStyles.None;
-            label6Date.AutoSize = true;
-            label6Date.BackColor = Color.Transparent;
-            label6Date.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6Date.ForeColor = Color.Gainsboro;
-            label6Date.Location = new Point(12, 58);
-            label6Date.Name = "label6Date";
-            label6Date.Size = new Size(90, 28);
-            label6Date.TabIndex = 24;
-            label6Date.Text = "March 3";
+            tableLayoutPanel6.BackColor = Color.Transparent;
+            tableLayoutPanel6.ColumnCount = 1;
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel6.Controls.Add(label6Temperature, 0, 3);
+            tableLayoutPanel6.Controls.Add(label6Day, 0, 0);
+            tableLayoutPanel6.Controls.Add(label6Description, 0, 4);
+            tableLayoutPanel6.Controls.Add(label6Date, 0, 1);
+            tableLayoutPanel6.Controls.Add(picture6, 0, 2);
+            tableLayoutPanel6.Dock = DockStyle.Fill;
+            tableLayoutPanel6.Location = new Point(0, 20);
+            tableLayoutPanel6.Name = "tableLayoutPanel6";
+            tableLayoutPanel6.RowCount = 5;
+            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanel6.Size = new Size(115, 247);
+            tableLayoutPanel6.TabIndex = 5;
+            // 
+            // label6Temperature
+            // 
+            label6Temperature.Anchor = AnchorStyles.None;
+            label6Temperature.AutoSize = true;
+            label6Temperature.BackColor = Color.Transparent;
+            label6Temperature.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6Temperature.ForeColor = Color.Gainsboro;
+            label6Temperature.Location = new Point(32, 184);
+            label6Temperature.Name = "label6Temperature";
+            label6Temperature.Size = new Size(50, 25);
+            label6Temperature.TabIndex = 26;
+            label6Temperature.Text = "20°C";
             // 
             // label6Day
             // 
             label6Day.Anchor = AnchorStyles.None;
             label6Day.AutoSize = true;
             label6Day.BackColor = Color.Transparent;
-            label6Day.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6Day.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label6Day.ForeColor = Color.Gainsboro;
-            label6Day.Location = new Point(22, 29);
+            label6Day.Location = new Point(25, 2);
             label6Day.Name = "label6Day";
-            label6Day.Size = new Size(70, 28);
+            label6Day.Size = new Size(64, 25);
             label6Day.TabIndex = 23;
             label6Day.Text = "Friday";
             // 
@@ -439,22 +513,35 @@
             label6Description.Anchor = AnchorStyles.None;
             label6Description.AutoSize = true;
             label6Description.BackColor = Color.Transparent;
-            label6Description.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6Description.Font = new Font("Segoe UI Semibold", 8F, FontStyle.Bold);
             label6Description.ForeColor = Color.Gainsboro;
-            label6Description.Location = new Point(9, 237);
+            label6Description.Location = new Point(16, 221);
             label6Description.Name = "label6Description";
-            label6Description.Size = new Size(98, 25);
+            label6Description.Size = new Size(82, 21);
             label6Description.TabIndex = 22;
             label6Description.Text = "Light Rain";
+            // 
+            // label6Date
+            // 
+            label6Date.Anchor = AnchorStyles.None;
+            label6Date.AutoSize = true;
+            label6Date.BackColor = Color.Transparent;
+            label6Date.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            label6Date.ForeColor = Color.Gainsboro;
+            label6Date.Location = new Point(17, 37);
+            label6Date.Name = "label6Date";
+            label6Date.Size = new Size(81, 25);
+            label6Date.TabIndex = 24;
+            label6Date.Text = "March 3";
             // 
             // picture6
             // 
             picture6.Anchor = AnchorStyles.None;
             picture6.BackColor = Color.Transparent;
             picture6.Image = (Image)resources.GetObject("picture6.Image");
-            picture6.Location = new Point(0, 111);
+            picture6.Location = new Point(3, 77);
             picture6.Name = "picture6";
-            picture6.Size = new Size(112, 93);
+            picture6.Size = new Size(109, 93);
             picture6.SizeMode = PictureBoxSizeMode.Zoom;
             picture6.TabIndex = 21;
             picture6.TabStop = false;
@@ -468,63 +555,96 @@
             panel5.Color1 = Color.Navy;
             panel5.Color2 = Color.FromArgb(25, 25, 50);
             panel5.ColorOrientation = System.Drawing.Drawing2D.LinearGradientMode.Horizontal;
-            panel5.Controls.Add(label5Day);
-            panel5.Controls.Add(label5Date);
-            panel5.Controls.Add(label5Description);
-            panel5.Controls.Add(picture5);
+            panel5.Controls.Add(tableLayoutPanel5);
             panel5.Dock = DockStyle.Fill;
             panel5.Location = new Point(487, 3);
             panel5.Name = "panel5";
+            panel5.Padding = new Padding(0, 20, 0, 38);
             panel5.Size = new Size(115, 305);
             panel5.TabIndex = 2;
+            // 
+            // tableLayoutPanel5
+            // 
+            tableLayoutPanel5.BackColor = Color.Transparent;
+            tableLayoutPanel5.ColumnCount = 1;
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel5.Controls.Add(label5Temperature, 0, 3);
+            tableLayoutPanel5.Controls.Add(label5Day, 0, 0);
+            tableLayoutPanel5.Controls.Add(label5Description, 0, 4);
+            tableLayoutPanel5.Controls.Add(label5Date, 0, 1);
+            tableLayoutPanel5.Controls.Add(picture5, 0, 2);
+            tableLayoutPanel5.Dock = DockStyle.Fill;
+            tableLayoutPanel5.Location = new Point(0, 20);
+            tableLayoutPanel5.Name = "tableLayoutPanel5";
+            tableLayoutPanel5.RowCount = 5;
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanel5.Size = new Size(115, 247);
+            tableLayoutPanel5.TabIndex = 4;
+            // 
+            // label5Temperature
+            // 
+            label5Temperature.Anchor = AnchorStyles.None;
+            label5Temperature.AutoSize = true;
+            label5Temperature.BackColor = Color.Transparent;
+            label5Temperature.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5Temperature.ForeColor = Color.Gainsboro;
+            label5Temperature.Location = new Point(32, 184);
+            label5Temperature.Name = "label5Temperature";
+            label5Temperature.Size = new Size(50, 25);
+            label5Temperature.TabIndex = 28;
+            label5Temperature.Text = "20°C";
             // 
             // label5Day
             // 
             label5Day.Anchor = AnchorStyles.None;
             label5Day.AutoSize = true;
             label5Day.BackColor = Color.Transparent;
-            label5Day.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5Day.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label5Day.ForeColor = Color.Gainsboro;
-            label5Day.Location = new Point(17, 29);
+            label5Day.Location = new Point(25, 2);
             label5Day.Name = "label5Day";
-            label5Day.Size = new Size(70, 28);
+            label5Day.Size = new Size(64, 25);
             label5Day.TabIndex = 23;
             label5Day.Text = "Friday";
-            // 
-            // label5Date
-            // 
-            label5Date.Anchor = AnchorStyles.None;
-            label5Date.AutoSize = true;
-            label5Date.BackColor = Color.Transparent;
-            label5Date.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5Date.ForeColor = Color.Gainsboro;
-            label5Date.Location = new Point(10, 58);
-            label5Date.Name = "label5Date";
-            label5Date.Size = new Size(90, 28);
-            label5Date.TabIndex = 24;
-            label5Date.Text = "March 3";
             // 
             // label5Description
             // 
             label5Description.Anchor = AnchorStyles.None;
             label5Description.AutoSize = true;
             label5Description.BackColor = Color.Transparent;
-            label5Description.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5Description.Font = new Font("Segoe UI Semibold", 8F, FontStyle.Bold);
             label5Description.ForeColor = Color.Gainsboro;
-            label5Description.Location = new Point(9, 237);
+            label5Description.Location = new Point(16, 221);
             label5Description.Name = "label5Description";
-            label5Description.Size = new Size(98, 25);
+            label5Description.Size = new Size(82, 21);
             label5Description.TabIndex = 22;
             label5Description.Text = "Light Rain";
+            // 
+            // label5Date
+            // 
+            label5Date.Anchor = AnchorStyles.None;
+            label5Date.AutoSize = true;
+            label5Date.BackColor = Color.Transparent;
+            label5Date.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            label5Date.ForeColor = Color.Gainsboro;
+            label5Date.Location = new Point(17, 37);
+            label5Date.Name = "label5Date";
+            label5Date.Size = new Size(81, 25);
+            label5Date.TabIndex = 24;
+            label5Date.Text = "March 3";
             // 
             // picture5
             // 
             picture5.Anchor = AnchorStyles.None;
             picture5.BackColor = Color.Transparent;
             picture5.Image = (Image)resources.GetObject("picture5.Image");
-            picture5.Location = new Point(0, 111);
+            picture5.Location = new Point(3, 77);
             picture5.Name = "picture5";
-            picture5.Size = new Size(112, 93);
+            picture5.Size = new Size(109, 93);
             picture5.SizeMode = PictureBoxSizeMode.Zoom;
             picture5.TabIndex = 21;
             picture5.TabStop = false;
@@ -538,63 +658,96 @@
             panel4.Color1 = Color.Navy;
             panel4.Color2 = Color.FromArgb(25, 25, 50);
             panel4.ColorOrientation = System.Drawing.Drawing2D.LinearGradientMode.Horizontal;
-            panel4.Controls.Add(label4Day);
-            panel4.Controls.Add(label4Date);
-            panel4.Controls.Add(label4Description);
-            panel4.Controls.Add(picture4);
+            panel4.Controls.Add(tableLayoutPanel4);
             panel4.Dock = DockStyle.Fill;
             panel4.Location = new Point(366, 3);
             panel4.Name = "panel4";
+            panel4.Padding = new Padding(0, 20, 0, 38);
             panel4.Size = new Size(115, 305);
             panel4.TabIndex = 2;
+            // 
+            // tableLayoutPanel4
+            // 
+            tableLayoutPanel4.BackColor = Color.Transparent;
+            tableLayoutPanel4.ColumnCount = 1;
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel4.Controls.Add(label4Temperature, 0, 3);
+            tableLayoutPanel4.Controls.Add(label4Day, 0, 0);
+            tableLayoutPanel4.Controls.Add(label4Description, 0, 4);
+            tableLayoutPanel4.Controls.Add(label4Date, 0, 1);
+            tableLayoutPanel4.Controls.Add(picture4, 0, 2);
+            tableLayoutPanel4.Dock = DockStyle.Fill;
+            tableLayoutPanel4.Location = new Point(0, 20);
+            tableLayoutPanel4.Name = "tableLayoutPanel4";
+            tableLayoutPanel4.RowCount = 5;
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanel4.Size = new Size(115, 247);
+            tableLayoutPanel4.TabIndex = 3;
+            // 
+            // label4Temperature
+            // 
+            label4Temperature.Anchor = AnchorStyles.None;
+            label4Temperature.AutoSize = true;
+            label4Temperature.BackColor = Color.Transparent;
+            label4Temperature.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4Temperature.ForeColor = Color.Gainsboro;
+            label4Temperature.Location = new Point(32, 184);
+            label4Temperature.Name = "label4Temperature";
+            label4Temperature.Size = new Size(50, 25);
+            label4Temperature.TabIndex = 27;
+            label4Temperature.Text = "20°C";
             // 
             // label4Day
             // 
             label4Day.Anchor = AnchorStyles.None;
             label4Day.AutoSize = true;
             label4Day.BackColor = Color.Transparent;
-            label4Day.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4Day.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label4Day.ForeColor = Color.Gainsboro;
-            label4Day.Location = new Point(19, 29);
+            label4Day.Location = new Point(25, 2);
             label4Day.Name = "label4Day";
-            label4Day.Size = new Size(70, 28);
+            label4Day.Size = new Size(64, 25);
             label4Day.TabIndex = 23;
             label4Day.Text = "Friday";
-            // 
-            // label4Date
-            // 
-            label4Date.Anchor = AnchorStyles.None;
-            label4Date.AutoSize = true;
-            label4Date.BackColor = Color.Transparent;
-            label4Date.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4Date.ForeColor = Color.Gainsboro;
-            label4Date.Location = new Point(12, 58);
-            label4Date.Name = "label4Date";
-            label4Date.Size = new Size(90, 28);
-            label4Date.TabIndex = 24;
-            label4Date.Text = "March 3";
             // 
             // label4Description
             // 
             label4Description.Anchor = AnchorStyles.None;
             label4Description.AutoSize = true;
             label4Description.BackColor = Color.Transparent;
-            label4Description.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4Description.Font = new Font("Segoe UI Semibold", 8F, FontStyle.Bold);
             label4Description.ForeColor = Color.Gainsboro;
-            label4Description.Location = new Point(9, 237);
+            label4Description.Location = new Point(16, 221);
             label4Description.Name = "label4Description";
-            label4Description.Size = new Size(98, 25);
+            label4Description.Size = new Size(82, 21);
             label4Description.TabIndex = 22;
             label4Description.Text = "Light Rain";
+            // 
+            // label4Date
+            // 
+            label4Date.Anchor = AnchorStyles.None;
+            label4Date.AutoSize = true;
+            label4Date.BackColor = Color.Transparent;
+            label4Date.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            label4Date.ForeColor = Color.Gainsboro;
+            label4Date.Location = new Point(17, 37);
+            label4Date.Name = "label4Date";
+            label4Date.Size = new Size(81, 25);
+            label4Date.TabIndex = 24;
+            label4Date.Text = "March 3";
             // 
             // picture4
             // 
             picture4.Anchor = AnchorStyles.None;
             picture4.BackColor = Color.Transparent;
             picture4.Image = (Image)resources.GetObject("picture4.Image");
-            picture4.Location = new Point(2, 111);
+            picture4.Location = new Point(3, 77);
             picture4.Name = "picture4";
-            picture4.Size = new Size(112, 93);
+            picture4.Size = new Size(109, 93);
             picture4.SizeMode = PictureBoxSizeMode.Zoom;
             picture4.TabIndex = 21;
             picture4.TabStop = false;
@@ -608,63 +761,96 @@
             panel3.Color1 = Color.Navy;
             panel3.Color2 = Color.FromArgb(25, 25, 50);
             panel3.ColorOrientation = System.Drawing.Drawing2D.LinearGradientMode.Horizontal;
-            panel3.Controls.Add(label3Day);
-            panel3.Controls.Add(label3Date);
-            panel3.Controls.Add(label3Description);
-            panel3.Controls.Add(picture3);
+            panel3.Controls.Add(tableLayoutPanel3);
             panel3.Dock = DockStyle.Fill;
             panel3.Location = new Point(245, 3);
             panel3.Name = "panel3";
+            panel3.Padding = new Padding(0, 20, 0, 38);
             panel3.Size = new Size(115, 305);
             panel3.TabIndex = 2;
+            // 
+            // tableLayoutPanel3
+            // 
+            tableLayoutPanel3.BackColor = Color.Transparent;
+            tableLayoutPanel3.ColumnCount = 1;
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel3.Controls.Add(label3Temperature, 0, 3);
+            tableLayoutPanel3.Controls.Add(label3Day, 0, 0);
+            tableLayoutPanel3.Controls.Add(label3Description, 0, 4);
+            tableLayoutPanel3.Controls.Add(label3Date, 0, 1);
+            tableLayoutPanel3.Controls.Add(picture3, 0, 2);
+            tableLayoutPanel3.Dock = DockStyle.Fill;
+            tableLayoutPanel3.Location = new Point(0, 20);
+            tableLayoutPanel3.Name = "tableLayoutPanel3";
+            tableLayoutPanel3.RowCount = 5;
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanel3.Size = new Size(115, 247);
+            tableLayoutPanel3.TabIndex = 2;
+            // 
+            // label3Temperature
+            // 
+            label3Temperature.Anchor = AnchorStyles.None;
+            label3Temperature.AutoSize = true;
+            label3Temperature.BackColor = Color.Transparent;
+            label3Temperature.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3Temperature.ForeColor = Color.Gainsboro;
+            label3Temperature.Location = new Point(32, 184);
+            label3Temperature.Name = "label3Temperature";
+            label3Temperature.Size = new Size(50, 25);
+            label3Temperature.TabIndex = 26;
+            label3Temperature.Text = "20°C";
             // 
             // label3Day
             // 
             label3Day.Anchor = AnchorStyles.None;
             label3Day.AutoSize = true;
             label3Day.BackColor = Color.Transparent;
-            label3Day.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3Day.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label3Day.ForeColor = Color.Gainsboro;
-            label3Day.Location = new Point(20, 29);
+            label3Day.Location = new Point(25, 2);
             label3Day.Name = "label3Day";
-            label3Day.Size = new Size(70, 28);
+            label3Day.Size = new Size(64, 25);
             label3Day.TabIndex = 23;
             label3Day.Text = "Friday";
-            // 
-            // label3Date
-            // 
-            label3Date.Anchor = AnchorStyles.None;
-            label3Date.AutoSize = true;
-            label3Date.BackColor = Color.Transparent;
-            label3Date.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3Date.ForeColor = Color.Gainsboro;
-            label3Date.Location = new Point(13, 58);
-            label3Date.Name = "label3Date";
-            label3Date.Size = new Size(90, 28);
-            label3Date.TabIndex = 24;
-            label3Date.Text = "March 3";
             // 
             // label3Description
             // 
             label3Description.Anchor = AnchorStyles.None;
             label3Description.AutoSize = true;
             label3Description.BackColor = Color.Transparent;
-            label3Description.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3Description.Font = new Font("Segoe UI Semibold", 8F, FontStyle.Bold);
             label3Description.ForeColor = Color.Gainsboro;
-            label3Description.Location = new Point(9, 237);
+            label3Description.Location = new Point(16, 221);
             label3Description.Name = "label3Description";
-            label3Description.Size = new Size(98, 25);
+            label3Description.Size = new Size(82, 21);
             label3Description.TabIndex = 22;
             label3Description.Text = "Light Rain";
+            // 
+            // label3Date
+            // 
+            label3Date.Anchor = AnchorStyles.None;
+            label3Date.AutoSize = true;
+            label3Date.BackColor = Color.Transparent;
+            label3Date.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            label3Date.ForeColor = Color.Gainsboro;
+            label3Date.Location = new Point(17, 37);
+            label3Date.Name = "label3Date";
+            label3Date.Size = new Size(81, 25);
+            label3Date.TabIndex = 24;
+            label3Date.Text = "March 3";
             // 
             // picture3
             // 
             picture3.Anchor = AnchorStyles.None;
             picture3.BackColor = Color.Transparent;
             picture3.Image = (Image)resources.GetObject("picture3.Image");
-            picture3.Location = new Point(3, 111);
+            picture3.Location = new Point(3, 77);
             picture3.Name = "picture3";
-            picture3.Size = new Size(112, 93);
+            picture3.Size = new Size(109, 93);
             picture3.SizeMode = PictureBoxSizeMode.Zoom;
             picture3.TabIndex = 21;
             picture3.TabStop = false;
@@ -678,63 +864,96 @@
             panel2.Color1 = Color.Navy;
             panel2.Color2 = Color.FromArgb(25, 25, 50);
             panel2.ColorOrientation = System.Drawing.Drawing2D.LinearGradientMode.Horizontal;
-            panel2.Controls.Add(label2Day);
-            panel2.Controls.Add(label2Date);
-            panel2.Controls.Add(label2Description);
-            panel2.Controls.Add(picture2);
+            panel2.Controls.Add(tableLayoutPanel2);
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(124, 3);
             panel2.Name = "panel2";
+            panel2.Padding = new Padding(0, 20, 0, 38);
             panel2.Size = new Size(115, 305);
             panel2.TabIndex = 1;
+            // 
+            // tableLayoutPanel2
+            // 
+            tableLayoutPanel2.BackColor = Color.Transparent;
+            tableLayoutPanel2.ColumnCount = 1;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.Controls.Add(label2Temperature, 0, 3);
+            tableLayoutPanel2.Controls.Add(label2Day, 0, 0);
+            tableLayoutPanel2.Controls.Add(label2Description, 0, 4);
+            tableLayoutPanel2.Controls.Add(label2Date, 0, 1);
+            tableLayoutPanel2.Controls.Add(picture2, 0, 2);
+            tableLayoutPanel2.Dock = DockStyle.Fill;
+            tableLayoutPanel2.Location = new Point(0, 20);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 5;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanel2.Size = new Size(115, 247);
+            tableLayoutPanel2.TabIndex = 1;
+            // 
+            // label2Temperature
+            // 
+            label2Temperature.Anchor = AnchorStyles.None;
+            label2Temperature.AutoSize = true;
+            label2Temperature.BackColor = Color.Transparent;
+            label2Temperature.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2Temperature.ForeColor = Color.Gainsboro;
+            label2Temperature.Location = new Point(32, 184);
+            label2Temperature.Name = "label2Temperature";
+            label2Temperature.Size = new Size(50, 25);
+            label2Temperature.TabIndex = 25;
+            label2Temperature.Text = "20°C";
             // 
             // label2Day
             // 
             label2Day.Anchor = AnchorStyles.None;
             label2Day.AutoSize = true;
             label2Day.BackColor = Color.Transparent;
-            label2Day.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2Day.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label2Day.ForeColor = Color.Gainsboro;
-            label2Day.Location = new Point(19, 28);
+            label2Day.Location = new Point(25, 2);
             label2Day.Name = "label2Day";
-            label2Day.Size = new Size(70, 28);
+            label2Day.Size = new Size(64, 25);
             label2Day.TabIndex = 23;
             label2Day.Text = "Friday";
-            // 
-            // label2Date
-            // 
-            label2Date.Anchor = AnchorStyles.None;
-            label2Date.AutoSize = true;
-            label2Date.BackColor = Color.Transparent;
-            label2Date.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2Date.ForeColor = Color.Gainsboro;
-            label2Date.Location = new Point(12, 57);
-            label2Date.Name = "label2Date";
-            label2Date.Size = new Size(90, 28);
-            label2Date.TabIndex = 24;
-            label2Date.Text = "March 3";
             // 
             // label2Description
             // 
             label2Description.Anchor = AnchorStyles.None;
             label2Description.AutoSize = true;
             label2Description.BackColor = Color.Transparent;
-            label2Description.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2Description.Font = new Font("Segoe UI Semibold", 8F, FontStyle.Bold);
             label2Description.ForeColor = Color.Gainsboro;
-            label2Description.Location = new Point(9, 237);
+            label2Description.Location = new Point(16, 221);
             label2Description.Name = "label2Description";
-            label2Description.Size = new Size(98, 25);
+            label2Description.Size = new Size(82, 21);
             label2Description.TabIndex = 22;
             label2Description.Text = "Light Rain";
+            // 
+            // label2Date
+            // 
+            label2Date.Anchor = AnchorStyles.None;
+            label2Date.AutoSize = true;
+            label2Date.BackColor = Color.Transparent;
+            label2Date.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            label2Date.ForeColor = Color.Gainsboro;
+            label2Date.Location = new Point(17, 37);
+            label2Date.Name = "label2Date";
+            label2Date.Size = new Size(81, 25);
+            label2Date.TabIndex = 24;
+            label2Date.Text = "March 3";
             // 
             // picture2
             // 
             picture2.Anchor = AnchorStyles.None;
             picture2.BackColor = Color.Transparent;
             picture2.Image = (Image)resources.GetObject("picture2.Image");
-            picture2.Location = new Point(2, 110);
+            picture2.Location = new Point(3, 77);
             picture2.Name = "picture2";
-            picture2.Size = new Size(112, 93);
+            picture2.Size = new Size(109, 93);
             picture2.SizeMode = PictureBoxSizeMode.Zoom;
             picture2.TabIndex = 21;
             picture2.TabStop = false;
@@ -748,26 +967,59 @@
             panel1.Color1 = Color.Navy;
             panel1.Color2 = Color.FromArgb(25, 25, 50);
             panel1.ColorOrientation = System.Drawing.Drawing2D.LinearGradientMode.Horizontal;
-            panel1.Controls.Add(label1Day);
-            panel1.Controls.Add(label1Date);
-            panel1.Controls.Add(label1Description);
-            panel1.Controls.Add(picture1);
+            panel1.Controls.Add(tableLayoutPanel1);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(3, 3);
             panel1.Name = "panel1";
+            panel1.Padding = new Padding(0, 20, 0, 38);
             panel1.Size = new Size(115, 305);
             panel1.TabIndex = 1;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.BackColor = Color.Transparent;
+            tableLayoutPanel1.ColumnCount = 1;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Controls.Add(label1Temperature, 0, 3);
+            tableLayoutPanel1.Controls.Add(label1Day, 0, 0);
+            tableLayoutPanel1.Controls.Add(label1Date, 0, 1);
+            tableLayoutPanel1.Controls.Add(picture1, 0, 2);
+            tableLayoutPanel1.Controls.Add(label1Description, 0, 4);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 20);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 5;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanel1.Size = new Size(115, 247);
+            tableLayoutPanel1.TabIndex = 0;
+            // 
+            // label1Temperature
+            // 
+            label1Temperature.Anchor = AnchorStyles.None;
+            label1Temperature.AutoSize = true;
+            label1Temperature.BackColor = Color.Transparent;
+            label1Temperature.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1Temperature.ForeColor = Color.Gainsboro;
+            label1Temperature.Location = new Point(32, 184);
+            label1Temperature.Name = "label1Temperature";
+            label1Temperature.Size = new Size(50, 25);
+            label1Temperature.TabIndex = 21;
+            label1Temperature.Text = "20°C";
             // 
             // label1Day
             // 
             label1Day.Anchor = AnchorStyles.None;
             label1Day.AutoSize = true;
             label1Day.BackColor = Color.Transparent;
-            label1Day.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1Day.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label1Day.ForeColor = Color.Gainsboro;
-            label1Day.Location = new Point(19, 28);
+            label1Day.Location = new Point(25, 2);
             label1Day.Name = "label1Day";
-            label1Day.Size = new Size(70, 28);
+            label1Day.Size = new Size(64, 25);
             label1Day.TabIndex = 19;
             label1Day.Text = "Friday";
             // 
@@ -776,38 +1028,38 @@
             label1Date.Anchor = AnchorStyles.None;
             label1Date.AutoSize = true;
             label1Date.BackColor = Color.Transparent;
-            label1Date.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1Date.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label1Date.ForeColor = Color.Gainsboro;
-            label1Date.Location = new Point(12, 57);
+            label1Date.Location = new Point(23, 32);
             label1Date.Name = "label1Date";
-            label1Date.Size = new Size(90, 28);
+            label1Date.Size = new Size(68, 25);
             label1Date.TabIndex = 20;
-            label1Date.Text = "March 3";
-            // 
-            // label1Description
-            // 
-            label1Description.Anchor = AnchorStyles.None;
-            label1Description.AutoSize = true;
-            label1Description.BackColor = Color.Transparent;
-            label1Description.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1Description.ForeColor = Color.Gainsboro;
-            label1Description.Location = new Point(9, 237);
-            label1Description.Name = "label1Description";
-            label1Description.Size = new Size(98, 25);
-            label1Description.TabIndex = 18;
-            label1Description.Text = "Light Rain";
+            label1Date.Text = "April 4";
             // 
             // picture1
             // 
             picture1.Anchor = AnchorStyles.None;
             picture1.BackColor = Color.Transparent;
             picture1.Image = (Image)resources.GetObject("picture1.Image");
-            picture1.Location = new Point(2, 110);
+            picture1.Location = new Point(3, 72);
             picture1.Name = "picture1";
-            picture1.Size = new Size(112, 93);
+            picture1.Size = new Size(109, 93);
             picture1.SizeMode = PictureBoxSizeMode.Zoom;
             picture1.TabIndex = 17;
             picture1.TabStop = false;
+            // 
+            // label1Description
+            // 
+            label1Description.Anchor = AnchorStyles.None;
+            label1Description.AutoSize = true;
+            label1Description.BackColor = Color.Transparent;
+            label1Description.Font = new Font("Segoe UI Semibold", 8F, FontStyle.Bold);
+            label1Description.ForeColor = Color.Gainsboro;
+            label1Description.Location = new Point(16, 221);
+            label1Description.Name = "label1Description";
+            label1Description.Size = new Size(82, 21);
+            label1Description.TabIndex = 18;
+            label1Description.Text = "Light Rain";
             // 
             // labelForecast
             // 
@@ -1265,25 +1517,32 @@
             panelForecast.PerformLayout();
             panelForecastTable.ResumeLayout(false);
             panel7.ResumeLayout(false);
-            panel7.PerformLayout();
+            tableLayoutPanel7.ResumeLayout(false);
+            tableLayoutPanel7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picture7).EndInit();
             panel6.ResumeLayout(false);
-            panel6.PerformLayout();
+            tableLayoutPanel6.ResumeLayout(false);
+            tableLayoutPanel6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picture6).EndInit();
             panel5.ResumeLayout(false);
-            panel5.PerformLayout();
+            tableLayoutPanel5.ResumeLayout(false);
+            tableLayoutPanel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picture5).EndInit();
             panel4.ResumeLayout(false);
-            panel4.PerformLayout();
+            tableLayoutPanel4.ResumeLayout(false);
+            tableLayoutPanel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picture4).EndInit();
             panel3.ResumeLayout(false);
-            panel3.PerformLayout();
+            tableLayoutPanel3.ResumeLayout(false);
+            tableLayoutPanel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picture3).EndInit();
             panel2.ResumeLayout(false);
-            panel2.PerformLayout();
+            tableLayoutPanel2.ResumeLayout(false);
+            tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picture2).EndInit();
             panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picture1).EndInit();
             panelDetails.ResumeLayout(false);
             panelDetails.PerformLayout();
@@ -1392,5 +1651,19 @@
         private CustomControls.CustomPanel panelHumidity;
         private CustomControls.CustomPanel panelWindSpeed;
         private Label label7Date;
+        private Label label1Temperature;
+        private Label label7Temperature;
+        private Label label6Temperature;
+        private Label label5Temperature;
+        private Label label4Temperature;
+        private Label label3Temperature;
+        private Label label2Temperature;
+        private TableLayoutPanel tableLayoutPanel1;
+        private TableLayoutPanel tableLayoutPanel2;
+        private TableLayoutPanel tableLayoutPanel7;
+        private TableLayoutPanel tableLayoutPanel6;
+        private TableLayoutPanel tableLayoutPanel5;
+        private TableLayoutPanel tableLayoutPanel4;
+        private TableLayoutPanel tableLayoutPanel3;
     }
 }

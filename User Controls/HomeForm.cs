@@ -17,12 +17,14 @@ namespace WeatherSphereV4
         private string siteUrl = "https://api.open-meteo.com/v1/forecast";
         private ProcessCurrentWeatherData processCurrentWeatherData;
         private ProcessGeocoding processGeocoding;
+        private ProcessForecast7Days processForecast7Days;
 
         public HomeForm()
         {
             InitializeComponent();
             processCurrentWeatherData = new ProcessCurrentWeatherData();
             processGeocoding = new ProcessGeocoding();
+            processForecast7Days = new ProcessForecast7Days();
         }
 
         private void buttonHomeSearch_MouseEnter(object sender, EventArgs e)
@@ -35,7 +37,7 @@ namespace WeatherSphereV4
             buttonHomeSearch.IconSize = 35;
         }
 
-        private async Task LoadWeatherData(string lat, string lon, string location)
+        private async Task LoadCurrentWeatherData(string lat, string lon, string location)
         {
             string current = "weather_code,temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,cloud_cover,pressure_msl";
             string daily = "sunrise,sunset,uv_index_max";
@@ -57,6 +59,123 @@ namespace WeatherSphereV4
 
             // ✅ Update UI with weather data
             UpdateWeatherUI(currentWeather, dailyWeather, location);
+        }
+
+        private async Task LoadForecast7Days(string lat, string lon, string location)
+        {
+            string parameters = "weather_code,temperature_2m_mean";
+            string endpoint = $"?latitude={lat}&longitude={lon}&daily={parameters}";
+            string final = $"{endpoint}&timezone=auto";
+
+            string jsonString = await processForecast7Days.GetJsonString(siteUrl, final);
+
+            if (string.IsNullOrEmpty(jsonString))
+            {
+                MessageBox.Show("Failed to load forecast data.");
+                return;
+            }
+
+            // 🌥️ Deserialize forecast data
+            Forecast7Days forecastData = processForecast7Days.DeserializeForecast7Days(jsonString);
+            DailyForecast dailyForecast = forecastData.dailyForecast;
+
+            UpdateForecastUI(dailyForecast, location);
+
+        }
+
+        private async void UpdateForecastUI(DailyForecast dailyForecast, string location)
+        {
+            DateTime date1 = DateTime.Parse(dailyForecast.time[0]);
+            label1Day.Text = date1.ToString("dddd");
+            label1Date.Text = date1.ToString("MMM dd");
+
+            DateTime date2 = DateTime.Parse(dailyForecast.time[1]);
+            label2Day.Text = date2.ToString("dddd");
+            label2Date.Text = date2.ToString("MMM dd");
+
+            DateTime date3 = DateTime.Parse(dailyForecast.time[2]);
+            label3Day.Text = date3.ToString("dddd");
+            label3Date.Text = date3.ToString("MMM dd");
+
+            DateTime date4 = DateTime.Parse(dailyForecast.time[3]);
+            label4Day.Text = date4.ToString("dddd");
+            label4Date.Text = date4.ToString("MMM dd");
+
+            DateTime date5 = DateTime.Parse(dailyForecast.time[4]);
+            label5Day.Text = date5.ToString("dddd");
+            label5Date.Text = date5.ToString("MMM dd");
+
+            DateTime date6 = DateTime.Parse(dailyForecast.time[5]);
+            label6Day.Text = date6.ToString("dddd");
+            label6Date.Text = date6.ToString("MMM dd");
+
+            DateTime date7 = DateTime.Parse(dailyForecast.time[6]);
+            label7Day.Text = date7.ToString("dddd");
+            label7Date.Text = date7.ToString("MMM dd");
+
+            // 🌤️ Display temperature
+            label1Temperature.Text = $"{dailyForecast.temperature_2m_mean[0]}°C";
+            label2Temperature.Text = $"{dailyForecast.temperature_2m_mean[1]}°C";
+            label3Temperature.Text = $"{dailyForecast.temperature_2m_mean[2]}°C";
+            label4Temperature.Text = $"{dailyForecast.temperature_2m_mean[3]}°C";
+            label5Temperature.Text = $"{dailyForecast.temperature_2m_mean[4]}°C";
+            label6Temperature.Text = $"{dailyForecast.temperature_2m_mean[5]}°C";
+            label7Temperature.Text = $"{dailyForecast.temperature_2m_mean[6]}°C";
+
+            // 🌤️ Display weather description and GIF icon
+            bool isDay = date1.Hour >= 6 && date1.Hour <= 18;  // Daytime check
+            var condition1 = WeatherCodeDescription.GetCondition(dailyForecast.weather_code[0]);
+            var condition2 = WeatherCodeDescription.GetCondition(dailyForecast.weather_code[1]);
+            var condition3 = WeatherCodeDescription.GetCondition(dailyForecast.weather_code[2]);
+            var condition4 = WeatherCodeDescription.GetCondition(dailyForecast.weather_code[3]);
+            var condition5 = WeatherCodeDescription.GetCondition(dailyForecast.weather_code[4]);
+            var condition6 = WeatherCodeDescription.GetCondition(dailyForecast.weather_code[5]);
+            var condition7 = WeatherCodeDescription.GetCondition(dailyForecast.weather_code[6]);
+
+            label1Description.Text = condition1.Description;
+            label2Description.Text = condition2.Description;
+            label3Description.Text = condition3.Description;
+            label4Description.Text = condition4.Description;
+            label5Description.Text = condition5.Description;
+            label6Description.Text = condition6.Description;
+            label7Description.Text = condition7.Description;
+
+            // 🌟 Display GIF icon dynamically
+            string icon1 = isDay ? condition1.DayIcon : condition1.NightIcon;
+            string icon2 = isDay ? condition2.DayIcon : condition2.NightIcon;
+            string icon3 = isDay ? condition3.DayIcon : condition3.NightIcon;
+            string icon4 = isDay ? condition4.DayIcon : condition4.NightIcon;
+            string icon5 = isDay ? condition5.DayIcon : condition5.NightIcon;
+            string icon6 = isDay ? condition6.DayIcon : condition6.NightIcon;
+            string icon7 = isDay ? condition7.DayIcon : condition7.NightIcon;
+
+            DisplayWeatherIcon(picture1, icon1);
+            DisplayWeatherIcon(picture2, icon2);
+            DisplayWeatherIcon(picture3, icon3);
+            DisplayWeatherIcon(picture4, icon4);
+            DisplayWeatherIcon(picture5, icon5);
+            DisplayWeatherIcon(picture6, icon6);
+            DisplayWeatherIcon(picture7, icon7);
+        }
+
+        private void DisplayWeatherIcon(PictureBox pictureBox, string icon)
+        {
+            try
+            {
+                string iconPath = $@"{Application.StartupPath}\Icons\{icon}.gif";
+                if (System.IO.File.Exists(iconPath))
+                {
+                    pictureBox.ImageLocation = iconPath;
+                }
+                else
+                {
+                    pictureBox.ImageLocation = $@"{Application.StartupPath}\Icons\unknown.gif";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading icon: {ex.Message}");
+            }
         }
 
         private async void UpdateWeatherUI(CurrentWeather current, DailyWeather daily, string location)
@@ -84,32 +203,12 @@ namespace WeatherSphereV4
 
             // 🌟 Display GIF icon dynamically
             string icon = isDay ? condition.DayIcon : condition.NightIcon;
-            DisplayWeatherIcon(icon);
+            DisplayWeatherIcon(pictureWeatherIcon, icon);
 
             // 📍 Display location
-            string address = await processGeocoding.GetCompleteAddress(location);
+            string address = await processGeocoding.GetCompleteAddressFromSearchTerm(location);
             labelLocation.Text = address;
-        }
-
-        // 🌤️ Display weather icon GIF dynamically
-        private void DisplayWeatherIcon(string icon)
-        {
-            try
-            {
-                string iconPath = $@"{Application.StartupPath}\Icons\{icon}.gif";
-                if (System.IO.File.Exists(iconPath))
-                {
-                    pictureWeatherIcon.ImageLocation = iconPath;
-                }
-                else
-                {
-                    pictureWeatherIcon.ImageLocation = $@"{Application.StartupPath}\Icons\unknown.gif";
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading icon: {ex.Message}");
-            }
+            WeatherSharedData.Location = address;
         }
 
         // 🔍 Search button click event
@@ -127,13 +226,20 @@ namespace WeatherSphereV4
 
             if (!string.IsNullOrEmpty(lat) && !string.IsNullOrEmpty(lon))
             {
-                await LoadWeatherData(lat, lon, location);
+                // ✅ Store the searched location in shared data
+                WeatherSharedData.Latitude = lat;
+                WeatherSharedData.Longitude = lon;
+
+                // ✅ Load data using shared coordinates
+                await LoadCurrentWeatherData(lat, lon, location);
+                await LoadForecast7Days(lat, lon, location);
             }
             else
             {
                 MessageBox.Show("Location not found. Try being more specific.");
             }
         }
+
     }
 }
 
