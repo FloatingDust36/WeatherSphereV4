@@ -94,6 +94,7 @@
             buttonHomeSearch.Size = new Size(63, 47);
             buttonHomeSearch.TabIndex = 5;
             buttonHomeSearch.UseVisualStyleBackColor = false;
+            buttonHomeSearch.Click += buttonHomeSearch_Click;
             buttonHomeSearch.MouseEnter += buttonHomeSearch_MouseEnter;
             buttonHomeSearch.MouseLeave += buttonHomeSearch_MouseLeave;
             // 
@@ -208,6 +209,8 @@
             gMapControl.TabIndex = 0;
             gMapControl.Zoom = 0D;
             gMapControl.MouseClick += gMapControl_MouseClick;
+            gMapControl.MouseDown += gMapControl_MouseDown;
+            gMapControl.MouseUp += gMapControl_MouseUp;
             // 
             // MapsForm
             // 
@@ -225,6 +228,12 @@
             ((System.ComponentModel.ISupportInitialize)pictureWeatherIcon).EndInit();
             panelMap.ResumeLayout(false);
             ResumeLayout(false);
+        }
+
+        private void buttonHomeSearch_Click(object sender, EventArgs e)
+        {
+            // Call the async method
+            buttonHomeSearch_ClickAsync(sender, e).ConfigureAwait(false);
         }
 
         #endregion

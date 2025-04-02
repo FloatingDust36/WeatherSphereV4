@@ -24,6 +24,11 @@ namespace WeatherSphereV4
         string lon = WeatherSharedData.Longitude;
         string location = WeatherSharedData.Location;
 
+        private Point mouseDownPosition;
+        private double lastZoomLevel;
+
+        private bool isDragging = false;
+
         public MapsForm()
         {
             InitializeComponent();
@@ -43,10 +48,46 @@ namespace WeatherSphereV4
             LoadCurrentWeatherData(lat, lon, location);
         }
 
+        private void gMapControl_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isDragging = true;
+                mouseDownPosition = e.Location; // Store the initial position
+            }
+        }
+
+        private void gMapControl_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isDragging = false;
+            }
+        }
+
+        private void gMapControl_MouseClick(object sender, MouseEventArgs e)
+        {
+            // Check if the mouse moved significantly before releasing (indicating a drag)
+            if (Math.Abs(e.X - mouseDownPosition.X) > 5 || Math.Abs(e.Y - mouseDownPosition.Y) > 5)
+            {
+                return; // Ignore click, as it's actually a drag
+            }
+
+            // Store the current zoom level before updating the position
+            lastZoomLevel = gMapControl.Zoom;
+
+            lat = gMapControl.FromLocalToLatLng(e.X, e.Y).Lat.ToString();
+            lon = gMapControl.FromLocalToLatLng(e.X, e.Y).Lng.ToString();
+
+            GoToCoordinate();
+        }
+
         private async void GoToCoordinate()
         {
             gMapControl.Position = new PointLatLng(Convert.ToDouble(lat), Convert.ToDouble(lon));
-            gMapControl.Zoom = 12;
+
+            // Restore the previous zoom level instead of resetting
+            gMapControl.Zoom = lastZoomLevel;
             gMapControl.Update();
 
             AddMarker();
@@ -70,14 +111,6 @@ namespace WeatherSphereV4
 
             markersOverlay.Markers.Add(marker);
             gMapControl.Overlays.Add(markersOverlay);
-        }
-
-        private void gMapControl_MouseClick(object sender, MouseEventArgs e)
-        {
-            lat = gMapControl.FromLocalToLatLng(e.X, e.Y).Lat.ToString();
-            lon = gMapControl.FromLocalToLatLng(e.X, e.Y).Lng.ToString();
-
-            GoToCoordinate();
         }
 
         private async Task LoadCurrentWeatherData(string lat, string lon, string location)
@@ -154,6 +187,35 @@ namespace WeatherSphereV4
         private void buttonHomeSearch_MouseLeave(object sender, EventArgs e)
         {
             buttonHomeSearch.IconSize = 35;
+        }
+
+        private async Task buttonHomeSearch_ClickAsync(object sender, EventArgs e)
+        {
+            string location = textboxHomeSearch.Text;
+
+            if (string.IsNullOrEmpty(location))
+            {
+                MessageBox.Show("Please enter a location.");
+                return;
+            }
+
+            var (lat, lon) = await processGeocoding.GetCoordinates(location);
+
+            if (!string.IsNullOrEmpty(lat) && !string.IsNullOrEmpty(lon))
+            {
+                // 📍 Display location
+                string address = await processGeocoding.GetCompleteAddressFromSearchTerm(location);
+
+                gMapControl.Position = new PointLatLng(Convert.ToDouble(lat), Convert.ToDouble(lon));
+                gMapControl.Zoom = 12;
+                gMapControl.Update();
+                AddMarker();
+                await LoadCurrentWeatherData(lat, lon, address);
+            }
+            else
+            {
+                MessageBox.Show("Location not found. Try being more specific.");
+            }
         }
     }
 
