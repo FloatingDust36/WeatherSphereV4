@@ -39,10 +39,12 @@
             labelFeelsLike = new Label();
             labelTemperature = new Label();
             pictureWeatherIcon = new PictureBox();
+            panelMap = new Panel();
             gMapControl = new GMap.NET.WindowsForms.GMapControl();
             panelMain.SuspendLayout();
             panelSearch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureWeatherIcon).BeginInit();
+            panelMap.SuspendLayout();
             SuspendLayout();
             // 
             // panelMain
@@ -92,7 +94,6 @@
             buttonHomeSearch.Size = new Size(63, 47);
             buttonHomeSearch.TabIndex = 5;
             buttonHomeSearch.UseVisualStyleBackColor = false;
-            buttonHomeSearch.Click += buttonHomeSearch_Click;
             buttonHomeSearch.MouseEnter += buttonHomeSearch_MouseEnter;
             buttonHomeSearch.MouseLeave += buttonHomeSearch_MouseLeave;
             // 
@@ -171,6 +172,15 @@
             pictureWeatherIcon.TabIndex = 42;
             pictureWeatherIcon.TabStop = false;
             // 
+            // panelMap
+            // 
+            panelMap.Controls.Add(gMapControl);
+            panelMap.Dock = DockStyle.Fill;
+            panelMap.Location = new Point(335, 0);
+            panelMap.Name = "panelMap";
+            panelMap.Size = new Size(847, 744);
+            panelMap.TabIndex = 5;
+            // 
             // gMapControl
             // 
             gMapControl.Bearing = 0F;
@@ -180,10 +190,10 @@
             gMapControl.GrayScaleMode = false;
             gMapControl.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
             gMapControl.LevelsKeepInMemory = 5;
-            gMapControl.Location = new Point(335, 0);
+            gMapControl.Location = new Point(0, 0);
             gMapControl.MarkersEnabled = true;
-            gMapControl.MaxZoom = 2;
-            gMapControl.MinZoom = 2;
+            gMapControl.MaxZoom = 20;
+            gMapControl.MinZoom = 1;
             gMapControl.MouseWheelZoomEnabled = true;
             gMapControl.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
             gMapControl.Name = "gMapControl";
@@ -195,15 +205,16 @@
             gMapControl.SelectedAreaFillColor = Color.FromArgb(33, 65, 105, 225);
             gMapControl.ShowTileGridLines = false;
             gMapControl.Size = new Size(847, 744);
-            gMapControl.TabIndex = 5;
+            gMapControl.TabIndex = 0;
             gMapControl.Zoom = 0D;
+            gMapControl.MouseClick += gMapControl_MouseClick;
             // 
             // MapsForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(50, 50, 79);
-            Controls.Add(gMapControl);
+            Controls.Add(panelMap);
             Controls.Add(panelMain);
             Name = "MapsForm";
             Size = new Size(1182, 744);
@@ -212,6 +223,7 @@
             panelSearch.ResumeLayout(false);
             panelSearch.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureWeatherIcon).EndInit();
+            panelMap.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -226,6 +238,7 @@
         private Label labelFeelsLike;
         private Label labelTemperature;
         private PictureBox pictureWeatherIcon;
+        private Panel panelMap;
         private GMap.NET.WindowsForms.GMapControl gMapControl;
     }
 }

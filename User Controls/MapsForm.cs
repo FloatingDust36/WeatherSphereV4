@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using WeatherSphereV4.Processes;
 using WeatherSphereV4.Models;
 using GMap.NET.WindowsForms;
+using GMap.NET;
 
 namespace WeatherSphereV4
 {
@@ -19,8 +20,8 @@ namespace WeatherSphereV4
         private ProcessCurrentWeatherData processCurrentWeatherData;
         private ProcessGeocoding processGeocoding;
 
-        string latitude = WeatherSharedData.Latitude;
-        string longitude = WeatherSharedData.Longitude;
+        string lat = WeatherSharedData.Latitude;
+        string lon = WeatherSharedData.Longitude;
         string location = WeatherSharedData.Location;
 
         public MapsForm()
@@ -29,47 +30,60 @@ namespace WeatherSphereV4
             processCurrentWeatherData = new ProcessCurrentWeatherData();
             processGeocoding = new ProcessGeocoding();
 
-            // Configure GMapControl
-            gMapControl.MapProvider = GMap.NET.MapProviders.GoogleMapProvider.Instance;
-            GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerOnly;
-            gMapControl.Zoom = 10;  // Set initial zoom level
-            gMapControl.Position = new GMap.NET.PointLatLng(double.Parse(latitude), double.Parse(longitude));  // Set initial position (New York)
-            gMapControl.MouseClick += GMapControl_MouseClick;
+            gMapControl.MapProvider = GMap.NET.MapProviders.GMapProviders.GoogleMap;
+            gMapControl.Dock = DockStyle.Fill;
+            GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
+            gMapControl.ShowCenter = false;
+            // allows dragging the map with the left mouse button
+            gMapControl.DragButton = MouseButtons.Left;
+
+            gMapControl.Position = new PointLatLng(Convert.ToDouble(lat), Convert.ToDouble(lon));
+            gMapControl.Zoom = 12;
+            AddMarker();
+            LoadCurrentWeatherData(lat, lon, location);
         }
 
-        private void buttonHomeSearch_MouseEnter(object sender, EventArgs e)
+        private async void GoToCoordinate()
         {
-            buttonHomeSearch.IconSize = 45;
+            gMapControl.Position = new PointLatLng(Convert.ToDouble(lat), Convert.ToDouble(lon));
+            gMapControl.Zoom = 12;
+            gMapControl.Update();
+
+            AddMarker();
+
+            // Reverse geocode asynchronously
+            location = await processGeocoding.GetCompleteAddressFromLatLon(lat, lon);
+            await LoadCurrentWeatherData(lat, lon, location);
         }
 
-        private void buttonHomeSearch_MouseLeave(object sender, EventArgs e)
+        private void AddMarker()
         {
-            buttonHomeSearch.IconSize = 35;
+            gMapControl.Overlays.Clear();
+
+            //Layer count is just a variable to add new OverLays with different names
+            var markersOverlay = new GMap.NET.WindowsForms.GMapOverlay("marker1");
+
+            //Marker far away in Quebec, Canada just to check my point in discussion    
+            var marker = new GMap.NET.WindowsForms.Markers.GMarkerGoogle(
+              new PointLatLng(Convert.ToDouble(lat), Convert.ToDouble(lon)),
+              GMap.NET.WindowsForms.Markers.GMarkerGoogleType.red_small);
+
+            markersOverlay.Markers.Add(marker);
+            gMapControl.Overlays.Add(markersOverlay);
         }
 
-        private async void GMapControl_MouseClick(object sender, MouseEventArgs e)
+        private void gMapControl_MouseClick(object sender, MouseEventArgs e)
         {
-            // Get the clicked latitude and longitude
-            double lat = gMapControl.FromLocalToLatLng(e.X, e.Y).Lat;
-            double lon = gMapControl.FromLocalToLatLng(e.X, e.Y).Lng;
+            lat = gMapControl.FromLocalToLatLng(e.X, e.Y).Lat.ToString();
+            lon = gMapControl.FromLocalToLatLng(e.X, e.Y).Lng.ToString();
 
-            // Use the reverse geocoding method to get the address
-            string location = await processGeocoding.GetCompleteAddressFromLatLon(lat.ToString(), lon.ToString());
-
-            // Store the coordinates and location
-            WeatherSharedData.Latitude = lat.ToString();
-            WeatherSharedData.Longitude = lon.ToString();
-            WeatherSharedData.Location = location;
-
-            // Load the weather data for the clicked location
-            await LoadCurrentWeatherData(lat.ToString(), lon.ToString(), location);
+            GoToCoordinate();
         }
 
         private async Task LoadCurrentWeatherData(string lat, string lon, string location)
         {
-            string current = "weather_code,temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,cloud_cover,pressure_msl";
-            string daily = "sunrise,sunset,uv_index_max";
-            string endpoint = $"?latitude={lat}&longitude={lon}&daily={daily}&current={current}";
+            string current = "weather_code,temperature_2m,apparent_temperature";
+            string endpoint = $"?latitude={lat}&longitude={lon}&current={current}";
             string final = $"{endpoint}&timezone=auto&forecast_days=1";
 
             string jsonString = await processCurrentWeatherData.GetJsonString(siteUrl, final);
@@ -80,12 +94,12 @@ namespace WeatherSphereV4
                 return;
             }
 
-            // Deserialize weather data and update UI
+            // 🌥️ Deserialize weather data
             CurrentWeatherData weatherData = processCurrentWeatherData.DeserializeCurrentWeatherData(jsonString);
             CurrentWeather currentWeather = weatherData.currentWeather;
             DailyWeather dailyWeather = weatherData.dailyWeather;
 
-            // Update UI with weather data
+            // ✅ Update UI with weather data
             UpdateWeatherUI(currentWeather, dailyWeather, location);
         }
 
@@ -94,33 +108,36 @@ namespace WeatherSphereV4
             labelTemperature.Text = $"{current.temperature_2m}°C";
             labelFeelsLike.Text = $"Feels like {current.apparent_temperature}°C";
 
+            // 🕰️ Display the current date
             DateTime date = DateTime.Parse(current.time);
             labelCurrentDate.Text = date.ToString("dddd, MMMM dd, yyyy");
 
+            // 🌤️ Display weather description and GIF icon
             bool isDay = date.Hour >= 6 && date.Hour <= 18;  // Daytime check
             var condition = WeatherCodeDescription.GetCondition(current.weather_code);
 
             labelDescription.Text = condition.Description;
 
+            // 🌟 Display GIF icon dynamically
             string icon = isDay ? condition.DayIcon : condition.NightIcon;
-            DisplayWeatherIcon(icon);
+            DisplayWeatherIcon(pictureWeatherIcon, icon);
 
-            // Display location
+            // 📍 Display location
             labelLocation.Text = location;
         }
 
-        private void DisplayWeatherIcon(string icon)
+        private void DisplayWeatherIcon(PictureBox pictureBox, string icon)
         {
             try
             {
                 string iconPath = $@"{Application.StartupPath}\Icons\{icon}.gif";
                 if (System.IO.File.Exists(iconPath))
                 {
-                    pictureWeatherIcon.ImageLocation = iconPath;
+                    pictureBox.ImageLocation = iconPath;
                 }
                 else
                 {
-                    pictureWeatherIcon.ImageLocation = $@"{Application.StartupPath}\Icons\unknown.gif";
+                    pictureBox.ImageLocation = $@"{Application.StartupPath}\Icons\unknown.gif";
                 }
             }
             catch (Exception ex)
@@ -129,32 +146,14 @@ namespace WeatherSphereV4
             }
         }
 
-        // 🔍 Search button click event to search by location
-        private async void buttonHomeSearch_Click(object sender, EventArgs e)
+        private void buttonHomeSearch_MouseEnter(object sender, EventArgs e)
         {
-            string location = textboxHomeSearch.Text;
+            buttonHomeSearch.IconSize = 45;
+        }
 
-            if (string.IsNullOrEmpty(location))
-            {
-                MessageBox.Show("Please enter a location.");
-                return;
-            }
-
-            // Use your geocoding method to get coordinates
-            var (lat, lon) = await processGeocoding.GetCoordinates(location);
-
-            if (!string.IsNullOrEmpty(lat) && !string.IsNullOrEmpty(lon))
-            {
-                // Move map to searched location
-                gMapControl.Position = new GMap.NET.PointLatLng(double.Parse(lat), double.Parse(lon));
-
-                // Load weather data for searched location
-                await LoadCurrentWeatherData(lat, lon, location);
-            }
-            else
-            {
-                MessageBox.Show("Location not found. Try being more specific.");
-            }
+        private void buttonHomeSearch_MouseLeave(object sender, EventArgs e)
+        {
+            buttonHomeSearch.IconSize = 35;
         }
     }
 

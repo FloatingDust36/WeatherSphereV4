@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WeatherSphereV4.Models;
 using WeatherSphereV4.Processes;
+using System.Windows.Data;
 
 namespace WeatherSphereV4
 {
@@ -37,7 +38,7 @@ namespace WeatherSphereV4
             buttonHomeSearch.IconSize = 35;
         }
 
-        private async Task LoadCurrentWeatherData(string lat, string lon, string location)
+        private async Task LoadCurrentWeatherData(string lat, string lon)
         {
             string current = "weather_code,temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,cloud_cover,pressure_msl";
             string daily = "sunrise,sunset,uv_index_max";
@@ -58,10 +59,10 @@ namespace WeatherSphereV4
             DailyWeather dailyWeather = weatherData.dailyWeather;
 
             // ✅ Update UI with weather data
-            UpdateWeatherUI(currentWeather, dailyWeather, location);
+            UpdateWeatherUI(currentWeather, dailyWeather);
         }
 
-        private async Task LoadForecast7Days(string lat, string lon, string location)
+        private async Task LoadForecast7Days(string lat, string lon)
         {
             string parameters = "weather_code,temperature_2m_mean";
             string endpoint = $"?latitude={lat}&longitude={lon}&daily={parameters}";
@@ -79,11 +80,11 @@ namespace WeatherSphereV4
             Forecast7Days forecastData = processForecast7Days.DeserializeForecast7Days(jsonString);
             DailyForecast dailyForecast = forecastData.dailyForecast;
 
-            UpdateForecastUI(dailyForecast, location);
+            UpdateForecastUI(dailyForecast);
 
         }
 
-        private async void UpdateForecastUI(DailyForecast dailyForecast, string location)
+        private async void UpdateForecastUI(DailyForecast dailyForecast)
         {
             DateTime date1 = DateTime.Parse(dailyForecast.time[0]);
             label1Day.Text = date1.ToString("dddd");
@@ -158,6 +159,36 @@ namespace WeatherSphereV4
             DisplayWeatherIcon(picture7, icon7);
         }
 
+        private async void UpdateWeatherUI(CurrentWeather current, DailyWeather daily)
+        {
+            labelTemperature.Text = $"{current.temperature_2m}°C";
+            labelFeelsLike.Text = $"Feels like {current.apparent_temperature}°C";
+            labelHumidity.Text = $"{current.relative_humidity_2m}%";
+            labelWindSpeed.Text = $"{current.wind_speed_10m} m/s";
+            labelCloudCover.Text = $"{current.cloud_cover}%";
+            labelPressure.Text = $"{current.pressure_msl} hPa";
+
+            labelSunrise.Text = daily.sunrise[0].Substring(11, 5) + " AM";
+            labelSunset.Text = daily.sunset[0].Substring(11, 5) + " PM";
+            labelUVIndex.Text = daily.uv_index_max[0].ToString();
+
+            // 🕰️ Display the current date
+            DateTime date = DateTime.Parse(current.time);
+            labelCurrentDate.Text = date.ToString("dddd, MMMM dd, yyyy");
+
+            // 🌤️ Display weather description and GIF icon
+            DateTime sunrise = DateTime.Parse(daily.sunrise[0]);
+            DateTime sunset = DateTime.Parse(daily.sunset[0]);
+            bool isDay = date >= sunrise && date <= sunset;  // Daytime check based on sunrise and sunset times
+            var condition = WeatherCodeDescription.GetCondition(current.weather_code);
+
+            labelDescription.Text = condition.Description;
+
+            // 🌟 Display GIF icon dynamically
+            string icon = isDay ? condition.DayIcon : condition.NightIcon;
+            DisplayWeatherIcon(pictureWeatherIcon, icon);
+        }
+
         private void DisplayWeatherIcon(PictureBox pictureBox, string icon)
         {
             try
@@ -178,39 +209,6 @@ namespace WeatherSphereV4
             }
         }
 
-        private async void UpdateWeatherUI(CurrentWeather current, DailyWeather daily, string location)
-        {
-            labelTemperature.Text = $"{current.temperature_2m}°C";
-            labelFeelsLike.Text = $"Feels like {current.apparent_temperature}°C";
-            labelHumidity.Text = $"{current.relative_humidity_2m}%";
-            labelWindSpeed.Text = $"{current.wind_speed_10m} m/s";
-            labelCloudCover.Text = $"{current.cloud_cover}%";
-            labelPressure.Text = $"{current.pressure_msl} hPa";
-
-            labelSunrise.Text = daily.sunrise[0].Substring(11, 5) + " AM";
-            labelSunset.Text = daily.sunset[0].Substring(11, 5) + " PM";
-            labelUVIndex.Text = daily.uv_index_max[0].ToString();
-
-            // 🕰️ Display the current date
-            DateTime date = DateTime.Parse(current.time);
-            labelCurrentDate.Text = date.ToString("dddd, MMMM dd, yyyy");
-
-            // 🌤️ Display weather description and GIF icon
-            bool isDay = date.Hour >= 6 && date.Hour <= 18;  // Daytime check
-            var condition = WeatherCodeDescription.GetCondition(current.weather_code);
-
-            labelDescription.Text = condition.Description;
-
-            // 🌟 Display GIF icon dynamically
-            string icon = isDay ? condition.DayIcon : condition.NightIcon;
-            DisplayWeatherIcon(pictureWeatherIcon, icon);
-
-            // 📍 Display location
-            string address = await processGeocoding.GetCompleteAddressFromSearchTerm(location);
-            labelLocation.Text = address;
-            WeatherSharedData.Location = address;
-        }
-
         // 🔍 Search button click event
         private async void buttonHomeSearch_Click(object sender, EventArgs e)
         {
@@ -229,10 +227,15 @@ namespace WeatherSphereV4
                 // ✅ Store the searched location in shared data
                 WeatherSharedData.Latitude = lat;
                 WeatherSharedData.Longitude = lon;
+                
+                // 📍 Display location
+                string address = await processGeocoding.GetCompleteAddressFromSearchTerm(location);
+                labelLocation.Text = address;
+                WeatherSharedData.Location = address;
 
                 // ✅ Load data using shared coordinates
-                await LoadCurrentWeatherData(lat, lon, location);
-                await LoadForecast7Days(lat, lon, location);
+                await LoadCurrentWeatherData(lat, lon);
+                await LoadForecast7Days(lat, lon);
             }
             else
             {
