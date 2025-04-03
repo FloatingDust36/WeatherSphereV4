@@ -16,16 +16,15 @@ namespace WeatherSphereV4
     public partial class HomeForm : UserControl
     {
         private string siteUrl = "https://api.open-meteo.com/v1/forecast";
-        private ProcessCurrentWeatherData processCurrentWeatherData;
+        private ProcessWeatherData processWeatherData;
         private ProcessGeocoding processGeocoding;
-        private ProcessForecast7Days processForecast7Days;
+        bool isDay;
 
         public HomeForm()
         {
             InitializeComponent();
-            processCurrentWeatherData = new ProcessCurrentWeatherData();
+            processWeatherData = new ProcessWeatherData();
             processGeocoding = new ProcessGeocoding();
-            processForecast7Days = new ProcessForecast7Days();
         }
 
         private void buttonHomeSearch_MouseEnter(object sender, EventArgs e)
@@ -45,16 +44,16 @@ namespace WeatherSphereV4
             string endpoint = $"?latitude={lat}&longitude={lon}&daily={daily}&current={current}";
             string final = $"{endpoint}&timezone=auto&forecast_days=1";
 
-            string jsonString = await processCurrentWeatherData.GetJsonString(siteUrl, final);
+            string jsonString = await processWeatherData.GetJsonString(siteUrl, final);
 
-            if(string.IsNullOrEmpty(jsonString))
+            if (string.IsNullOrEmpty(jsonString))
             {
                 MessageBox.Show("Failed to load weather data.");
                 return;
             }
 
             // 🌥️ Deserialize weather data
-            CurrentWeatherData weatherData = processCurrentWeatherData.DeserializeCurrentWeatherData(jsonString);
+            CurrentWeatherData weatherData = processWeatherData.DeserializeCurrentWeatherData(jsonString);
             CurrentWeather currentWeather = weatherData.currentWeather;
             DailyWeather dailyWeather = weatherData.dailyWeather;
 
@@ -64,11 +63,11 @@ namespace WeatherSphereV4
 
         private async Task LoadForecast7Days(string lat, string lon)
         {
-            string parameters = "weather_code,temperature_2m_mean";
+            string parameters = "weather_code,temperature_2m_mean,sunrise,sunset";
             string endpoint = $"?latitude={lat}&longitude={lon}&daily={parameters}";
             string final = $"{endpoint}&timezone=auto";
 
-            string jsonString = await processForecast7Days.GetJsonString(siteUrl, final);
+            string jsonString = await processWeatherData.GetJsonString(siteUrl, final);
 
             if (string.IsNullOrEmpty(jsonString))
             {
@@ -77,11 +76,10 @@ namespace WeatherSphereV4
             }
 
             // 🌥️ Deserialize forecast data
-            Forecast7Days forecastData = processForecast7Days.DeserializeForecast7Days(jsonString);
+            Forecast7Days forecastData = processWeatherData.DeserializeForecast7Days(jsonString);
             DailyForecast dailyForecast = forecastData.dailyForecast;
 
             UpdateForecastUI(dailyForecast);
-
         }
 
         private async void UpdateForecastUI(DailyForecast dailyForecast)
@@ -123,8 +121,6 @@ namespace WeatherSphereV4
             label6Temperature.Text = $"{dailyForecast.temperature_2m_mean[5]}°C";
             label7Temperature.Text = $"{dailyForecast.temperature_2m_mean[6]}°C";
 
-            // 🌤️ Display weather description and GIF icon
-            bool isDay = date1.Hour >= 6 && date1.Hour <= 18;  // Daytime check
             var condition1 = WeatherCodeDescription.GetCondition(dailyForecast.weather_code[0]);
             var condition2 = WeatherCodeDescription.GetCondition(dailyForecast.weather_code[1]);
             var condition3 = WeatherCodeDescription.GetCondition(dailyForecast.weather_code[2]);
@@ -179,7 +175,7 @@ namespace WeatherSphereV4
             // 🌤️ Display weather description and GIF icon
             DateTime sunrise = DateTime.Parse(daily.sunrise[0]);
             DateTime sunset = DateTime.Parse(daily.sunset[0]);
-            bool isDay = date >= sunrise && date <= sunset;  // Daytime check based on sunrise and sunset times
+            isDay = date >= sunrise && date <= sunset;  // Daytime check based on sunrise and sunset times
             var condition = WeatherCodeDescription.GetCondition(current.weather_code);
 
             labelDescription.Text = condition.Description;
@@ -227,7 +223,7 @@ namespace WeatherSphereV4
                 // ✅ Store the searched location in shared data
                 WeatherSharedData.Latitude = lat;
                 WeatherSharedData.Longitude = lon;
-                
+
                 // 📍 Display location
                 string address = await processGeocoding.GetCompleteAddressFromSearchTerm(location);
                 labelLocation.Text = address;

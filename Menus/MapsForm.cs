@@ -17,7 +17,7 @@ namespace WeatherSphereV4
     public partial class MapsForm : UserControl
     {
         private string siteUrl = "https://api.open-meteo.com/v1/forecast";
-        private ProcessCurrentWeatherData processCurrentWeatherData;
+        private ProcessWeatherData processWeatherData;
         private ProcessGeocoding processGeocoding;
 
         string lat = WeatherSharedData.Latitude;
@@ -32,7 +32,7 @@ namespace WeatherSphereV4
         public MapsForm()
         {
             InitializeComponent();
-            processCurrentWeatherData = new ProcessCurrentWeatherData();
+            processWeatherData = new ProcessWeatherData();
             processGeocoding = new ProcessGeocoding();
 
             gMapControl.MapProvider = GMap.NET.MapProviders.GMapProviders.GoogleMap;
@@ -119,7 +119,7 @@ namespace WeatherSphereV4
             string endpoint = $"?latitude={lat}&longitude={lon}&current={current}";
             string final = $"{endpoint}&timezone=auto&forecast_days=1";
 
-            string jsonString = await processCurrentWeatherData.GetJsonString(siteUrl, final);
+            string jsonString = await processWeatherData.GetJsonString(siteUrl, final);
 
             if (string.IsNullOrEmpty(jsonString))
             {
@@ -128,7 +128,7 @@ namespace WeatherSphereV4
             }
 
             // 🌥️ Deserialize weather data
-            CurrentWeatherData weatherData = processCurrentWeatherData.DeserializeCurrentWeatherData(jsonString);
+            CurrentWeatherData weatherData = processWeatherData.DeserializeCurrentWeatherData(jsonString);
             CurrentWeather currentWeather = weatherData.currentWeather;
             DailyWeather dailyWeather = weatherData.dailyWeather;
 

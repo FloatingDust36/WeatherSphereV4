@@ -28,34 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            flowLayoutPanel1 = new FlowLayoutPanel();
-            flowLayoutPanel2 = new FlowLayoutPanel();
+            panelDaily = new FlowLayoutPanel();
+            panelHourly = new FlowLayoutPanel();
             SuspendLayout();
             // 
-            // flowLayoutPanel1
+            // panelDaily
             // 
-            flowLayoutPanel1.Dock = DockStyle.Top;
-            flowLayoutPanel1.Location = new Point(15, 15);
-            flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(1152, 108);
-            flowLayoutPanel1.TabIndex = 0;
+            panelDaily.Dock = DockStyle.Top;
+            panelDaily.Location = new Point(15, 15);
+            panelDaily.Name = "panelDaily";
+            panelDaily.Size = new Size(1152, 152);
+            panelDaily.TabIndex = 0;
             // 
-            // flowLayoutPanel2
+            // panelHourly
             // 
-            flowLayoutPanel2.AutoScroll = true;
-            flowLayoutPanel2.Dock = DockStyle.Fill;
-            flowLayoutPanel2.Location = new Point(15, 123);
-            flowLayoutPanel2.Name = "flowLayoutPanel2";
-            flowLayoutPanel2.Size = new Size(1152, 606);
-            flowLayoutPanel2.TabIndex = 1;
+            panelHourly.Dock = DockStyle.Fill;
+            panelHourly.FlowDirection = FlowDirection.TopDown;
+            panelHourly.Location = new Point(15, 167);
+            panelHourly.Name = "panelHourly";
+            panelHourly.Size = new Size(1152, 562);
+            panelHourly.TabIndex = 1;
             // 
             // HourlyForecastForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(50, 50, 79);
-            Controls.Add(flowLayoutPanel2);
-            Controls.Add(flowLayoutPanel1);
+            Controls.Add(panelHourly);
+            Controls.Add(panelDaily);
             Name = "HourlyForecastForm";
             Padding = new Padding(15);
             Size = new Size(1182, 744);
@@ -64,7 +64,7 @@
 
         #endregion
 
-        private FlowLayoutPanel flowLayoutPanel1;
-        private FlowLayoutPanel flowLayoutPanel2;
+        private FlowLayoutPanel panelDaily;
+        private FlowLayoutPanel panelHourly;
     }
 }

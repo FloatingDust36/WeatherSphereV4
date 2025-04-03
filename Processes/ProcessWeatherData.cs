@@ -9,26 +9,37 @@ using System.Net.Http;
 
 namespace WeatherSphereV4.Processes
 {
-    public class ProcessCurrentWeatherData
+    public class ProcessWeatherData
     {
         public CurrentWeatherData DeserializeCurrentWeatherData(string json)
         {
             return JsonConvert.DeserializeObject<CurrentWeatherData>(json);
         }
+
+        public Forecast7Days DeserializeForecast7Days(string json)
+        {
+            return JsonConvert.DeserializeObject<Forecast7Days>(json);
+        }
+
+        public HourlyForecastData DeserializeHourlyForecast(string json)
+        {
+            return JsonConvert.DeserializeObject<HourlyForecastData>(json);
+        }
+
         public async Task<string> GetJsonString(string siteUrl, string final)
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(siteUrl);
-                
-                HttpResponseMessage response = await client.GetAsync(final);
+                string fullUrl = siteUrl + final;  // ✅ Ensure full URL is used
+                HttpResponseMessage response = await client.GetAsync(fullUrl);
 
                 if (response.IsSuccessStatusCode)
                 {
                     return await response.Content.ReadAsStringAsync();
                 }
 
-                return "Could not retrieve JSON Object";
+                string errorMessage = await response.Content.ReadAsStringAsync();
+                return $"Error: {response.StatusCode} - {errorMessage}";
             }
         }
     }

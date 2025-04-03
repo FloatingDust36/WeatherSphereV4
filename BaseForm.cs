@@ -19,8 +19,6 @@ namespace WeatherSphereV4
         public BaseForm()
         {
             InitializeComponent();
-            LoadUserControl("Home", new HomeForm());
-            //buttonHome.PerformClick();
 
             this.Padding = new Padding(borderSize);//Border size
             this.BackColor = Color.FromArgb(25, 25, 50);//Border color
@@ -31,6 +29,12 @@ namespace WeatherSphereV4
             panelMenu.Controls.Add(leftBorderButton);
             pictureLogo.BringToFront();
             pictureLogo.BackColor = Color.Transparent;
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            buttonHome.PerformClick();
         }
 
         #region Menu Movement and Design
@@ -314,10 +318,14 @@ namespace WeatherSphereV4
         }
 
         private Dictionary<string, UserControl> userControls = new Dictionary<string, UserControl>();
+        private UserControl currentControl = null; // Keep track of active control
 
         private void LoadUserControl(string key, UserControl control)
         {
-            //panelContents.Controls.Clear(); // Remove existing content
+            if (currentControl != null)
+            {
+                currentControl.Hide(); // Hide previous control instead of clearing
+            }
 
             if (!userControls.ContainsKey(key))
             {
@@ -325,12 +333,10 @@ namespace WeatherSphereV4
                 userControls[key] = control;
                 panelContents.Controls.Add(control);
             }
-            else
-            {
-                panelContents.Controls.Add(userControls[key]);
-            }
 
-            userControls[key].BringToFront();
+            currentControl = userControls[key]; // Update active control
+            currentControl.Show(); // Ensure the control is visible
+            currentControl.BringToFront();
         }
 
         private void buttonNightDayToggle_MouseHover(object sender, EventArgs e)
