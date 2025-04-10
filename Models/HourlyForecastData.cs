@@ -19,6 +19,7 @@ namespace WeatherSphereV4.Models
     public class Hourly
     {
         public List<string> time { get; set; }
+        public List<int> is_day { get; set; }
         public List<double> apparent_temperature { get; set; }
         public List<int> weather_code { get; set; }
         public List<int> relative_humidity_2m { get; set; }

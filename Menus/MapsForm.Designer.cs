@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MapsForm));
             panelMain = new Panel();
             panelSearch = new WeatherSphereV4.CustomControls.CustomPanel();
             buttonHomeSearch = new FontAwesome.Sharp.IconButton();
@@ -74,7 +73,7 @@
             panelSearch.ColorOrientation = System.Drawing.Drawing2D.LinearGradientMode.Horizontal;
             panelSearch.Controls.Add(buttonHomeSearch);
             panelSearch.Controls.Add(textboxHomeSearch);
-            panelSearch.Location = new Point(35, 91);
+            panelSearch.Location = new Point(31, 90);
             panelSearch.Name = "panelSearch";
             panelSearch.Size = new Size(273, 53);
             panelSearch.TabIndex = 48;
@@ -113,7 +112,7 @@
             labelLocation.AutoSize = true;
             labelLocation.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelLocation.ForeColor = Color.Gainsboro;
-            labelLocation.Location = new Point(21, 628);
+            labelLocation.Location = new Point(17, 627);
             labelLocation.Name = "labelLocation";
             labelLocation.Size = new Size(242, 21);
             labelLocation.TabIndex = 47;
@@ -124,7 +123,7 @@
             labelCurrentDate.AutoSize = true;
             labelCurrentDate.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelCurrentDate.ForeColor = Color.Gainsboro;
-            labelCurrentDate.Location = new Point(22, 585);
+            labelCurrentDate.Location = new Point(18, 584);
             labelCurrentDate.Name = "labelCurrentDate";
             labelCurrentDate.Size = new Size(210, 28);
             labelCurrentDate.TabIndex = 46;
@@ -135,7 +134,7 @@
             labelDescription.AutoSize = true;
             labelDescription.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelDescription.ForeColor = Color.Gainsboro;
-            labelDescription.Location = new Point(22, 543);
+            labelDescription.Location = new Point(18, 542);
             labelDescription.Name = "labelDescription";
             labelDescription.Size = new Size(291, 28);
             labelDescription.TabIndex = 45;
@@ -146,7 +145,7 @@
             labelFeelsLike.AutoSize = true;
             labelFeelsLike.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelFeelsLike.ForeColor = Color.Gainsboro;
-            labelFeelsLike.Location = new Point(22, 500);
+            labelFeelsLike.Location = new Point(18, 499);
             labelFeelsLike.Name = "labelFeelsLike";
             labelFeelsLike.Size = new Size(169, 32);
             labelFeelsLike.TabIndex = 44;
@@ -157,7 +156,7 @@
             labelTemperature.AutoSize = true;
             labelTemperature.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelTemperature.ForeColor = Color.Gainsboro;
-            labelTemperature.Location = new Point(111, 394);
+            labelTemperature.Location = new Point(107, 393);
             labelTemperature.Name = "labelTemperature";
             labelTemperature.Size = new Size(123, 65);
             labelTemperature.TabIndex = 43;
@@ -165,8 +164,7 @@
             // 
             // pictureWeatherIcon
             // 
-            pictureWeatherIcon.Image = (Image)resources.GetObject("pictureWeatherIcon.Image");
-            pictureWeatherIcon.Location = new Point(35, 243);
+            pictureWeatherIcon.Location = new Point(31, 242);
             pictureWeatherIcon.Name = "pictureWeatherIcon";
             pictureWeatherIcon.Size = new Size(273, 185);
             pictureWeatherIcon.SizeMode = PictureBoxSizeMode.Zoom;

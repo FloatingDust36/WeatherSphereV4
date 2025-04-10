@@ -182,11 +182,11 @@
             labelUVIndex.AutoSize = true;
             labelUVIndex.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelUVIndex.ForeColor = Color.Gainsboro;
-            labelUVIndex.Location = new Point(105, 37);
+            labelUVIndex.Location = new Point(114, 37);
             labelUVIndex.Name = "labelUVIndex";
-            labelUVIndex.Size = new Size(53, 28);
+            labelUVIndex.Size = new Size(24, 28);
             labelUVIndex.TabIndex = 3;
-            labelUVIndex.Text = "9.41";
+            labelUVIndex.Text = "0";
             // 
             // panel5
             // 
@@ -216,11 +216,11 @@
             labelCloudCover.AutoSize = true;
             labelCloudCover.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelCloudCover.ForeColor = Color.Gainsboro;
-            labelCloudCover.Location = new Point(107, 37);
+            labelCloudCover.Location = new Point(95, 37);
             labelCloudCover.Name = "labelCloudCover";
-            labelCloudCover.Size = new Size(41, 28);
+            labelCloudCover.Size = new Size(53, 28);
             labelCloudCover.TabIndex = 3;
-            labelCloudCover.Text = "0%";
+            labelCloudCover.Text = "99%";
             // 
             // panel4
             // 
@@ -349,9 +349,9 @@
             // pictureWeatherIcon
             // 
             pictureWeatherIcon.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            pictureWeatherIcon.Location = new Point(28, 58);
+            pictureWeatherIcon.Location = new Point(28, 48);
             pictureWeatherIcon.Name = "pictureWeatherIcon";
-            pictureWeatherIcon.Size = new Size(118, 77);
+            pictureWeatherIcon.Size = new Size(118, 100);
             pictureWeatherIcon.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureWeatherIcon.TabIndex = 2;
             pictureWeatherIcon.TabStop = false;
@@ -362,7 +362,7 @@
             labelDescription.AutoSize = true;
             labelDescription.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             labelDescription.ForeColor = Color.Gainsboro;
-            labelDescription.Location = new Point(28, 17);
+            labelDescription.Location = new Point(19, 17);
             labelDescription.Name = "labelDescription";
             labelDescription.Size = new Size(140, 28);
             labelDescription.TabIndex = 2;

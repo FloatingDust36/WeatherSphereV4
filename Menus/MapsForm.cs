@@ -115,7 +115,7 @@ namespace WeatherSphereV4
 
         private async Task LoadCurrentWeatherData(string lat, string lon, string location)
         {
-            string current = "weather_code,temperature_2m,apparent_temperature";
+            string current = "is_day,weather_code,temperature_2m,apparent_temperature";
             string endpoint = $"?latitude={lat}&longitude={lon}&current={current}";
             string final = $"{endpoint}&timezone=auto&forecast_days=1";
 
@@ -146,12 +146,11 @@ namespace WeatherSphereV4
             labelCurrentDate.Text = date.ToString("dddd, MMMM dd, yyyy");
 
             // 🌤️ Display weather description and GIF icon
-            bool isDay = date.Hour >= 6 && date.Hour <= 18;  // Daytime check
             var condition = WeatherCodeDescription.GetCondition(current.weather_code);
-
             labelDescription.Text = condition.Description;
 
             // 🌟 Display GIF icon dynamically
+            bool isDay = current.is_day == 1;
             string icon = isDay ? condition.DayIcon : condition.NightIcon;
             DisplayWeatherIcon(pictureWeatherIcon, icon);
 

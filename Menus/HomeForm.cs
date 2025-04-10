@@ -39,7 +39,7 @@ namespace WeatherSphereV4
 
         private async Task LoadCurrentWeatherData(string lat, string lon)
         {
-            string current = "weather_code,temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,cloud_cover,pressure_msl";
+            string current = "is_day,weather_code,temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,cloud_cover,pressure_msl";
             string daily = "sunrise,sunset,uv_index_max";
             string endpoint = $"?latitude={lat}&longitude={lon}&daily={daily}&current={current}";
             string final = $"{endpoint}&timezone=auto&forecast_days=1";
@@ -59,6 +59,32 @@ namespace WeatherSphereV4
 
             // ✅ Update UI with weather data
             UpdateWeatherUI(currentWeather, dailyWeather);
+        }
+
+        private async void UpdateWeatherUI(CurrentWeather current, DailyWeather daily)
+        {
+            labelTemperature.Text = $"{current.temperature_2m}°C";
+            labelFeelsLike.Text = $"Feels like {current.apparent_temperature}°C";
+            labelHumidity.Text = $"{current.relative_humidity_2m}%";
+            labelWindSpeed.Text = $"{current.wind_speed_10m} m/s";
+            labelCloudCover.Text = $"{current.cloud_cover}%";
+            labelPressure.Text = $"{current.pressure_msl} hPa";
+
+            labelSunrise.Text = daily.sunrise[0].Substring(11, 5) + " AM";
+            labelSunset.Text = daily.sunset[0].Substring(11, 5) + " PM";
+            labelUVIndex.Text = daily.uv_index_max[0].ToString();
+
+            // 🕰️ Display the current date
+            DateTime date = DateTime.Parse(current.time);
+            labelCurrentDate.Text = date.ToString("dddd, MMMM dd, yyyy");
+
+            var condition = WeatherCodeDescription.GetCondition(current.weather_code);
+            labelDescription.Text = condition.Description;
+
+            // 🌟 Display GIF icon dynamically
+            isDay = current.is_day == 1;
+            string icon = isDay ? condition.DayIcon : condition.NightIcon;
+            DisplayWeatherIcon(pictureWeatherIcon, icon);
         }
 
         private async Task LoadForecast7Days(string lat, string lon)
@@ -153,36 +179,6 @@ namespace WeatherSphereV4
             DisplayWeatherIcon(picture5, icon5);
             DisplayWeatherIcon(picture6, icon6);
             DisplayWeatherIcon(picture7, icon7);
-        }
-
-        private async void UpdateWeatherUI(CurrentWeather current, DailyWeather daily)
-        {
-            labelTemperature.Text = $"{current.temperature_2m}°C";
-            labelFeelsLike.Text = $"Feels like {current.apparent_temperature}°C";
-            labelHumidity.Text = $"{current.relative_humidity_2m}%";
-            labelWindSpeed.Text = $"{current.wind_speed_10m} m/s";
-            labelCloudCover.Text = $"{current.cloud_cover}%";
-            labelPressure.Text = $"{current.pressure_msl} hPa";
-
-            labelSunrise.Text = daily.sunrise[0].Substring(11, 5) + " AM";
-            labelSunset.Text = daily.sunset[0].Substring(11, 5) + " PM";
-            labelUVIndex.Text = daily.uv_index_max[0].ToString();
-
-            // 🕰️ Display the current date
-            DateTime date = DateTime.Parse(current.time);
-            labelCurrentDate.Text = date.ToString("dddd, MMMM dd, yyyy");
-
-            // 🌤️ Display weather description and GIF icon
-            DateTime sunrise = DateTime.Parse(daily.sunrise[0]);
-            DateTime sunset = DateTime.Parse(daily.sunset[0]);
-            isDay = date >= sunrise && date <= sunset;  // Daytime check based on sunrise and sunset times
-            var condition = WeatherCodeDescription.GetCondition(current.weather_code);
-
-            labelDescription.Text = condition.Description;
-
-            // 🌟 Display GIF icon dynamically
-            string icon = isDay ? condition.DayIcon : condition.NightIcon;
-            DisplayWeatherIcon(pictureWeatherIcon, icon);
         }
 
         private void DisplayWeatherIcon(PictureBox pictureBox, string icon)

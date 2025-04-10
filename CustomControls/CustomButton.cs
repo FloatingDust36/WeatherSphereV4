@@ -57,7 +57,22 @@ namespace WeatherSphereV4.CustomControls
             get { return borderRadius; }
             set
             {
-                borderRadius = value;
+                if (value < 0)
+                {
+                    borderRadius = 0; // Or throw an ArgumentException
+                }
+                else
+                {
+                    int smallerDimension = Math.Min(Width, Height);
+                    if (value > smallerDimension / 2)
+                    {
+                        borderRadius = smallerDimension / 2;
+                    }
+                    else
+                    {
+                        borderRadius = value;
+                    }
+                }
                 Invalidate();
             }
         }
@@ -289,8 +304,13 @@ namespace WeatherSphereV4.CustomControls
 
         private void Button_Resize(object sender, EventArgs e)
         {
-            if (borderRadius > Height)
-                borderRadius = Height;
+            if (borderRadius < 0) borderRadius = 0;
+            int smallerDimension = Math.Min(Width, Height);
+            if (borderRadius > smallerDimension / 2)
+            {
+                borderRadius = smallerDimension / 2;
+            }
+            Invalidate();
         }
 
         protected override void OnMouseDown(MouseEventArgs mevent)
@@ -325,15 +345,19 @@ namespace WeatherSphereV4.CustomControls
             Invalidate();
         }
 
+        private Color originalHoverColor1;
+        private Color originalHoverColor2;
+
         protected override void OnMouseEnter(EventArgs e)
         {
             base.OnMouseEnter(e);
             isHovered = true;
 
-            // Interchange Color1 and Color2
-            var tempColor = color1;
+            originalHoverColor1 = color1;
+            originalHoverColor2 = color2;
+
             color1 = color2;
-            color2 = tempColor;
+            color2 = originalHoverColor1;
 
             Invalidate();
         }
@@ -343,13 +367,12 @@ namespace WeatherSphereV4.CustomControls
             base.OnMouseLeave(e);
             isHovered = false;
 
-            // Revert Color1 and Color2
-            var tempColor = color1;
-            color1 = color2;
-            color2 = tempColor;
+            color1 = originalHoverColor1;
+            color2 = originalHoverColor2;
 
             Invalidate();
         }
+
 
         private void RippleTimer_Tick(object sender, EventArgs e)
         {
@@ -360,6 +383,15 @@ namespace WeatherSphereV4.CustomControls
                 rippleTimer.Stop();
             }
             Invalidate();
+        }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                rippleTimer?.Stop();
+                rippleTimer?.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

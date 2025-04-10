@@ -284,7 +284,6 @@
             // 
             // pictureWeatherIcon
             // 
-            pictureWeatherIcon.Image = (Image)resources.GetObject("pictureWeatherIcon.Image");
             pictureWeatherIcon.Location = new Point(31, 242);
             pictureWeatherIcon.Name = "pictureWeatherIcon";
             pictureWeatherIcon.Size = new Size(273, 185);
@@ -435,7 +434,6 @@
             // 
             picture7.Anchor = AnchorStyles.None;
             picture7.BackColor = Color.Transparent;
-            picture7.Image = (Image)resources.GetObject("picture7.Image");
             picture7.Location = new Point(3, 77);
             picture7.Name = "picture7";
             picture7.Size = new Size(109, 93);
@@ -538,7 +536,6 @@
             // 
             picture6.Anchor = AnchorStyles.None;
             picture6.BackColor = Color.Transparent;
-            picture6.Image = (Image)resources.GetObject("picture6.Image");
             picture6.Location = new Point(3, 77);
             picture6.Name = "picture6";
             picture6.Size = new Size(109, 93);
@@ -641,7 +638,6 @@
             // 
             picture5.Anchor = AnchorStyles.None;
             picture5.BackColor = Color.Transparent;
-            picture5.Image = (Image)resources.GetObject("picture5.Image");
             picture5.Location = new Point(3, 77);
             picture5.Name = "picture5";
             picture5.Size = new Size(109, 93);
@@ -744,7 +740,6 @@
             // 
             picture4.Anchor = AnchorStyles.None;
             picture4.BackColor = Color.Transparent;
-            picture4.Image = (Image)resources.GetObject("picture4.Image");
             picture4.Location = new Point(3, 77);
             picture4.Name = "picture4";
             picture4.Size = new Size(109, 93);
@@ -847,7 +842,6 @@
             // 
             picture3.Anchor = AnchorStyles.None;
             picture3.BackColor = Color.Transparent;
-            picture3.Image = (Image)resources.GetObject("picture3.Image");
             picture3.Location = new Point(3, 77);
             picture3.Name = "picture3";
             picture3.Size = new Size(109, 93);
@@ -950,7 +944,6 @@
             // 
             picture2.Anchor = AnchorStyles.None;
             picture2.BackColor = Color.Transparent;
-            picture2.Image = (Image)resources.GetObject("picture2.Image");
             picture2.Location = new Point(3, 77);
             picture2.Name = "picture2";
             picture2.Size = new Size(109, 93);
@@ -1040,7 +1033,6 @@
             // 
             picture1.Anchor = AnchorStyles.None;
             picture1.BackColor = Color.Transparent;
-            picture1.Image = (Image)resources.GetObject("picture1.Image");
             picture1.Location = new Point(3, 72);
             picture1.Name = "picture1";
             picture1.Size = new Size(109, 93);

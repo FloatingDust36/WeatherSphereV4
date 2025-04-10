@@ -26,6 +26,7 @@ namespace WeatherSphereV4.Models
     public class CurrentWeather
     {
         public string time { get; set; }
+        public int is_day { get; set; }
         public int weather_code { get; set; }
         public double temperature_2m { get; set; }
         public double apparent_temperature { get; set; }

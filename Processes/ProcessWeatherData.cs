@@ -25,6 +25,10 @@ namespace WeatherSphereV4.Processes
         {
             return JsonConvert.DeserializeObject<HourlyForecastData>(json);
         }
+        public MonthlyForecastData DeserializeMonthlyForecast(string json)
+        {
+            return JsonConvert.DeserializeObject<MonthlyForecastData>(json);
+        }
 
         public async Task<string> GetJsonString(string siteUrl, string final)
         {
