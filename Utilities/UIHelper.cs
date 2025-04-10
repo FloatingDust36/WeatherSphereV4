@@ -3,6 +3,7 @@ using System.Drawing; // Required for PictureBox
 using System.IO;      // Required for Path and File
 using System.Windows.Forms;
 using FontAwesome.Sharp;
+using System.Configuration;
 
 namespace WeatherSphereV4.Utilities // Or WeatherSphereV4.Utils if you prefer a sub-namespace
 {
@@ -22,6 +23,9 @@ namespace WeatherSphereV4.Utilities // Or WeatherSphereV4.Utils if you prefer a 
         {
             if (pictureBox == null) return; // Safety check
 
+            string iconsFolder = ConfigurationManager.AppSettings["IconsFolderPath"] ?? "Icons";
+            string unknownIconFile = ConfigurationManager.AppSettings["UnknownIconFileName"] ?? "unknown.gif";
+
             string iconFilePath = null;
             bool iconFound = false;
 
@@ -29,7 +33,7 @@ namespace WeatherSphereV4.Utilities // Or WeatherSphereV4.Utils if you prefer a 
             {
                 try
                 {
-                    iconFilePath = Path.Combine(Application.StartupPath, IconsFolder, $"{iconName}.gif");
+                    iconFilePath = Path.Combine(Application.StartupPath, iconsFolder, $"{iconName}.gif");
 
                     if (File.Exists(iconFilePath))
                     {
@@ -55,7 +59,7 @@ namespace WeatherSphereV4.Utilities // Or WeatherSphereV4.Utils if you prefer a 
             {
                 try
                 {
-                    string unknownIconPath = Path.Combine(Application.StartupPath, IconsFolder, UnknownIconFile);
+                    string unknownIconPath = Path.Combine(Application.StartupPath, iconsFolder, unknownIconFile);
                     if (File.Exists(unknownIconPath))
                     {
                         pictureBox.ImageLocation = unknownIconPath;

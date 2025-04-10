@@ -17,7 +17,7 @@ namespace WeatherSphereV4
 {
     public partial class MonthlyForecastForm : UserControl
     {
-        private const string ApiBaseUrl = "https://api.open-meteo.com/v1/forecast";
+
         private const string DailyWeatherParameters = "weather_code,temperature_2m_mean";
 
         private const int CalendarRows = 7; // Including header
@@ -62,7 +62,7 @@ namespace WeatherSphereV4
             try
             {
                 string endpoint = $"?latitude={WeatherSharedData.Latitude}&longitude={WeatherSharedData.Longitude}&daily={DailyWeatherParameters}";
-                string final = $"{ApiBaseUrl}{endpoint}&timezone=auto&start_date={apiStartDate:yyyy-MM-dd}&end_date={apiEndDate:yyyy-MM-dd}";
+                string final = $"{endpoint}&timezone=auto&start_date={apiStartDate:yyyy-MM-dd}&end_date={apiEndDate:yyyy-MM-dd}";
 
                 string jsonString = await processWeatherData.GetJsonString(final);
                 if (string.IsNullOrEmpty(jsonString))

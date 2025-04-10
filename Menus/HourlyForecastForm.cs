@@ -19,7 +19,6 @@ namespace WeatherSphereV4
 {
     public partial class HourlyForecastForm : UserControl
     {
-        private const string ApiBaseUrl = "https://api.open-meteo.com/v1/forecast";
         private const string DailyWeatherParameters = "sunrise,sunset,weather_code";
         private const string HourlyWeatherParameters = "is_day,weather_code,apparent_temperature,relative_humidity_2m,wind_speed_10m,cloud_cover,uv_index,pressure_msl";
         private ProcessWeatherData processWeatherData = new ProcessWeatherData();
@@ -39,7 +38,7 @@ namespace WeatherSphereV4
             try
             {
                 string endpoint = $"?latitude={WeatherSharedData.Latitude}&longitude={WeatherSharedData.Longitude}&daily={DailyWeatherParameters}&hourly={HourlyWeatherParameters}";
-                string final = $"{ApiBaseUrl}{endpoint}&timezone=auto&forecast_days=7";
+                string final = $"{endpoint}&timezone=auto&forecast_days=7";
 
                 string jsonString = await processWeatherData.GetJsonString(final);
 

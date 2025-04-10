@@ -18,7 +18,6 @@ namespace WeatherSphereV4
 {
     public partial class MapsForm : UserControl
     {
-        private const string ApiBaseUrl = "https://api.open-meteo.com/v1/forecast";
         private const string CurrentWeatherParameters = "is_day,weather_code,temperature_2m,apparent_temperature";
         private ProcessWeatherData processWeatherData;
         private ProcessGeocoding processGeocoding;
@@ -135,7 +134,7 @@ namespace WeatherSphereV4
             try
             {
                 string endpoint = $"?latitude={lat}&longitude={lon}&current={CurrentWeatherParameters}";
-                string final = $"{ApiBaseUrl}{endpoint}&timezone=auto&forecast_days=1";
+                string final = $"{endpoint}&timezone=auto&forecast_days=1";
 
                 string jsonString = await processWeatherData.GetJsonString(final);
 
