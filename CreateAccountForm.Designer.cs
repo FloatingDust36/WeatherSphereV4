@@ -48,6 +48,10 @@
             labelRegister = new Label();
             labelLogin = new Label();
             panelCreate = new Panel();
+            panelConfirmPassword = new WeatherSphereV4.CustomControls.CustomPanel();
+            pictureConfirmPassword = new PictureBox();
+            barConfirmPassword = new ReaLTaiizor.Controls.MaterialDivider();
+            textboxConfirmPassword = new TextBox();
             panelCreatePassword = new WeatherSphereV4.CustomControls.CustomPanel();
             pictureCreatePassword = new PictureBox();
             barCreatePassword = new ReaLTaiizor.Controls.MaterialDivider();
@@ -65,6 +69,8 @@
             panelPassword.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picturePassword).BeginInit();
             panelCreate.SuspendLayout();
+            panelConfirmPassword.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureConfirmPassword).BeginInit();
             panelCreatePassword.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureCreatePassword).BeginInit();
             panelCreateUsername.SuspendLayout();
@@ -105,7 +111,7 @@
             panelImage2.Dock = DockStyle.Top;
             panelImage2.Location = new Point(0, 0);
             panelImage2.Name = "panelImage2";
-            panelImage2.Size = new Size(529, 238);
+            panelImage2.Size = new Size(529, 171);
             panelImage2.TabIndex = 2;
             // 
             // panelLogin
@@ -234,7 +240,7 @@
             // 
             buttonLogin.BackColor = Color.FromArgb(255, 192, 192);
             buttonLogin.BorderColor = Color.PaleVioletRed;
-            buttonLogin.BorderRadius = 33;
+            buttonLogin.BorderRadius = 20;
             buttonLogin.BorderSize = 0;
             buttonLogin.Color1 = Color.FromArgb(18, 151, 244);
             buttonLogin.Color2 = Color.FromArgb(37, 64, 129);
@@ -294,7 +300,7 @@
             labelRegister.AutoSize = true;
             labelRegister.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelRegister.ForeColor = Color.White;
-            labelRegister.Location = new Point(217, 259);
+            labelRegister.Location = new Point(227, 187);
             labelRegister.Name = "labelRegister";
             labelRegister.Size = new Size(98, 30);
             labelRegister.TabIndex = 16;
@@ -305,7 +311,7 @@
             labelLogin.AutoSize = true;
             labelLogin.Font = new Font("Segoe UI", 8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelLogin.ForeColor = SystemColors.AppWorkspace;
-            labelLogin.Location = new Point(227, 447);
+            labelLogin.Location = new Point(248, 447);
             labelLogin.Name = "labelLogin";
             labelLogin.Size = new Size(53, 21);
             labelLogin.TabIndex = 19;
@@ -317,6 +323,7 @@
             // panelCreate
             // 
             panelCreate.BackColor = Color.FromArgb(16, 18, 41);
+            panelCreate.Controls.Add(panelConfirmPassword);
             panelCreate.Controls.Add(panelCreatePassword);
             panelCreate.Controls.Add(panelCreateUsername);
             panelCreate.Controls.Add(buttonCreateAccount);
@@ -327,6 +334,61 @@
             panelCreate.Name = "panelCreate";
             panelCreate.Size = new Size(529, 598);
             panelCreate.TabIndex = 18;
+            // 
+            // panelConfirmPassword
+            // 
+            panelConfirmPassword.BackColor = Color.MediumSlateBlue;
+            panelConfirmPassword.BorderColor = Color.Gainsboro;
+            panelConfirmPassword.BorderRadius = 0;
+            panelConfirmPassword.BorderSize = 0;
+            panelConfirmPassword.Color1 = Color.FromArgb(31, 48, 62);
+            panelConfirmPassword.Color2 = Color.FromArgb(31, 48, 62);
+            panelConfirmPassword.ColorOrientation = System.Drawing.Drawing2D.LinearGradientMode.Horizontal;
+            panelConfirmPassword.Controls.Add(pictureConfirmPassword);
+            panelConfirmPassword.Controls.Add(barConfirmPassword);
+            panelConfirmPassword.Controls.Add(textboxConfirmPassword);
+            panelConfirmPassword.Location = new Point(88, 381);
+            panelConfirmPassword.Name = "panelConfirmPassword";
+            panelConfirmPassword.Size = new Size(370, 44);
+            panelConfirmPassword.TabIndex = 23;
+            // 
+            // pictureConfirmPassword
+            // 
+            pictureConfirmPassword.BackColor = Color.Transparent;
+            pictureConfirmPassword.Image = (Image)resources.GetObject("pictureConfirmPassword.Image");
+            pictureConfirmPassword.Location = new Point(6, 5);
+            pictureConfirmPassword.Name = "pictureConfirmPassword";
+            pictureConfirmPassword.Size = new Size(31, 30);
+            pictureConfirmPassword.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureConfirmPassword.TabIndex = 2;
+            pictureConfirmPassword.TabStop = false;
+            // 
+            // barConfirmPassword
+            // 
+            barConfirmPassword.BackColor = Color.Gainsboro;
+            barConfirmPassword.Depth = 0;
+            barConfirmPassword.Dock = DockStyle.Bottom;
+            barConfirmPassword.Location = new Point(0, 43);
+            barConfirmPassword.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            barConfirmPassword.Name = "barConfirmPassword";
+            barConfirmPassword.Size = new Size(370, 1);
+            barConfirmPassword.TabIndex = 1;
+            barConfirmPassword.Text = "materialDivider4";
+            // 
+            // textboxConfirmPassword
+            // 
+            textboxConfirmPassword.BackColor = Color.FromArgb(31, 48, 62);
+            textboxConfirmPassword.BorderStyle = BorderStyle.None;
+            textboxConfirmPassword.ForeColor = Color.Gainsboro;
+            textboxConfirmPassword.Location = new Point(41, 8);
+            textboxConfirmPassword.Name = "textboxConfirmPassword";
+            textboxConfirmPassword.PasswordChar = '●';
+            textboxConfirmPassword.PlaceholderText = "Password";
+            textboxConfirmPassword.Size = new Size(329, 24);
+            textboxConfirmPassword.TabIndex = 0;
+            textboxConfirmPassword.UseSystemPasswordChar = true;
+            textboxConfirmPassword.MouseEnter += TextBox_MouseEnter;
+            textboxConfirmPassword.MouseLeave += TextBox_MouseEnter;
             // 
             // panelCreatePassword
             // 
@@ -340,7 +402,7 @@
             panelCreatePassword.Controls.Add(pictureCreatePassword);
             panelCreatePassword.Controls.Add(barCreatePassword);
             panelCreatePassword.Controls.Add(textboxCreatePassword);
-            panelCreatePassword.Location = new Point(81, 379);
+            panelCreatePassword.Location = new Point(88, 312);
             panelCreatePassword.Name = "panelCreatePassword";
             panelCreatePassword.Size = new Size(370, 44);
             panelCreatePassword.TabIndex = 21;
@@ -395,7 +457,7 @@
             panelCreateUsername.Controls.Add(pictureCreateUsername);
             panelCreateUsername.Controls.Add(barCreateUsername);
             panelCreateUsername.Controls.Add(textboxCreateUsername);
-            panelCreateUsername.Location = new Point(81, 311);
+            panelCreateUsername.Location = new Point(88, 244);
             panelCreateUsername.Name = "panelCreateUsername";
             panelCreateUsername.Size = new Size(370, 44);
             panelCreateUsername.TabIndex = 22;
@@ -440,7 +502,7 @@
             // 
             buttonCreateAccount.BackColor = Color.FromArgb(255, 192, 192);
             buttonCreateAccount.BorderColor = Color.PaleVioletRed;
-            buttonCreateAccount.BorderRadius = 33;
+            buttonCreateAccount.BorderRadius = 20;
             buttonCreateAccount.BorderSize = 0;
             buttonCreateAccount.Color1 = Color.FromArgb(18, 151, 244);
             buttonCreateAccount.Color2 = Color.FromArgb(37, 64, 129);
@@ -471,8 +533,8 @@
             ClientSize = new Size(902, 683);
             Controls.Add(buttonMinimize);
             Controls.Add(buttonClose);
-            Controls.Add(panelLogin);
             Controls.Add(panelCreate);
+            Controls.Add(panelLogin);
             HelpButton = true;
             Name = "CreateAccountForm";
             StartPosition = FormStartPosition.CenterScreen;
@@ -489,6 +551,9 @@
             ((System.ComponentModel.ISupportInitialize)picturePassword).EndInit();
             panelCreate.ResumeLayout(false);
             panelCreate.PerformLayout();
+            panelConfirmPassword.ResumeLayout(false);
+            panelConfirmPassword.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureConfirmPassword).EndInit();
             panelCreatePassword.ResumeLayout(false);
             panelCreatePassword.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureCreatePassword).EndInit();
@@ -527,5 +592,9 @@
         private ReaLTaiizor.Controls.MaterialDivider barCreateUsername;
         private TextBox textboxCreateUsername;
         private CustomControls.CustomButton buttonCreateAccount;
+        private CustomControls.CustomPanel panelConfirmPassword;
+        private PictureBox pictureConfirmPassword;
+        private ReaLTaiizor.Controls.MaterialDivider barConfirmPassword;
+        private TextBox textboxConfirmPassword;
     }
 }

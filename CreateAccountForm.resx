@@ -9269,6 +9269,50 @@
         AABJRU5ErkJggg==
 </value>
   </data>
+  <data name="pictureConfirmPassword.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+</value>
+  </data>
   <data name="pictureCreatePassword.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL

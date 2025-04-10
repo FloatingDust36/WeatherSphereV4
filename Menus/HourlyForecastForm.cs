@@ -14,6 +14,7 @@ using WeatherSphereV4.Models;
 using WeatherSphereV4.Utilities;
 using FontAwesome.Sharp;
 using Microsoft.VisualBasic.Logging;
+using WeatherSphereV4.Services;
 
 namespace WeatherSphereV4
 {
@@ -27,7 +28,34 @@ namespace WeatherSphereV4
         public HourlyForecastForm()
         {
             InitializeComponent();
+
+            WeatherSharedData.LocationChanged += HandleLocationChanged;
+            this.Disposed += (s, e) => WeatherSharedData.LocationChanged -= HandleLocationChanged;
+
             LoadHourlyForecast();
+            CenterLoadingSpinner();
+        }
+
+        private async void HandleLocationChanged(object sender, EventArgs e)
+        {
+            // Use BeginInvoke for thread safety if needed, though async void usually marshals back
+            if (this.IsHandleCreated && !this.IsDisposed)
+            {
+                // Using BeginInvoke for safety with UI updates inside LoadHourlyForecast
+                this.BeginInvoke(new Action(async () => {
+                    Console.WriteLine("HourlyForecastForm handling LocationChanged..."); // Debug
+                                                                                         // Reload data. LoadHourlyForecast already reads the latest WeatherSharedData.
+                    if (!string.IsNullOrEmpty(WeatherSharedData.Latitude) && !string.IsNullOrEmpty(WeatherSharedData.Longitude))
+                    {
+                        await LoadHourlyForecast(); // Call the existing load method
+                    }
+                    else
+                    {
+                        Console.WriteLine("HourlyForecastForm HandleLocationChanged skipped: Lat/Lon is null/empty.");
+                        // ClearHourlyWeatherDataUI(); // Optionally clear UI
+                    }
+                }));
+            }
         }
 
         private async Task LoadHourlyForecast()

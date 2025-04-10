@@ -12,6 +12,7 @@ using WeatherSphereV4.Processes;
 using WeatherSphereV4.UserControls; //MonthlyControl is in this namespace
 using WeatherSphereV4.Utilities;
 using FontAwesome.Sharp;
+using WeatherSphereV4.Services;
 
 namespace WeatherSphereV4
 {
@@ -22,7 +23,7 @@ namespace WeatherSphereV4
 
         private const int CalendarRows = 7; // Including header
         private const int CalendarColumns = 7;
-        private const int FutureForecastLimitDays = 15;
+        private const int FutureForecastLimitDays = 14; // temporarily chnaged it to 14 days
         private ProcessWeatherData processWeatherData = new ProcessWeatherData();
         private int currentYear;
         private int currentMonth;
@@ -33,6 +34,39 @@ namespace WeatherSphereV4
             DateTime now = DateTime.Now;
             currentYear = now.Year;
             currentMonth = now.Month;
+
+            WeatherSharedData.LocationChanged += HandleLocationChanged;
+            this.Disposed += (s, e) => WeatherSharedData.LocationChanged -= HandleLocationChanged;
+
+            CenterLoadingSpinner();
+        }
+
+        private async void HandleLocationChanged(object sender, EventArgs e)
+        {
+            if (this.IsHandleCreated && !this.IsDisposed)
+            {
+                // Use BeginInvoke for safety, especially with async void handler potentially
+                // completing after form disposal in edge cases.
+                this.BeginInvoke(new Action(async () => {
+                    Console.WriteLine("MonthlyForecastForm handling LocationChanged..."); // Debug
+
+                    // Reset to the current month/year whenever location changes
+                    DateTime now = DateTime.Now;
+                    this.currentYear = now.Year;
+                    this.currentMonth = now.Month;
+
+                    // Reload calendar data for the current month at the new location
+                    if (!string.IsNullOrEmpty(WeatherSharedData.Latitude) && !string.IsNullOrEmpty(WeatherSharedData.Longitude))
+                    {
+                        await LoadAndPopulateCalendar(this.currentYear, this.currentMonth);
+                    }
+                    else
+                    {
+                        Console.WriteLine("MonthlyForecastForm HandleLocationChanged skipped: Lat/Lon is null/empty.");
+                        // ClearMonthlyWeatherDataUI(); // Optionally clear calendar
+                    }
+                }));
+            }
         }
 
         private async Task LoadAndPopulateCalendar(int year, int month)
@@ -72,7 +106,7 @@ namespace WeatherSphereV4
 
                 MonthlyForecastData weatherData = processWeatherData.DeserializeMonthlyForecast(jsonString);
                 labelMonth.Text = new DateTime(year, month, 1).ToString("MMMM");
-                MessageBox.Show($"Weather data loaded for {labelMonth.Text} {year}.");
+                //MessageBox.Show($"Weather data loaded for {labelMonth.Text} {year}.");
                 PopulateCalendarGrid(year, month, weatherData, calendarStartDate);
             }
             catch (Exception ex)

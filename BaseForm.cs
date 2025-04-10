@@ -1,10 +1,16 @@
-using System;
+using System; // For EventArgs, Task, etc.
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 using FontAwesome.Sharp;
 using WeatherSphereV4.CustomControls;
 using WeatherSphereV4.Utilities;
+using System.Net.Http; // For HttpClient - reuse static instance if possible
+using Newtonsoft.Json; // For JSON parsing
+using WeatherSphereV4.Models; // IpApiLocationInfo
+using WeatherSphereV4.Processes; // ProcessWeatherData
+using System.Threading.Tasks;
+using WeatherSphereV4.Services; // For Task
 
 namespace WeatherSphereV4
 {
@@ -32,11 +38,142 @@ namespace WeatherSphereV4
             pictureLogo.BackColor = Color.Transparent;
         }
 
-        protected override void OnLoad(EventArgs e)
+        protected override async void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            buttonHome.PerformClick();
+
+            ShowLoadingOverlay();
+
+            await TrySetInitialLocationAsync();
+            if (buttonHome != null) // Check if button exists
+            {
+                buttonHome.PerformClick();
+            }
+            else
+            {
+                // Fallback if buttonHome isn't available - manually load HomeForm
+                LoadUserControl("Home", new HomeForm());
+                // Ensure the home button in the menu *looks* activated
+                ActivateButton(buttonHome, RGBColors.color1); // Assuming buttonHome is the sender object
+            }
+
+            HideLoadingOverlay(); // Hide BaseForm loading indicator
         }
+
+        #region Loading Overlay & Info Bar Helpers
+
+        /// <summary>
+        /// Centers the loading spinner PictureBox within the overlay panel.
+        /// Call this from constructor/Load and form's Resize event.
+        /// </summary>
+        private void CenterLoadingSpinner()
+        {
+            if (pictureLoadingSpinner != null && panelLoadingOverlay != null)
+            {
+                // Ensure calculations happen on the UI thread if needed, though Resize/Load usually are.
+                int x = (panelLoadingOverlay.ClientSize.Width - pictureLoadingSpinner.Width) / 2;
+                int y = (panelLoadingOverlay.ClientSize.Height - pictureLoadingSpinner.Height) / 2;
+                // Prevent negative coordinates if spinner is larger than panel
+                pictureLoadingSpinner.Location = new Point(Math.Max(0, x), Math.Max(0, y));
+            }
+        }
+
+        /// <summary>
+        /// Shows the loading overlay.
+        /// </summary>
+        private void ShowLoadingOverlay()
+        {
+            if (panelLoadingOverlay.InvokeRequired)
+            {
+                panelLoadingOverlay.Invoke(new Action(ShowLoadingOverlay));
+                return;
+            }
+            CenterLoadingSpinner(); // Recenter before showing
+            panelLoadingOverlay.Visible = true;
+            panelLoadingOverlay.BringToFront();
+        }
+
+        /// <summary>
+        /// Hides the loading overlay.
+        /// </summary>
+        private void HideLoadingOverlay()
+        {
+            if (panelLoadingOverlay.InvokeRequired)
+            {
+                panelLoadingOverlay.Invoke(new Action(HideLoadingOverlay));
+                return;
+            }
+            panelLoadingOverlay.Visible = false;
+        }
+
+        /// <summary>
+        /// Shows the Info Bar panel with a message and appropriate styling.
+        /// </summary>
+        /// <param name="message">The message to display.</param>
+        /// <param name="messageType">Type of message (Info, Success, Warning, Error).</param>
+        private void ShowInfoBar(string message, InfoBarType messageType = InfoBarType.Info)
+        {
+            if (panelInfoBar.InvokeRequired)
+            {
+                panelInfoBar.Invoke(new Action(() => ShowInfoBar(message, messageType)));
+                return;
+            }
+
+            labelInfoBarMessage.Text = message;
+            Color backColor = Color.CornflowerBlue; // Default
+            Color foreColor = Color.White;
+            IconChar icon = IconChar.InfoCircle;
+
+            switch (messageType)
+            {
+                case InfoBarType.Error:
+                    backColor = Color.FromArgb(217, 83, 79); // Red
+                    icon = IconChar.TimesCircle; // Use TimesCircle for error
+                    foreColor = Color.White;
+                    break;
+                case InfoBarType.Warning:
+                    backColor = Color.FromArgb(240, 173, 78); // Yellow
+                    icon = IconChar.Warning;
+                    foreColor = Color.Black; // Dark text on yellow
+                    break;
+                case InfoBarType.Success:
+                    backColor = Color.FromArgb(92, 184, 92); // Green
+                    icon = IconChar.CheckCircle;
+                    foreColor = Color.White;
+                    break;
+                case InfoBarType.Info:
+                default:
+                    backColor = Color.FromArgb(91, 192, 222); // Blue
+                    icon = IconChar.InfoCircle;
+                    foreColor = Color.White;
+                    break;
+            }
+
+            panelInfoBar.BackColor = backColor;
+            iconInfoBar.IconChar = icon;
+            iconInfoBar.IconColor = foreColor; // Match icon color to text for consistency
+            buttonCloseInfoBar.IconColor = foreColor; // Match close button icon color too
+            labelInfoBarMessage.ForeColor = foreColor;
+
+
+            panelInfoBar.Visible = true;
+            panelInfoBar.BringToFront(); // Ensure it's visible
+        }
+
+        /// <summary>
+        /// Hides the Info Bar panel.
+        /// </summary>
+        private void HideInfoBar()
+        {
+            if (panelInfoBar.InvokeRequired)
+            {
+                panelInfoBar.Invoke(new Action(HideInfoBar));
+                return;
+            }
+            panelInfoBar.Visible = false;
+        }
+
+        #endregion
 
         #region Menu Movement and Design
         private struct RGBColors
@@ -92,48 +229,56 @@ namespace WeatherSphereV4
         {
             ActivateButton(sender, RGBColors.color1);
             LoadUserControl("Home", new HomeForm());
+            buttonAddRemoveFavorites.Visible = true; // Show the button when Home is active
         }
 
         private void buttonMaps_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color2);
             LoadUserControl("Settings", new MapsForm());
+            buttonAddRemoveFavorites.Visible = true; // Show the button when Maps is active
         }
 
         private void buttonHourlyForecast_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color3);
             LoadUserControl("HourlyForecast", new HourlyForecastForm());
+            buttonAddRemoveFavorites.Visible = false; // Hide the button when HourlyForecast is active
         }
 
         private void buttonMonthlyForecast_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color4);
             LoadUserControl("MonthlyForecast", new MonthlyForecastForm());
+            buttonAddRemoveFavorites.Visible = false; // Hide the button when MonthlyForecast is active
         }
 
         private void buttonLife_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color5);
             LoadUserControl("Life", new LifeForm());
+            buttonAddRemoveFavorites.Visible = false; // Hide the button when Life is active
         }
 
         private void buttonFavorites_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color6);
             LoadUserControl("Favorites", new FavoritesForm());
+            buttonAddRemoveFavorites.Visible = false; // Hide the button when Favorites is active
         }
 
         private void buttonAccount_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color1);
             LoadUserControl("Account", new AccountForm());
+            buttonAddRemoveFavorites.Visible = false; // Hide the button when Account is active
         }
 
         private void buttonSettings_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color2);
             LoadUserControl("Settings", new SettingsForm());
+            buttonAddRemoveFavorites.Visible = false; // Hide the button when Settings is active
         }
         #endregion
 
@@ -327,7 +472,6 @@ namespace WeatherSphereV4
             {
                 currentControl.Hide(); // Hide previous control instead of clearing
             }
-
             if (!userControls.ContainsKey(key))
             {
                 control.Dock = DockStyle.Fill;
@@ -338,6 +482,63 @@ namespace WeatherSphereV4
             currentControl = userControls[key]; // Update active control
             currentControl.Show(); // Ensure the control is visible
             currentControl.BringToFront();
+
+            UpdateFavoriteButtonState();
+        }
+
+        private async void UpdateFavoriteButtonState()
+        {
+            // Check if the *newly shown* control is Home or Maps
+            bool showButton = (currentControl is HomeForm || currentControl is MapsForm);
+            buttonAddRemoveFavorites.Visible = showButton;
+
+            if (showButton && WeatherSharedData.LoggedInUserID.HasValue)
+            {
+                // If button is visible and user logged in, check current fav status
+                string currentLat = WeatherSharedData.Latitude;
+                string currentLon = WeatherSharedData.Longitude;
+                int currentUserID = WeatherSharedData.LoggedInUserID.Value;
+
+                if (!string.IsNullOrEmpty(currentLat) && !string.IsNullOrEmpty(currentLon))
+                {
+                    this.Cursor = Cursors.WaitCursor; // Indicate check
+                    buttonAddRemoveFavorites.Enabled = false;
+                    try
+                    {
+                        FavoriteLocation fav = await DatabaseManager.FindFavoriteAsync(currentUserID, currentLat, currentLon);
+                        if (fav != null)
+                        {
+                            // Already a favorite
+                            buttonAddRemoveFavorites.IconChar = IconChar.HeartCircleMinus; // Remove icon
+                            toolTip.SetToolTip(buttonAddRemoveFavorites, "Remove from Favorites");
+                        }
+                        else
+                        {
+                            // Not a favorite
+                            buttonAddRemoveFavorites.IconChar = IconChar.HeartCirclePlus; // Add icon
+                            toolTip.SetToolTip(buttonAddRemoveFavorites, "Add to Favorites");
+                        }
+                    }
+                    catch (Exception ex) { Console.WriteLine($"Error checking favorite status on view change: {ex.Message}"); }
+                    finally
+                    {
+                        buttonAddRemoveFavorites.Enabled = true;
+                        this.Cursor = Cursors.Default;
+                    }
+                }
+                else // No valid location data, maybe default to "Add" state or disable?
+                {
+                    buttonAddRemoveFavorites.IconChar = IconChar.HeartCirclePlus;
+                    toolTip.SetToolTip(buttonAddRemoveFavorites, "Add to Favorites");
+                    buttonAddRemoveFavorites.Enabled = false; // Disable if no location data
+                }
+            }
+            else if (showButton) // Button should be visible but user not logged in
+            {
+                buttonAddRemoveFavorites.IconChar = IconChar.HeartCirclePlus; // Default to Add icon
+                toolTip.SetToolTip(buttonAddRemoveFavorites, "Log in to add favorites");
+                buttonAddRemoveFavorites.Enabled = false; // Disable if not logged in
+            }
         }
 
         private void buttonNightDayToggle_MouseHover(object sender, EventArgs e)
@@ -368,6 +569,160 @@ namespace WeatherSphereV4
         private void buttonRefresh_MouseLeave(object sender, EventArgs e)
         {
             UIHelper.SetIconButtonSize(sender, UIHelper.IconSizeLargeDefault);
+        }
+
+        private async Task TrySetInitialLocationAsync()
+        {
+            string ipApiUrl = "http://ip-api.com/json"; // URL for the IP API
+            string defaultLat = "10.3157";
+            string defaultLon = "123.8854";
+            string defaultLocation = "Cebu City, Central Visayas, Philippines";
+
+            try
+            {
+                Console.WriteLine("Attempting IP Geolocation using ProcessWeatherData...");
+
+                // --- REPLACE THE using(var tempClient...) block ---
+                // --- WITH a call to the new static method ---
+
+                // Set a short timeout specifically for the IP lookup (e.g., 5 seconds)
+                string jsonResponse = await ProcessWeatherData.GetGenericJsonAsync(ipApiUrl, 5);
+
+                // --- The code below assumes GetGenericJsonAsync succeeded (didn't throw) ---
+
+                IpApiLocationInfo locationInfo = JsonConvert.DeserializeObject<IpApiLocationInfo>(jsonResponse);
+
+                if (locationInfo?.Status?.ToLower() == "success" && locationInfo.Lat.HasValue && locationInfo.Lon.HasValue)
+                {
+                    string detectedLocation = $"{locationInfo.City}, {locationInfo.RegionName}, {locationInfo.Country}";
+                    Console.WriteLine($"IP Geolocation Success: {detectedLocation}");
+                    // Use InitializeLocation to ensure event fires for first location
+                    WeatherSharedData.InitializeLocation(locationInfo.Lat.Value.ToString(), locationInfo.Lon.Value.ToString(), detectedLocation);
+                    return; // Success, exit method
+                }
+                else
+                {
+                    // This else block might be reached if status wasn't "success" or lat/lon were null
+                    Console.WriteLine($"IP Geolocation API returned non-success or invalid data. Status: {locationInfo?.Status}, Message: {locationInfo?.Message}");
+                }
+
+                // --- REMOVE the old http response handling logic (IsSuccessStatusCode etc.) ---
+                // --- It's now handled by GetGenericJsonAsync throwing an exception on failure ---
+
+            }
+            // --- The existing catch block will now catch exceptions from GetGenericJsonAsync ---
+            catch (HttpRequestException httpEx) // Catch specific HTTP errors
+            {
+                Console.WriteLine($"Error during IP Geolocation HTTP request: {httpEx.Message}");
+            }
+            catch (JsonException jsonEx) // Catch errors during JSON parsing
+            {
+                Console.WriteLine($"Error parsing IP Geolocation response: {jsonEx.Message}");
+            }
+            catch (Exception ex) // Catch any other general errors
+            {
+                Console.WriteLine($"Generic error during IP Geolocation: {ex.Message}");
+            }
+
+            // If we reached here, detection failed (due to exception or non-success status), use default
+            Console.WriteLine("IP Geolocation failed or unavailable, using default location (Cebu City).");
+            // Use InitializeLocation to ensure event fires for first location
+            WeatherSharedData.InitializeLocation(defaultLat, defaultLon, defaultLocation);
+        }
+
+        private async void buttonAddRemoveFavorites_Click(object sender, EventArgs e)
+        {
+            if (!WeatherSharedData.LoggedInUserID.HasValue)
+            {
+                // Optional: Show InfoBar or MessageBox asking user to log in first
+                ShowInfoBar("Please log in to manage favorites.", InfoBarType.Warning);
+                // Or: MessageBox.Show("Please log in to manage favorites.", "Login Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            int currentUserID = WeatherSharedData.LoggedInUserID.Value;
+
+            // 2. Get current location details from shared data
+            string currentLat = WeatherSharedData.Latitude;
+            string currentLon = WeatherSharedData.Longitude;
+            string currentLocName = WeatherSharedData.Location;
+
+            if (string.IsNullOrEmpty(currentLat) || string.IsNullOrEmpty(currentLon) || string.IsNullOrEmpty(currentLocName))
+            {
+                ShowInfoBar("Current location data is unavailable.", InfoBarType.Warning);
+                return;
+            }
+
+            // 3. Check if this location is already a favorite
+            this.Cursor = Cursors.WaitCursor;
+            buttonAddRemoveFavorites.Enabled = false;
+            FavoriteLocation existingFavorite = null;
+            try
+            {
+                existingFavorite = await DatabaseManager.FindFavoriteAsync(currentUserID, currentLat, currentLon);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error checking for existing favorite: {ex.ToString()}");
+                ShowInfoBar("Error checking favorites database.", InfoBarType.Error);
+                this.Cursor = Cursors.Default;
+                buttonAddRemoveFavorites.Enabled = true;
+                return;
+            }
+
+            // 4. Add or Remove based on whether it was found
+            try
+            {
+                bool success = false;
+                if (existingFavorite != null)
+                {
+                    // --- Location IS a favorite, so REMOVE it ---
+                    Console.WriteLine($"Attempting to remove favorite ID: {existingFavorite.FavoriteID}");
+                    success = await DatabaseManager.RemoveFavoriteAsync(existingFavorite.FavoriteID, currentUserID);
+                    if (success)
+                    {
+                        ShowInfoBar($"Removed '{currentLocName}' from favorites.", InfoBarType.Success);
+                        // Update button appearance (example using IconChar)
+                        buttonAddRemoveFavorites.IconChar = IconChar.HeartCirclePlus; // Or regular HeartCrack, Heart, etc.
+                        toolTip.SetToolTip(buttonAddRemoveFavorites, "Add to Favorites"); // Assuming you have a ToolTip component named toolTip
+                    }
+                    else
+                    {
+                        ShowInfoBar($"Failed to remove '{currentLocName}' from favorites.", InfoBarType.Warning);
+                    }
+                }
+                else
+                {
+                    // --- Location IS NOT a favorite, so ADD it ---
+                    Console.WriteLine($"Attempting to add favorite: {currentLocName}");
+                    success = await DatabaseManager.AddFavoriteAsync(currentUserID, currentLocName, currentLat, currentLon);
+                    if (success)
+                    {
+                        ShowInfoBar($"Added '{currentLocName}' to favorites.", InfoBarType.Success);
+                        // Update button appearance
+                        buttonAddRemoveFavorites.IconChar = IconChar.HeartCircleMinus; // Or HeartCircleCheck, Solid Heart, etc.
+                        toolTip.SetToolTip(buttonAddRemoveFavorites, "Remove from Favorites");
+                    }
+                    else
+                    {
+                        ShowInfoBar($"Failed to add '{currentLocName}' to favorites.", InfoBarType.Warning);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error adding/removing favorite: {ex.ToString()}");
+                ShowInfoBar("Error updating favorites database.", InfoBarType.Error);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+                buttonAddRemoveFavorites.Enabled = true;
+            }
+        }
+
+        private void buttonCloseInfoBar_Click(object sender, EventArgs e)
+        {
+            HideInfoBar();
         }
     }
 }

@@ -12,6 +12,8 @@ using WeatherSphereV4.Processes;
 using System.Windows.Data;
 using FontAwesome.Sharp;
 using WeatherSphereV4.Utilities;
+using WeatherSphereV4.Services;
+using static GMap.NET.Entity.OpenStreetMapGeocodeEntity;
 
 namespace WeatherSphereV4
 {
@@ -30,6 +32,62 @@ namespace WeatherSphereV4
             processWeatherData = new ProcessWeatherData();
             processGeocoding = new ProcessGeocoding();
             CenterLoadingSpinner();
+
+            WeatherSharedData.LocationChanged += HandleLocationChanged;
+            this.Disposed += (s, e) => WeatherSharedData.LocationChanged -= HandleLocationChanged;
+        }
+
+        private async void HandleLocationChanged(object sender, EventArgs e)
+        {
+            // Use BeginInvoke/Invoke if mixing threads, but since event is static and UI updates happen,
+            // it's safer, although async void handlers usually run on UI thread in WinForms unless awaited differently.
+            // Using async void directly is often okay here, but check for cross-thread issues if they arise.
+
+            Console.WriteLine("HomeForm Handling LocationChanged Event..."); // For Debugging
+
+            // Get the latest location data
+            string currentLat = WeatherSharedData.Latitude;
+            string currentLon = WeatherSharedData.Longitude;
+            string currentLoc = WeatherSharedData.Location;
+
+            // Ensure we have valid data before trying to load
+            if (!string.IsNullOrEmpty(currentLat) && !string.IsNullOrEmpty(currentLon))
+            {
+                // Update the location label immediately
+                if (labelLocation.InvokeRequired)
+                {
+                    labelLocation.Invoke(new Action(() => labelLocation.Text = currentLoc));
+                }
+                else
+                {
+                    labelLocation.Text = currentLoc;
+                }
+
+                // Reload both current weather and forecast for the new location
+                // Use Task.WhenAll to run them concurrently if they are independent
+                try
+                {
+                    // Don't need Show/Hide overlay within the handler if the methods called already do it.
+                    // If Load methods don't show overlay, add ShowLoadingOverlay() here and HideLoadingOverlay() in finally.
+                    await Task.WhenAll(
+                        LoadCurrentWeatherData(currentLat, currentLon),
+                        LoadForecast7Days(currentLat, currentLon)
+                    );
+                }
+                catch (Exception ex)
+                {
+                    // Handle or log potential errors from WhenAll, though individual methods have catches
+                    Console.WriteLine($"Error during HomeForm coordinated data load: {ex.Message}");
+                    // ShowInfoBar is likely called within the Load methods on error already.
+                }
+            }
+            else
+            {
+                Console.WriteLine("HomeForm HandleLocationChanged skipped: Lat/Lon is null/empty.");
+                // Optionally clear UI or show message if location becomes invalid
+                // ClearHomeWeatherDataUI();
+                // ShowInfoBar("Location data is missing.", InfoBarType.Warning);
+            }
         }
 
         private void buttonHomeSearch_MouseEnter(object sender, EventArgs e)
@@ -98,8 +156,33 @@ namespace WeatherSphereV4
             labelCloudCover.Text = $"{current.cloud_cover}%";
             labelPressure.Text = $"{current.pressure_msl} hPa";
 
-            labelSunrise.Text = daily.sunrise[0].Substring(11, 5) + " AM";
-            labelSunset.Text = daily.sunset[0].Substring(11, 5) + " PM";
+            try
+            {
+                if (daily?.sunrise?.Count > 0 && DateTime.TryParse(daily.sunrise[0], out DateTime sunriseTime))
+                {
+                    labelSunrise.Text = sunriseTime.ToString("hh:mm tt"); // Formats as "06:15 AM"
+                }
+                else
+                {
+                    labelSunrise.Text = "--:--"; // Default if data is missing/invalid
+                }
+
+                if (daily?.sunset?.Count > 0 && DateTime.TryParse(daily.sunset[0], out DateTime sunsetTime))
+                {
+                    labelSunset.Text = sunsetTime.ToString("hh:mm tt"); // Formats as "06:30 PM"
+                }
+                else
+                {
+                    labelSunset.Text = "--:--"; // Default if data is missing/invalid
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error parsing sunrise/sunset times: {ex.Message}");
+                labelSunrise.Text = "Error";
+                labelSunset.Text = "Error";
+            }
+
             labelUVIndex.Text = daily.uv_index_max[0].ToString();
 
             DateTime date = DateTime.Parse(current.time);
@@ -243,13 +326,11 @@ namespace WeatherSphereV4
 
             if (!string.IsNullOrEmpty(lat) && !string.IsNullOrEmpty(lon))
             {
-                WeatherSharedData.Latitude = lat;
-                WeatherSharedData.Longitude = lon;
 
                 string address = await processGeocoding.GetCompleteAddressFromSearchTerm(location);
-                labelLocation.Text = address;
-                WeatherSharedData.Location = address;
+                WeatherSharedData.SetLocationData(lat, lon, address);
 
+                labelLocation.Text = address;
                 // Load data using shared coordinates
                 await LoadCurrentWeatherData(lat, lon);
                 await LoadForecast7Days(lat, lon);
@@ -409,6 +490,27 @@ namespace WeatherSphereV4
         private void buttonCloseInfoBar_Click(object sender, EventArgs e)
         {
             HideInfoBar();
+        }
+
+        private void HomeForm_Load(object sender, EventArgs e)
+        {
+            // Check if location data is already available when the form loads
+            // and trigger the handler to load the data.
+            // This ensures data loads the first time the form is shown,
+            // even though it missed the initial event from BaseForm.
+            if (!string.IsNullOrEmpty(WeatherSharedData.Latitude) && !string.IsNullOrEmpty(WeatherSharedData.Longitude))
+            {
+                Console.WriteLine("HomeForm_Load triggering initial data load via HandleLocationChanged...");
+                // Call the existing handler to load data using the current WeatherSharedData
+                HandleLocationChanged(this, EventArgs.Empty);
+            }
+            else
+            {
+                Console.WriteLine("HomeForm_Load skipped initial load: Lat/Lon is null/empty.");
+                // Optionally show a message asking user to search, or wait for BaseForm detection
+                // ShowInfoBar("Please search for a location.", InfoBarType.Info);
+                // Or rely on HandleLocationChanged to eventually get called if BaseForm is slow
+            }
         }
     }
 }

@@ -13,6 +13,7 @@ using GMap.NET.WindowsForms;
 using GMap.NET;
 using WeatherSphereV4.Utilities;
 using FontAwesome.Sharp;
+using WeatherSphereV4.Services;
 
 namespace WeatherSphereV4
 {
@@ -25,6 +26,7 @@ namespace WeatherSphereV4
         string lat = WeatherSharedData.Latitude;
         string lon = WeatherSharedData.Longitude;
         string location = WeatherSharedData.Location;
+        private bool isUpdatingFromExternalEvent = false;
 
         private Point mouseDownPosition;
         private double lastZoomLevel;
@@ -37,6 +39,9 @@ namespace WeatherSphereV4
             processWeatherData = new ProcessWeatherData();
             processGeocoding = new ProcessGeocoding();
 
+            WeatherSharedData.LocationChanged += HandleLocationChanged;
+            this.Disposed += (s, e) => WeatherSharedData.LocationChanged -= HandleLocationChanged;
+
             gMapControl.MapProvider = GMap.NET.MapProviders.GMapProviders.GoogleMap;
             gMapControl.Dock = DockStyle.Fill;
             GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
@@ -48,6 +53,39 @@ namespace WeatherSphereV4
             gMapControl.Zoom = 12;
             AddMarker();
             LoadCurrentWeatherData(lat, lon, location);
+        }
+
+        private void HandleLocationChanged(object sender, EventArgs e)
+        {
+            if (this.IsHandleCreated && !this.IsDisposed)
+            {
+                textboxHomeSearch.Text = "";
+                this.BeginInvoke(new Action(() => {
+                    // --- READ SHARED DATA *INSIDE* BEGININVOKE ---
+                    string newLat = WeatherSharedData.Latitude;
+                    string newLon = WeatherSharedData.Longitude;
+                    string newLoc = WeatherSharedData.Location;
+                    // ---------------------------------------------
+
+                    Console.WriteLine($"MapsForm HandleLocationChanged - Read from WeatherSharedData: Lat={newLat}, Lon={newLon}, Loc={newLoc}");
+
+                    if (!string.IsNullOrEmpty(newLat) && !string.IsNullOrEmpty(newLon))
+                    {
+                        this.lat = newLat;
+                        this.lon = newLon;
+                        this.location = newLoc; // Use the location name from the event
+                        this.lastZoomLevel = gMapControl.Zoom;
+
+                        this.isUpdatingFromExternalEvent = true;
+                        GoToCoordinate();
+                    }
+                    else
+                    {
+                        Console.WriteLine("MapsForm HandleLocationChanged skipped: Lat/Lon is null/empty.");
+                        // ClearMapWeatherDataUI(); // Optional: Reset UI if location becomes invalid
+                    }
+                }));
+            }
         }
 
         private void buttonHomeSearch_MouseEnter(object sender, EventArgs e)
@@ -96,17 +134,56 @@ namespace WeatherSphereV4
 
         private async void GoToCoordinate()
         {
-            gMapControl.Position = new PointLatLng(Convert.ToDouble(lat), Convert.ToDouble(lon));
+            Console.WriteLine($"MapsForm GoToCoordinate - Using internal state: Lat={this.lat}, Lon={this.lon}, Loc={this.location}");
+            string locationToLoad = this.location; // Start with the current internal location name
 
-            // Restore the previous zoom level instead of resetting
-            gMapControl.Zoom = lastZoomLevel;
-            gMapControl.Update();
+            try // Add try block for finally
+            {
+                if (double.TryParse(this.lat, out double latDouble) && double.TryParse(this.lon, out double lonDouble))
+                {
+                    gMapControl.Position = new PointLatLng(latDouble, lonDouble);
+                    gMapControl.Zoom = this.lastZoomLevel;
+                    gMapControl.Update();
+                    AddMarker();
 
-            AddMarker();
+                    // --- CHECK FLAG BEFORE REVERSE GEOCODE ---
+                    if (!this.isUpdatingFromExternalEvent)
+                    {
+                        // Only reverse geocode if the action originated from map click/search
+                        Console.WriteLine("MapsForm GoToCoordinate - Performing reverse geocode...");
+                        try
+                        {
+                            locationToLoad = await processGeocoding.GetCompleteAddressFromCoordinates(this.lat, this.lon);
+                            this.location = locationToLoad; // Update internal field only if reverse geocoded
+                            Console.WriteLine($"MapsForm GoToCoordinate - Reverse Geocoded Location: {locationToLoad}");
+                        }
+                        catch (Exception rgEx)
+                        {
+                            Console.WriteLine($"MapsForm GoToCoordinate - Reverse Geocoding failed: {rgEx.Message}");
+                            // Keep the existing this.location if reverse geocode fails
+                            locationToLoad = this.location;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("MapsForm GoToCoordinate - Skipping reverse geocode due to external event.");
+                        locationToLoad = this.location; // Ensure we use the name from WeatherSharedData
+                    }
+                    // --- END CHECK ---
 
-            // Reverse geocode asynchronously
-            location = await processGeocoding.GetCompleteAddressFromCoordinates(lat, lon);
-            await LoadCurrentWeatherData(lat, lon, location);
+                    await LoadCurrentWeatherData(this.lat, this.lon, locationToLoad);
+                }
+                else
+                {
+                    Console.WriteLine($"MapsForm GoToCoordinate - Invalid lat/lon format: Lat={this.lat}, Lon={this.lon}");
+                    ShowInfoBar("Invalid coordinates received.", InfoBarType.Error);
+                }
+            }
+            finally
+            {
+                // --- RESET FLAG ---
+                this.isUpdatingFromExternalEvent = false;
+            }
         }
 
         private void AddMarker()

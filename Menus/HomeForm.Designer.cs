@@ -378,13 +378,12 @@
             tableLayoutPanel7.Dock = DockStyle.Fill;
             tableLayoutPanel7.Location = new Point(0, 20);
             tableLayoutPanel7.Name = "tableLayoutPanel7";
-            tableLayoutPanel7.RowCount = 6;
+            tableLayoutPanel7.RowCount = 5;
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel7.Size = new Size(115, 247);
             tableLayoutPanel7.TabIndex = 6;
             // 
@@ -395,7 +394,7 @@
             label7Temperature.BackColor = Color.Transparent;
             label7Temperature.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label7Temperature.ForeColor = Color.Gainsboro;
-            label7Temperature.Location = new Point(32, 164);
+            label7Temperature.Location = new Point(32, 184);
             label7Temperature.Name = "label7Temperature";
             label7Temperature.Size = new Size(50, 25);
             label7Temperature.TabIndex = 27;
@@ -421,7 +420,7 @@
             label7Description.BackColor = Color.Transparent;
             label7Description.Font = new Font("Segoe UI Semibold", 8F, FontStyle.Bold);
             label7Description.ForeColor = Color.Gainsboro;
-            label7Description.Location = new Point(16, 201);
+            label7Description.Location = new Point(16, 221);
             label7Description.Name = "label7Description";
             label7Description.Size = new Size(82, 21);
             label7Description.TabIndex = 22;
@@ -442,11 +441,11 @@
             // 
             // picture7
             // 
-            picture7.Anchor = AnchorStyles.None;
             picture7.BackColor = Color.Transparent;
+            picture7.Dock = DockStyle.Fill;
             picture7.Location = new Point(3, 73);
             picture7.Name = "picture7";
-            picture7.Size = new Size(109, 81);
+            picture7.Size = new Size(109, 101);
             picture7.SizeMode = PictureBoxSizeMode.Zoom;
             picture7.TabIndex = 21;
             picture7.TabStop = false;
@@ -544,11 +543,11 @@
             // 
             // picture6
             // 
-            picture6.Anchor = AnchorStyles.None;
             picture6.BackColor = Color.Transparent;
-            picture6.Location = new Point(3, 77);
+            picture6.Dock = DockStyle.Fill;
+            picture6.Location = new Point(3, 73);
             picture6.Name = "picture6";
-            picture6.Size = new Size(109, 93);
+            picture6.Size = new Size(109, 101);
             picture6.SizeMode = PictureBoxSizeMode.Zoom;
             picture6.TabIndex = 21;
             picture6.TabStop = false;
@@ -646,11 +645,11 @@
             // 
             // picture5
             // 
-            picture5.Anchor = AnchorStyles.None;
             picture5.BackColor = Color.Transparent;
-            picture5.Location = new Point(3, 77);
+            picture5.Dock = DockStyle.Fill;
+            picture5.Location = new Point(3, 73);
             picture5.Name = "picture5";
-            picture5.Size = new Size(109, 93);
+            picture5.Size = new Size(109, 101);
             picture5.SizeMode = PictureBoxSizeMode.Zoom;
             picture5.TabIndex = 21;
             picture5.TabStop = false;
@@ -748,11 +747,11 @@
             // 
             // picture4
             // 
-            picture4.Anchor = AnchorStyles.None;
             picture4.BackColor = Color.Transparent;
-            picture4.Location = new Point(3, 77);
+            picture4.Dock = DockStyle.Fill;
+            picture4.Location = new Point(3, 73);
             picture4.Name = "picture4";
-            picture4.Size = new Size(109, 93);
+            picture4.Size = new Size(109, 101);
             picture4.SizeMode = PictureBoxSizeMode.Zoom;
             picture4.TabIndex = 21;
             picture4.TabStop = false;
@@ -850,11 +849,11 @@
             // 
             // picture3
             // 
-            picture3.Anchor = AnchorStyles.None;
             picture3.BackColor = Color.Transparent;
-            picture3.Location = new Point(3, 77);
+            picture3.Dock = DockStyle.Fill;
+            picture3.Location = new Point(3, 73);
             picture3.Name = "picture3";
-            picture3.Size = new Size(109, 93);
+            picture3.Size = new Size(109, 101);
             picture3.SizeMode = PictureBoxSizeMode.Zoom;
             picture3.TabIndex = 21;
             picture3.TabStop = false;
@@ -952,11 +951,11 @@
             // 
             // picture2
             // 
-            picture2.Anchor = AnchorStyles.None;
             picture2.BackColor = Color.Transparent;
-            picture2.Location = new Point(3, 77);
+            picture2.Dock = DockStyle.Fill;
+            picture2.Location = new Point(3, 73);
             picture2.Name = "picture2";
-            picture2.Size = new Size(109, 93);
+            picture2.Size = new Size(109, 101);
             picture2.SizeMode = PictureBoxSizeMode.Zoom;
             picture2.TabIndex = 21;
             picture2.TabStop = false;
@@ -1041,11 +1040,11 @@
             // 
             // picture1
             // 
-            picture1.Anchor = AnchorStyles.None;
             picture1.BackColor = Color.Transparent;
-            picture1.Location = new Point(3, 72);
+            picture1.Dock = DockStyle.Fill;
+            picture1.Location = new Point(3, 63);
             picture1.Name = "picture1";
-            picture1.Size = new Size(109, 93);
+            picture1.Size = new Size(109, 111);
             picture1.SizeMode = PictureBoxSizeMode.Zoom;
             picture1.TabIndex = 17;
             picture1.TabStop = false;
@@ -1588,6 +1587,7 @@
             Controls.Add(panelLoadingOverlay);
             Name = "HomeForm";
             Size = new Size(1182, 744);
+            Load += HomeForm_Load;
             Resize += HomeForm_Resize;
             panelMain.ResumeLayout(false);
             panelMain.PerformLayout();
