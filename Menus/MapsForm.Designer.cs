@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MapsForm));
             panelMain = new Panel();
             panelSearch = new WeatherSphereV4.CustomControls.CustomPanel();
             buttonHomeSearch = new FontAwesome.Sharp.IconButton();
@@ -40,10 +41,19 @@
             pictureWeatherIcon = new PictureBox();
             panelMap = new Panel();
             gMapControl = new GMap.NET.WindowsForms.GMapControl();
+            panelInfoBar = new Panel();
+            labelInfoBarMessage = new Label();
+            buttonCloseInfoBar = new FontAwesome.Sharp.IconButton();
+            iconInfoBar = new FontAwesome.Sharp.IconButton();
+            panelLoadingOverlay = new Panel();
+            pictureLoadingSpinner = new PictureBox();
             panelMain.SuspendLayout();
             panelSearch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureWeatherIcon).BeginInit();
             panelMap.SuspendLayout();
+            panelInfoBar.SuspendLayout();
+            panelLoadingOverlay.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureLoadingSpinner).BeginInit();
             SuspendLayout();
             // 
             // panelMain
@@ -175,9 +185,9 @@
             // 
             panelMap.Controls.Add(gMapControl);
             panelMap.Dock = DockStyle.Fill;
-            panelMap.Location = new Point(335, 0);
+            panelMap.Location = new Point(335, 35);
             panelMap.Name = "panelMap";
-            panelMap.Size = new Size(847, 744);
+            panelMap.Size = new Size(847, 709);
             panelMap.TabIndex = 5;
             // 
             // gMapControl
@@ -203,12 +213,89 @@
             gMapControl.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             gMapControl.SelectedAreaFillColor = Color.FromArgb(33, 65, 105, 225);
             gMapControl.ShowTileGridLines = false;
-            gMapControl.Size = new Size(847, 744);
+            gMapControl.Size = new Size(847, 709);
             gMapControl.TabIndex = 0;
             gMapControl.Zoom = 0D;
             gMapControl.MouseClick += gMapControl_MouseClick;
             gMapControl.MouseDown += gMapControl_MouseDown;
             gMapControl.MouseUp += gMapControl_MouseUp;
+            // 
+            // panelInfoBar
+            // 
+            panelInfoBar.BackColor = Color.CornflowerBlue;
+            panelInfoBar.Controls.Add(labelInfoBarMessage);
+            panelInfoBar.Controls.Add(buttonCloseInfoBar);
+            panelInfoBar.Controls.Add(iconInfoBar);
+            panelInfoBar.Dock = DockStyle.Top;
+            panelInfoBar.Location = new Point(335, 0);
+            panelInfoBar.Name = "panelInfoBar";
+            panelInfoBar.Size = new Size(847, 35);
+            panelInfoBar.TabIndex = 43;
+            panelInfoBar.Visible = false;
+            // 
+            // labelInfoBarMessage
+            // 
+            labelInfoBarMessage.Dock = DockStyle.Fill;
+            labelInfoBarMessage.Location = new Point(35, 0);
+            labelInfoBarMessage.Name = "labelInfoBarMessage";
+            labelInfoBarMessage.Padding = new Padding(5, 0, 0, 0);
+            labelInfoBarMessage.Size = new Size(777, 35);
+            labelInfoBarMessage.TabIndex = 2;
+            labelInfoBarMessage.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // buttonCloseInfoBar
+            // 
+            buttonCloseInfoBar.Dock = DockStyle.Right;
+            buttonCloseInfoBar.Enabled = false;
+            buttonCloseInfoBar.FlatAppearance.BorderSize = 0;
+            buttonCloseInfoBar.FlatStyle = FlatStyle.Flat;
+            buttonCloseInfoBar.IconChar = FontAwesome.Sharp.IconChar.XmarkCircle;
+            buttonCloseInfoBar.IconColor = Color.White;
+            buttonCloseInfoBar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            buttonCloseInfoBar.IconSize = 27;
+            buttonCloseInfoBar.Location = new Point(812, 0);
+            buttonCloseInfoBar.Name = "buttonCloseInfoBar";
+            buttonCloseInfoBar.Size = new Size(35, 35);
+            buttonCloseInfoBar.TabIndex = 1;
+            buttonCloseInfoBar.UseVisualStyleBackColor = true;
+            buttonCloseInfoBar.Click += buttonCloseInfoBar_Click;
+            // 
+            // iconInfoBar
+            // 
+            iconInfoBar.Dock = DockStyle.Left;
+            iconInfoBar.Enabled = false;
+            iconInfoBar.FlatAppearance.BorderSize = 0;
+            iconInfoBar.FlatStyle = FlatStyle.Flat;
+            iconInfoBar.IconChar = FontAwesome.Sharp.IconChar.Info;
+            iconInfoBar.IconColor = Color.White;
+            iconInfoBar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iconInfoBar.IconSize = 27;
+            iconInfoBar.Location = new Point(0, 0);
+            iconInfoBar.Name = "iconInfoBar";
+            iconInfoBar.Size = new Size(35, 35);
+            iconInfoBar.TabIndex = 0;
+            iconInfoBar.UseVisualStyleBackColor = true;
+            // 
+            // panelLoadingOverlay
+            // 
+            panelLoadingOverlay.Controls.Add(pictureLoadingSpinner);
+            panelLoadingOverlay.Dock = DockStyle.Fill;
+            panelLoadingOverlay.Location = new Point(0, 0);
+            panelLoadingOverlay.Name = "panelLoadingOverlay";
+            panelLoadingOverlay.Size = new Size(1182, 744);
+            panelLoadingOverlay.TabIndex = 49;
+            panelLoadingOverlay.Visible = false;
+            // 
+            // pictureLoadingSpinner
+            // 
+            pictureLoadingSpinner.Anchor = AnchorStyles.None;
+            pictureLoadingSpinner.Image = (Image)resources.GetObject("pictureLoadingSpinner.Image");
+            pictureLoadingSpinner.Location = new Point(335, 86);
+            pictureLoadingSpinner.Name = "pictureLoadingSpinner";
+            pictureLoadingSpinner.Size = new Size(498, 498);
+            pictureLoadingSpinner.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureLoadingSpinner.TabIndex = 13;
+            pictureLoadingSpinner.TabStop = false;
             // 
             // MapsForm
             // 
@@ -216,7 +303,9 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(50, 50, 79);
             Controls.Add(panelMap);
+            Controls.Add(panelInfoBar);
             Controls.Add(panelMain);
+            Controls.Add(panelLoadingOverlay);
             Name = "MapsForm";
             Size = new Size(1182, 744);
             panelMain.ResumeLayout(false);
@@ -225,6 +314,9 @@
             panelSearch.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureWeatherIcon).EndInit();
             panelMap.ResumeLayout(false);
+            panelInfoBar.ResumeLayout(false);
+            panelLoadingOverlay.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureLoadingSpinner).EndInit();
             ResumeLayout(false);
         }
 
@@ -247,5 +339,11 @@
         private PictureBox pictureWeatherIcon;
         private Panel panelMap;
         private GMap.NET.WindowsForms.GMapControl gMapControl;
+        private Panel panelInfoBar;
+        private Label labelInfoBarMessage;
+        private FontAwesome.Sharp.IconButton buttonCloseInfoBar;
+        private FontAwesome.Sharp.IconButton iconInfoBar;
+        private Panel panelLoadingOverlay;
+        private PictureBox pictureLoadingSpinner;
     }
 }

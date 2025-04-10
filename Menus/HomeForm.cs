@@ -10,12 +10,17 @@ using System.Windows.Forms;
 using WeatherSphereV4.Models;
 using WeatherSphereV4.Processes;
 using System.Windows.Data;
+using FontAwesome.Sharp;
+using WeatherSphereV4.Utilities;
 
 namespace WeatherSphereV4
 {
     public partial class HomeForm : UserControl
     {
-        private string siteUrl = "https://api.open-meteo.com/v1/forecast";
+        private const string ApiBaseUrl = "https://api.open-meteo.com/v1/forecast";
+        private const string CurrentWeatherParameters = "is_day,weather_code,temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,cloud_cover,pressure_msl";
+        private const string DailyWeatherParameters = "sunrise,sunset,uv_index_max";
+        private const string Forecast7DaysParameters = "weather_code,temperature_2m_mean,sunrise,sunset";
         private ProcessWeatherData processWeatherData;
         private ProcessGeocoding processGeocoding;
         bool isDay;
@@ -25,40 +30,64 @@ namespace WeatherSphereV4
             InitializeComponent();
             processWeatherData = new ProcessWeatherData();
             processGeocoding = new ProcessGeocoding();
+            CenterLoadingSpinner();
         }
 
         private void buttonHomeSearch_MouseEnter(object sender, EventArgs e)
         {
-            buttonHomeSearch.IconSize = 45;
+            UIHelper.SetIconButtonSize(sender, UIHelper.IconSizeSearchHover);
         }
 
         private void buttonHomeSearch_MouseLeave(object sender, EventArgs e)
         {
-            buttonHomeSearch.IconSize = 35;
+            UIHelper.SetIconButtonSize(sender, UIHelper.IconSizeSearchDefault);
         }
 
         private async Task LoadCurrentWeatherData(string lat, string lon)
         {
-            string current = "is_day,weather_code,temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,cloud_cover,pressure_msl";
-            string daily = "sunrise,sunset,uv_index_max";
-            string endpoint = $"?latitude={lat}&longitude={lon}&daily={daily}&current={current}";
-            string final = $"{endpoint}&timezone=auto&forecast_days=1";
+            HideInfoBar();
+            ShowLoadingOverlay();
+            buttonHomeSearch.Enabled = false;
 
-            string jsonString = await processWeatherData.GetJsonString(siteUrl, final);
-
-            if (string.IsNullOrEmpty(jsonString))
+            try
             {
-                MessageBox.Show("Failed to load weather data.");
-                return;
+                string endpoint = $"?latitude={lat}&longitude={lon}&daily={DailyWeatherParameters}&current={CurrentWeatherParameters}";
+                string final = $"{ApiBaseUrl}{endpoint}&timezone=auto&forecast_days=1";
+
+                string jsonString = await processWeatherData.GetJsonString(final);
+
+                if (string.IsNullOrEmpty(jsonString))
+                {
+                    throw new Exception("Received empty response from weather API."); // Treat empty as error
+                }
+
+                // Deserialize weather data
+                CurrentWeatherData weatherData = processWeatherData.DeserializeCurrentWeatherData(jsonString);
+                CurrentWeather currentWeather = weatherData.currentWeather;
+                DailyWeather dailyWeather = weatherData.dailyWeather;
+
+                UpdateWeatherUI(currentWeather, dailyWeather);
+
+                // Optionally show success message briefly:
+                // ShowInfoBar("Current weather updated.", InfoBarType.Success);
+                // Consider using a Timer to hide success message after a few seconds
             }
+            catch (Exception ex)
+            {
+                // Log the full error details for debugging
+                Console.WriteLine($"ERROR loading current weather data: {ex.ToString()}");
 
-            // 🌥️ Deserialize weather data
-            CurrentWeatherData weatherData = processWeatherData.DeserializeCurrentWeatherData(jsonString);
-            CurrentWeather currentWeather = weatherData.currentWeather;
-            DailyWeather dailyWeather = weatherData.dailyWeather;
+                // Show user-friendly error message in the Info Bar
+                ShowInfoBar($"Error loading current weather: {ex.Message}", InfoBarType.Error); // Show specific ex.Message
 
-            // ✅ Update UI with weather data
-            UpdateWeatherUI(currentWeather, dailyWeather);
+                // Reset the UI elements to a default/empty state
+                ClearHomeWeatherDataUI(); // Call the specific reset method for this form
+            }
+            finally
+            {
+                HideLoadingOverlay();
+                buttonHomeSearch.Enabled = true;
+            }
         }
 
         private async void UpdateWeatherUI(CurrentWeather current, DailyWeather daily)
@@ -74,38 +103,60 @@ namespace WeatherSphereV4
             labelSunset.Text = daily.sunset[0].Substring(11, 5) + " PM";
             labelUVIndex.Text = daily.uv_index_max[0].ToString();
 
-            // 🕰️ Display the current date
             DateTime date = DateTime.Parse(current.time);
             labelCurrentDate.Text = date.ToString("dddd, MMMM dd, yyyy");
 
             var condition = WeatherCodeDescription.GetCondition(current.weather_code);
             labelDescription.Text = condition.Description;
 
-            // 🌟 Display GIF icon dynamically
             isDay = current.is_day == 1;
             string icon = isDay ? condition.DayIcon : condition.NightIcon;
-            DisplayWeatherIcon(pictureWeatherIcon, icon);
+            UIHelper.DisplayWeatherIcon(pictureWeatherIcon, icon);
         }
 
         private async Task LoadForecast7Days(string lat, string lon)
         {
-            string parameters = "weather_code,temperature_2m_mean,sunrise,sunset";
-            string endpoint = $"?latitude={lat}&longitude={lon}&daily={parameters}";
-            string final = $"{endpoint}&timezone=auto";
+            HideInfoBar();           // Clear previous info/error messages
+            ShowLoadingOverlay();
+            buttonHomeSearch.Enabled = false;
 
-            string jsonString = await processWeatherData.GetJsonString(siteUrl, final);
-
-            if (string.IsNullOrEmpty(jsonString))
+            try
             {
-                MessageBox.Show("Failed to load forecast data.");
-                return;
+                string endpoint = $"?latitude={lat}&longitude={lon}&daily={Forecast7DaysParameters}";
+                string final = $"{ApiBaseUrl}{endpoint}&timezone=auto";
+
+                string jsonString = await processWeatherData.GetJsonString(final);
+
+                if (string.IsNullOrEmpty(jsonString))
+                {
+                    throw new Exception("Received empty response from weather API."); // Treat empty as error
+                }
+
+                Forecast7Days forecastData = processWeatherData.DeserializeForecast7Days(jsonString);
+                DailyForecast dailyForecast = forecastData.dailyForecast;
+
+                UpdateForecastUI(dailyForecast);
+
+                // Optionally show success message briefly:
+                // ShowInfoBar("Current weather updated.", InfoBarType.Success);
+                // Consider using a Timer to hide success message after a few seconds
             }
+            catch (Exception ex)
+            {
+                // Log the full error details for debugging
+                Console.WriteLine($"ERROR loading current weather data: {ex.ToString()}");
 
-            // 🌥️ Deserialize forecast data
-            Forecast7Days forecastData = processWeatherData.DeserializeForecast7Days(jsonString);
-            DailyForecast dailyForecast = forecastData.dailyForecast;
+                // Show user-friendly error message in the Info Bar
+                ShowInfoBar($"Error loading current weather: {ex.Message}", InfoBarType.Error); // Show specific ex.Message
 
-            UpdateForecastUI(dailyForecast);
+                // Reset the UI elements to a default/empty state
+                ClearHomeWeatherDataUI(); // Call the specific reset method for this form
+            }
+            finally
+            {
+                HideLoadingOverlay();
+                buttonHomeSearch.Enabled = true;
+            }
         }
 
         private async void UpdateForecastUI(DailyForecast dailyForecast)
@@ -138,7 +189,6 @@ namespace WeatherSphereV4
             label7Day.Text = date7.ToString("dddd");
             label7Date.Text = date7.ToString("MMM dd");
 
-            // 🌤️ Display temperature
             label1Temperature.Text = $"{dailyForecast.temperature_2m_mean[0]}°C";
             label2Temperature.Text = $"{dailyForecast.temperature_2m_mean[1]}°C";
             label3Temperature.Text = $"{dailyForecast.temperature_2m_mean[2]}°C";
@@ -163,7 +213,6 @@ namespace WeatherSphereV4
             label6Description.Text = condition6.Description;
             label7Description.Text = condition7.Description;
 
-            // 🌟 Display GIF icon dynamically
             string icon1 = isDay ? condition1.DayIcon : condition1.NightIcon;
             string icon2 = isDay ? condition2.DayIcon : condition2.NightIcon;
             string icon3 = isDay ? condition3.DayIcon : condition3.NightIcon;
@@ -172,36 +221,15 @@ namespace WeatherSphereV4
             string icon6 = isDay ? condition6.DayIcon : condition6.NightIcon;
             string icon7 = isDay ? condition7.DayIcon : condition7.NightIcon;
 
-            DisplayWeatherIcon(picture1, icon1);
-            DisplayWeatherIcon(picture2, icon2);
-            DisplayWeatherIcon(picture3, icon3);
-            DisplayWeatherIcon(picture4, icon4);
-            DisplayWeatherIcon(picture5, icon5);
-            DisplayWeatherIcon(picture6, icon6);
-            DisplayWeatherIcon(picture7, icon7);
+            UIHelper.DisplayWeatherIcon(picture1, icon1);
+            UIHelper.DisplayWeatherIcon(picture2, icon2);
+            UIHelper.DisplayWeatherIcon(picture3, icon3);
+            UIHelper.DisplayWeatherIcon(picture4, icon4);
+            UIHelper.DisplayWeatherIcon(picture5, icon5);
+            UIHelper.DisplayWeatherIcon(picture6, icon6);
+            UIHelper.DisplayWeatherIcon(picture7, icon7);
         }
 
-        private void DisplayWeatherIcon(PictureBox pictureBox, string icon)
-        {
-            try
-            {
-                string iconPath = $@"{Application.StartupPath}\Icons\{icon}.gif";
-                if (System.IO.File.Exists(iconPath))
-                {
-                    pictureBox.ImageLocation = iconPath;
-                }
-                else
-                {
-                    pictureBox.ImageLocation = $@"{Application.StartupPath}\Icons\unknown.gif";
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading icon: {ex.Message}");
-            }
-        }
-
-        // 🔍 Search button click event
         private async void buttonHomeSearch_Click(object sender, EventArgs e)
         {
             string location = textboxHomeSearch.Text;
@@ -216,16 +244,14 @@ namespace WeatherSphereV4
 
             if (!string.IsNullOrEmpty(lat) && !string.IsNullOrEmpty(lon))
             {
-                // ✅ Store the searched location in shared data
                 WeatherSharedData.Latitude = lat;
                 WeatherSharedData.Longitude = lon;
 
-                // 📍 Display location
                 string address = await processGeocoding.GetCompleteAddressFromSearchTerm(location);
                 labelLocation.Text = address;
                 WeatherSharedData.Location = address;
 
-                // ✅ Load data using shared coordinates
+                // Load data using shared coordinates
                 await LoadCurrentWeatherData(lat, lon);
                 await LoadForecast7Days(lat, lon);
             }
@@ -235,6 +261,164 @@ namespace WeatherSphereV4
             }
         }
 
+        private void ClearHomeWeatherDataUI()
+        {
+            // Reset labels to default state
+            labelTemperature.Text = "--°C";
+            labelFeelsLike.Text = "Feels like --°C";
+            labelHumidity.Text = "--%";
+            labelWindSpeed.Text = "-- m/s";
+            labelCloudCover.Text = "--%";
+            labelPressure.Text = "-- hPa";
+            labelSunrise.Text = "--:-- AM";
+            labelSunset.Text = "--:-- PM";
+            labelUVIndex.Text = "--";
+            labelCurrentDate.Text = "----, ---- --, ----";
+            labelDescription.Text = "Weather description";
+            labelLocation.Text = "Loading location..."; // Or keep previous location? Decide UX.
+
+            // Reset forecast labels/icons
+            label1Day.Text = "Day"; label1Date.Text = "Date"; label1Temperature.Text = "--°C"; label1Description.Text = "-"; UIHelper.DisplayWeatherIcon(picture1, null);
+            label2Day.Text = "Day"; label2Date.Text = "Date"; label2Temperature.Text = "--°C"; label2Description.Text = "-"; UIHelper.DisplayWeatherIcon(picture2, null);
+            // ... Repeat for labels 3-7 and pictures 3-7 ...
+            label7Day.Text = "Day"; label7Date.Text = "Date"; label7Temperature.Text = "--°C"; label7Description.Text = "-"; UIHelper.DisplayWeatherIcon(picture7, null);
+
+            // Hide main weather icon
+            UIHelper.DisplayWeatherIcon(pictureWeatherIcon, null); // Will hide it if unknown.gif is missing, or show unknown.gif
+        }
+
+        #region Loading Overlay & Info Bar Helpers
+
+        /// <summary>
+        /// Centers the loading spinner PictureBox within the overlay panel.
+        /// Call this from constructor/Load and form's Resize event.
+        /// </summary>
+        private void CenterLoadingSpinner()
+        {
+            if (pictureLoadingSpinner != null && panelLoadingOverlay != null)
+            {
+                // Ensure calculations happen on the UI thread if needed, though Resize/Load usually are.
+                int x = (panelLoadingOverlay.ClientSize.Width - pictureLoadingSpinner.Width) / 2;
+                int y = (panelLoadingOverlay.ClientSize.Height - pictureLoadingSpinner.Height) / 2;
+                // Prevent negative coordinates if spinner is larger than panel
+                pictureLoadingSpinner.Location = new Point(Math.Max(0, x), Math.Max(0, y));
+            }
+        }
+
+        /// <summary>
+        /// Shows the loading overlay.
+        /// </summary>
+        private void ShowLoadingOverlay()
+        {
+            if (panelLoadingOverlay.InvokeRequired)
+            {
+                panelLoadingOverlay.Invoke(new Action(ShowLoadingOverlay));
+                return;
+            }
+            CenterLoadingSpinner(); // Recenter before showing
+            panelLoadingOverlay.Visible = true;
+            panelLoadingOverlay.BringToFront();
+        }
+
+        /// <summary>
+        /// Hides the loading overlay.
+        /// </summary>
+        private void HideLoadingOverlay()
+        {
+            if (panelLoadingOverlay.InvokeRequired)
+            {
+                panelLoadingOverlay.Invoke(new Action(HideLoadingOverlay));
+                return;
+            }
+            panelLoadingOverlay.Visible = false;
+        }
+
+        /// <summary>
+        /// Shows the Info Bar panel with a message and appropriate styling.
+        /// </summary>
+        /// <param name="message">The message to display.</param>
+        /// <param name="messageType">Type of message (Info, Success, Warning, Error).</param>
+        private void ShowInfoBar(string message, InfoBarType messageType = InfoBarType.Info)
+        {
+            if (panelInfoBar.InvokeRequired)
+            {
+                panelInfoBar.Invoke(new Action(() => ShowInfoBar(message, messageType)));
+                return;
+            }
+
+            labelInfoBarMessage.Text = message;
+            Color backColor = Color.CornflowerBlue; // Default
+            Color foreColor = Color.White;
+            IconChar icon = IconChar.InfoCircle;
+
+            switch (messageType)
+            {
+                case InfoBarType.Error:
+                    backColor = Color.FromArgb(217, 83, 79); // Red
+                    icon = IconChar.TimesCircle; // Use TimesCircle for error
+                    foreColor = Color.White;
+                    break;
+                case InfoBarType.Warning:
+                    backColor = Color.FromArgb(240, 173, 78); // Yellow
+                    icon = IconChar.Warning;
+                    foreColor = Color.Black; // Dark text on yellow
+                    break;
+                case InfoBarType.Success:
+                    backColor = Color.FromArgb(92, 184, 92); // Green
+                    icon = IconChar.CheckCircle;
+                    foreColor = Color.White;
+                    break;
+                case InfoBarType.Info:
+                default:
+                    backColor = Color.FromArgb(91, 192, 222); // Blue
+                    icon = IconChar.InfoCircle;
+                    foreColor = Color.White;
+                    break;
+            }
+
+            panelInfoBar.BackColor = backColor;
+            iconInfoBar.IconChar = icon;
+            iconInfoBar.IconColor = foreColor; // Match icon color to text for consistency
+            buttonCloseInfoBar.IconColor = foreColor; // Match close button icon color too
+            labelInfoBarMessage.ForeColor = foreColor;
+
+
+            panelInfoBar.Visible = true;
+            panelInfoBar.BringToFront(); // Ensure it's visible
+        }
+
+        /// <summary>
+        /// Hides the Info Bar panel.
+        /// </summary>
+        private void HideInfoBar()
+        {
+            if (panelInfoBar.InvokeRequired)
+            {
+                panelInfoBar.Invoke(new Action(HideInfoBar));
+                return;
+            }
+            panelInfoBar.Visible = false;
+        }
+
+        #endregion
+
+        private void HomeForm_Resize(object sender, EventArgs e)
+        {
+            CenterLoadingSpinner();
+        }
+
+        private void buttonCloseInfoBar_Click(object sender, EventArgs e)
+        {
+            HideInfoBar();
+        }
     }
+}
+
+public enum InfoBarType
+{
+    Info,
+    Success,
+    Warning,
+    Error
 }
 

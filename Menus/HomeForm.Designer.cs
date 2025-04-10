@@ -122,6 +122,12 @@
             labelWindSpeedTitle = new Label();
             pictureWindSpeed = new PictureBox();
             labelDetails = new Label();
+            panelLoadingOverlay = new Panel();
+            pictureLoadingSpinner = new PictureBox();
+            panelInfoBar = new Panel();
+            labelInfoBarMessage = new Label();
+            buttonCloseInfoBar = new FontAwesome.Sharp.IconButton();
+            iconInfoBar = new FontAwesome.Sharp.IconButton();
             panelMain.SuspendLayout();
             panelSearch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureWeatherIcon).BeginInit();
@@ -164,6 +170,9 @@
             ((System.ComponentModel.ISupportInitialize)pictureHumidity).BeginInit();
             panelWindSpeed.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureWindSpeed).BeginInit();
+            panelLoadingOverlay.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureLoadingSpinner).BeginInit();
+            panelInfoBar.SuspendLayout();
             SuspendLayout();
             // 
             // panelMain
@@ -369,12 +378,13 @@
             tableLayoutPanel7.Dock = DockStyle.Fill;
             tableLayoutPanel7.Location = new Point(0, 20);
             tableLayoutPanel7.Name = "tableLayoutPanel7";
-            tableLayoutPanel7.RowCount = 5;
+            tableLayoutPanel7.RowCount = 6;
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel7.Size = new Size(115, 247);
             tableLayoutPanel7.TabIndex = 6;
             // 
@@ -385,7 +395,7 @@
             label7Temperature.BackColor = Color.Transparent;
             label7Temperature.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label7Temperature.ForeColor = Color.Gainsboro;
-            label7Temperature.Location = new Point(32, 184);
+            label7Temperature.Location = new Point(32, 164);
             label7Temperature.Name = "label7Temperature";
             label7Temperature.Size = new Size(50, 25);
             label7Temperature.TabIndex = 27;
@@ -411,7 +421,7 @@
             label7Description.BackColor = Color.Transparent;
             label7Description.Font = new Font("Segoe UI Semibold", 8F, FontStyle.Bold);
             label7Description.ForeColor = Color.Gainsboro;
-            label7Description.Location = new Point(16, 221);
+            label7Description.Location = new Point(16, 201);
             label7Description.Name = "label7Description";
             label7Description.Size = new Size(82, 21);
             label7Description.TabIndex = 22;
@@ -434,9 +444,9 @@
             // 
             picture7.Anchor = AnchorStyles.None;
             picture7.BackColor = Color.Transparent;
-            picture7.Location = new Point(3, 77);
+            picture7.Location = new Point(3, 73);
             picture7.Name = "picture7";
-            picture7.Size = new Size(109, 93);
+            picture7.Size = new Size(109, 81);
             picture7.SizeMode = PictureBoxSizeMode.Zoom;
             picture7.TabIndex = 21;
             picture7.TabStop = false;
@@ -1489,16 +1499,96 @@
             labelDetails.TabIndex = 10;
             labelDetails.Text = "Weather Details";
             // 
+            // panelLoadingOverlay
+            // 
+            panelLoadingOverlay.Controls.Add(pictureLoadingSpinner);
+            panelLoadingOverlay.Dock = DockStyle.Fill;
+            panelLoadingOverlay.Location = new Point(0, 0);
+            panelLoadingOverlay.Name = "panelLoadingOverlay";
+            panelLoadingOverlay.Size = new Size(1182, 744);
+            panelLoadingOverlay.TabIndex = 12;
+            panelLoadingOverlay.Visible = false;
+            // 
+            // pictureLoadingSpinner
+            // 
+            pictureLoadingSpinner.Anchor = AnchorStyles.None;
+            pictureLoadingSpinner.Image = (Image)resources.GetObject("pictureLoadingSpinner.Image");
+            pictureLoadingSpinner.Location = new Point(325, 18);
+            pictureLoadingSpinner.Name = "pictureLoadingSpinner";
+            pictureLoadingSpinner.Size = new Size(498, 498);
+            pictureLoadingSpinner.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureLoadingSpinner.TabIndex = 13;
+            pictureLoadingSpinner.TabStop = false;
+            // 
+            // panelInfoBar
+            // 
+            panelInfoBar.BackColor = Color.CornflowerBlue;
+            panelInfoBar.Controls.Add(labelInfoBarMessage);
+            panelInfoBar.Controls.Add(buttonCloseInfoBar);
+            panelInfoBar.Controls.Add(iconInfoBar);
+            panelInfoBar.Dock = DockStyle.Top;
+            panelInfoBar.Location = new Point(335, 0);
+            panelInfoBar.Name = "panelInfoBar";
+            panelInfoBar.Size = new Size(847, 35);
+            panelInfoBar.TabIndex = 42;
+            panelInfoBar.Visible = false;
+            // 
+            // labelInfoBarMessage
+            // 
+            labelInfoBarMessage.Dock = DockStyle.Fill;
+            labelInfoBarMessage.Location = new Point(35, 0);
+            labelInfoBarMessage.Name = "labelInfoBarMessage";
+            labelInfoBarMessage.Padding = new Padding(5, 0, 0, 0);
+            labelInfoBarMessage.Size = new Size(777, 35);
+            labelInfoBarMessage.TabIndex = 2;
+            labelInfoBarMessage.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // buttonCloseInfoBar
+            // 
+            buttonCloseInfoBar.Dock = DockStyle.Right;
+            buttonCloseInfoBar.Enabled = false;
+            buttonCloseInfoBar.FlatAppearance.BorderSize = 0;
+            buttonCloseInfoBar.FlatStyle = FlatStyle.Flat;
+            buttonCloseInfoBar.IconChar = FontAwesome.Sharp.IconChar.XmarkCircle;
+            buttonCloseInfoBar.IconColor = Color.White;
+            buttonCloseInfoBar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            buttonCloseInfoBar.IconSize = 27;
+            buttonCloseInfoBar.Location = new Point(812, 0);
+            buttonCloseInfoBar.Name = "buttonCloseInfoBar";
+            buttonCloseInfoBar.Size = new Size(35, 35);
+            buttonCloseInfoBar.TabIndex = 1;
+            buttonCloseInfoBar.UseVisualStyleBackColor = true;
+            buttonCloseInfoBar.Click += buttonCloseInfoBar_Click;
+            // 
+            // iconInfoBar
+            // 
+            iconInfoBar.Dock = DockStyle.Left;
+            iconInfoBar.Enabled = false;
+            iconInfoBar.FlatAppearance.BorderSize = 0;
+            iconInfoBar.FlatStyle = FlatStyle.Flat;
+            iconInfoBar.IconChar = FontAwesome.Sharp.IconChar.Info;
+            iconInfoBar.IconColor = Color.White;
+            iconInfoBar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iconInfoBar.IconSize = 27;
+            iconInfoBar.Location = new Point(0, 0);
+            iconInfoBar.Name = "iconInfoBar";
+            iconInfoBar.Size = new Size(35, 35);
+            iconInfoBar.TabIndex = 0;
+            iconInfoBar.UseVisualStyleBackColor = true;
+            // 
             // HomeForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Transparent;
             BackgroundImageLayout = ImageLayout.Stretch;
+            Controls.Add(panelInfoBar);
             Controls.Add(panelGeneralInfo);
             Controls.Add(panelMain);
+            Controls.Add(panelLoadingOverlay);
             Name = "HomeForm";
             Size = new Size(1182, 744);
+            Resize += HomeForm_Resize;
             panelMain.ResumeLayout(false);
             panelMain.PerformLayout();
             panelSearch.ResumeLayout(false);
@@ -1558,6 +1648,9 @@
             panelWindSpeed.ResumeLayout(false);
             panelWindSpeed.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureWindSpeed).EndInit();
+            panelLoadingOverlay.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureLoadingSpinner).EndInit();
+            panelInfoBar.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -1657,5 +1750,11 @@
         private TableLayoutPanel tableLayoutPanel5;
         private TableLayoutPanel tableLayoutPanel4;
         private TableLayoutPanel tableLayoutPanel3;
+        private Panel panelLoadingOverlay;
+        private PictureBox pictureLoadingSpinner;
+        private Panel panelInfoBar;
+        private FontAwesome.Sharp.IconButton buttonCloseInfoBar;
+        private FontAwesome.Sharp.IconButton iconInfoBar;
+        private Label labelInfoBarMessage;
     }
 }

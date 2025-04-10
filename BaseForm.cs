@@ -4,6 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 using FontAwesome.Sharp;
 using WeatherSphereV4.CustomControls;
+using WeatherSphereV4.Utilities;
 
 namespace WeatherSphereV4
 {
@@ -341,32 +342,32 @@ namespace WeatherSphereV4
 
         private void buttonNightDayToggle_MouseHover(object sender, EventArgs e)
         {
-            buttonNightDayToggle.IconSize = 70;
+            UIHelper.SetIconButtonSize(sender, UIHelper.IconSizeLargeHover);
         }
 
         private void buttonNightDayToggle_MouseLeave(object sender, EventArgs e)
         {
-            buttonNightDayToggle.IconSize = 55;
+            UIHelper.SetIconButtonSize(sender, UIHelper.IconSizeLargeDefault);
         }
 
         private void buttonAddRemoveFavorites_MouseHover(object sender, EventArgs e)
         {
-            buttonAddRemoveFavorites.IconSize = 70;
+            UIHelper.SetIconButtonSize(sender, UIHelper.IconSizeLargeHover);
         }
 
         private void buttonAddRemoveFavorites_MouseLeave(object sender, EventArgs e)
         {
-            buttonAddRemoveFavorites.IconSize = 55;
+            UIHelper.SetIconButtonSize(sender, UIHelper.IconSizeLargeDefault);
         }
 
         private void buttonRefresh_MouseHover(object sender, EventArgs e)
         {
-            buttonRefresh.IconSize = 70;
+            UIHelper.SetIconButtonSize(sender, UIHelper.IconSizeLargeHover);
         }
 
         private void buttonRefresh_MouseLeave(object sender, EventArgs e)
         {
-            buttonRefresh.IconSize = 55;
+            UIHelper.SetIconButtonSize(sender, UIHelper.IconSizeLargeDefault);
         }
     }
 }

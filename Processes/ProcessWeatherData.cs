@@ -30,11 +30,10 @@ namespace WeatherSphereV4.Processes
             return JsonConvert.DeserializeObject<MonthlyForecastData>(json);
         }
 
-        public async Task<string> GetJsonString(string siteUrl, string final)
+        public async Task<string> GetJsonString(string fullUrl)
         {
             using (HttpClient client = new HttpClient())
             {
-                string fullUrl = siteUrl + final;  // ✅ Ensure full URL is used
                 HttpResponseMessage response = await client.GetAsync(fullUrl);
 
                 if (response.IsSuccessStatusCode)

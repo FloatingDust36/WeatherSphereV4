@@ -37,7 +37,7 @@ namespace WeatherSphereV4.Processes
         }
 
         // 🌍 Reverse Geocoding: Get complete address from latitude & longitude
-        public async Task<string> GetCompleteAddressFromLatLon(string lat, string lon)
+        public async Task<string> GetCompleteAddressFromCoordinates(string lat, string lon)
         {
             try
             {
