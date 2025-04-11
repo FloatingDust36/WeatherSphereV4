@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="WeatherSphereV4.CustomControls.CustomButton" Collapsed="true">
+    <Position X="6.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CECIgAwICKgAAAAAAgvwAIBCUACIAGCAIABAiBBCBAg=</HashCode>
+      <FileName>CustomControls\CustomButton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.CustomControls.CustomForm" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAgAAAAKAAAAAAAAKgAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomControls\CustomForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.CustomControls.CustomPanel" Collapsed="true">
+    <Position X="4.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACIgAAACMAAAABAAAogAAACAAACACCAAAAAgAQAAAA=</HashCode>
+      <FileName>CustomControls\CustomPanel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.AccountForm" Collapsed="true">
+    <Position X="14" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AUgAQAgAAAAAAQCAgAAAAgAgAAAAAAAAAAAAACBBAAA=</HashCode>
+      <FileName>Menus\AccountForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.FavoritesForm" Collapsed="true">
+    <Position X="11.75" Y="2" Width="1.5" />
+    <InheritanceLine Type="System.Windows.Forms.UserControl" ManuallyRouted="true">
+      <Path>
+        <Point X="11.25" Y="1.691" />
+        <Point X="11.25" Y="1.813" />
+        <Point X="12.5" Y="1.813" />
+        <Point X="12.5" Y="2" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>gUAAAAgAACAAIAAAAACABgAiAAQoAgADAAgAEQJAARQ=</HashCode>
+      <FileName>Menus\FavoritesForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.HomeForm" Collapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ccBwJ4hTqCAggECoEhGQAzkqgAToB1UCkPQJKSNAwDU=</HashCode>
+      <FileName>Menus\HomeForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.HourlyForecastForm" Collapsed="true">
+    <Position X="5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AUAAFAxEACAAAACAEACAAggiAgEKAgACAAAIASJAABQ=</HashCode>
+      <FileName>Menus\HourlyForecastForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.LifeForm" Collapsed="true">
+    <Position X="9.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAACAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Menus\LifeForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.MapsForm" Collapsed="true">
+    <Position X="2.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>YUBAIQgQICAAAASAAgCQChiiECRIAwQCAKC5DAJBABQ=</HashCode>
+      <FileName>Menus\MapsForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.MonthlyForecastForm" Collapsed="true">
+    <Position X="7.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AUQABAgAAOAAAxCAABKCSgAiAAAMAgAHAAAIgwJAABQ=</HashCode>
+      <FileName>Menus\MonthlyForecastForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.SettingsForm" Collapsed="true">
+    <Position X="16.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAACAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Menus\SettingsForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.BaseForm" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="WeatherSphereV4.BaseForm.RGBColors" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>BaseForm.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AUoKBRjCICCAMIAACWCAYwE2QBMoQ94DcIAAQKJwgBg=</HashCode>
+      <FileName>BaseForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.CreateAccountForm" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AARAAAABACAACSKQ2ACAQDMaBAATgEAIAAQCgAAABAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.Program" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.Models.Forecast7Days" Collapsed="true">
+    <Position X="7.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAIAAAAAIAACAAAAABAAAgAAAAAAAA=</HashCode>
+      <FileName>Models\7DaysForecastData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.Models.DailyForecast" Collapsed="true">
+    <Position X="9.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAABAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\7DaysForecastData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.Models.CurrentWeatherData" Collapsed="true">
+    <Position X="5.5" Y="3.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAEAQAAAACAAAAAAAAAAAIAACAAAAABAAAgAAAAAAAA=</HashCode>
+      <FileName>Models\CurrentWeatherData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.Models.CurrentWeather" Collapsed="true">
+    <Position X="5.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAABBAAAIABAAAAgAAAAAAAAAAhAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Models\CurrentWeatherData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.Models.DailyWeather" Collapsed="true">
+    <Position X="9.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAEA=</HashCode>
+      <FileName>Models\CurrentWeatherData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.Models.FavoriteLocation" Collapsed="true">
+    <Position X="16.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAEIAIIAAgAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Models\FavoriteLocation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.Models.HourlyForecastData" Collapsed="true">
+    <Position X="11" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAgBAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\HourlyForecastData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.Models.Hourly" Collapsed="true">
+    <Position X="11" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAABBAAAIABAAAAAAAAAAAAAAAhAAAAAAAgAAAAgAAA=</HashCode>
+      <FileName>Models\HourlyForecastData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.Models.Daily" Collapsed="true">
+    <Position X="9.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAABAAAQAAAAAAAAAAEA=</HashCode>
+      <FileName>Models\HourlyForecastData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.Models.IpApiLocationInfo" Collapsed="true">
+    <Position X="16.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEACgAAAAIAAAAAAAAAAoAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Models\IpApiLocationInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.Models.MonthlyForecastData" Collapsed="true">
+    <Position X="12.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\MonthlyForecastData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.Models.DailyInfo" Collapsed="true">
+    <Position X="9.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAABAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\MonthlyForecastData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.Models.WeatherCondition" Collapsed="true">
+    <Position X="14.5" Y="4" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAgAAAAAACgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\WeatherCodeDescription.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.Models.WeatherCodeDescription" Collapsed="true">
+    <Position X="14.5" Y="3.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAIAAACAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\WeatherCodeDescription.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.Processes.ProcessGeocoding" Collapsed="true">
+    <Position X="15.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAgAAAAAAAAAAQAIAAAABAAAACA=</HashCode>
+      <FileName>Processes\ProcessGeocoding.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.Processes.ProcessWeatherData" Collapsed="true">
+    <Position X="17.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAQAAgAAAAAAAEAAAAAADgBAAAAAAAAAAA=</HashCode>
+      <FileName>Processes\ProcessWeatherData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.Services.DatabaseManager" Collapsed="true">
+    <Position X="9.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAEAAgAEMACAIQBAAAAABEEAAAABBQABAA=</HashCode>
+      <FileName>Services\DatabaseManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.Services.WeatherSharedData" Collapsed="true">
+    <Position X="11" Y="7" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAEACAAAgAIIMAACQAAAAAQAEADAAAAAAEAA=</HashCode>
+      <FileName>Services\WeatherSharedData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.UserControls.HourlyControl" Collapsed="true">
+    <Position X="18.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IEAAAQASCCAAABCABACAAAECAAQAAAAAAAAAAQEAACA=</HashCode>
+      <FileName>UserControls\HourlyControl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.UserControls.MonthlyControl" Collapsed="true">
+    <Position X="20.25" Y="2" Width="1.5" />
+    <InheritanceLine Type="System.Windows.Forms.UserControl" FixedFromPoint="true">
+      <Path>
+        <Point X="11.25" Y="1.691" />
+        <Point X="11.25" Y="1.813" />
+        <Point X="21" Y="1.813" />
+        <Point X="21" Y="2" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAACAAAAAABACAAAACAAQAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>UserControls\MonthlyControl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeatherSphereV4.Utilities.UIHelper" Collapsed="true">
+    <Position X="13.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAgCAEAAAAAAAAAAAgAAAAAAAAAAAAAAAAAgABACAA=</HashCode>
+      <FileName>Utilities\UIHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Windows.Forms.UserControl" Collapsed="true">
+    <Position X="10.5" Y="1" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Enum Name="InfoBarType" Collapsed="true">
+    <Position X="2.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAABAAAgAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Menus\HomeForm.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
