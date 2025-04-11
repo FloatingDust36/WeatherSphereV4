@@ -235,7 +235,7 @@ namespace WeatherSphereV4
         private void buttonMaps_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color2);
-            LoadUserControl("Settings", new MapsForm());
+            LoadUserControl("Maps", new MapsForm());
             buttonAddRemoveFavorites.Visible = true; // Show the button when Maps is active
         }
 
@@ -486,7 +486,7 @@ namespace WeatherSphereV4
             UpdateFavoriteButtonState();
         }
 
-        private async void UpdateFavoriteButtonState()
+        public async void UpdateFavoriteButtonState()
         {
             // Check if the *newly shown* control is Home or Maps
             bool showButton = (currentControl is HomeForm || currentControl is MapsForm);
@@ -723,6 +723,78 @@ namespace WeatherSphereV4
         private void buttonCloseInfoBar_Click(object sender, EventArgs e)
         {
             HideInfoBar();
+        }
+
+        private async void buttonRefresh_Click(object sender, EventArgs e)
+        {
+            // Check which control is currently active
+            if (currentControl != null)
+            {
+                Console.WriteLine($"Refresh requested for: {currentControl.GetType().Name}");
+                this.Cursor = Cursors.WaitCursor;
+                buttonRefresh.Enabled = false; // Disable while refreshing
+
+                // Use pattern matching (C# 7+) or if/else if (as BaseForm doesn't know RefreshDataAsync exists)
+                // This calls the specific RefreshDataAsync method on the active control
+                Task refreshTask = null;
+                if (currentControl is HomeForm hf) { refreshTask = hf.RefreshDataAsync(); }
+                else if (currentControl is MapsForm mf) { refreshTask = mf.RefreshDataAsync(); }
+                else if (currentControl is HourlyForecastForm hff) { refreshTask = hff.RefreshDataAsync(); }
+                else if (currentControl is MonthlyForecastForm mff) { refreshTask = mff.RefreshDataAsync(); }
+                else if (currentControl is FavoritesForm ff) { refreshTask = ff.RefreshDataAsync(); }
+                // Add other refreshable forms here if needed
+                // else if (currentControl is SomeOtherForm sof) { refreshTask = sof.RefreshDataAsync(); }
+
+                if (refreshTask != null)
+                {
+                    try
+                    {
+                        await refreshTask; // Wait for the refresh operation to complete
+                        ShowInfoBar("Data refreshed.", InfoBarType.Success); // Optional success feedback
+                                                                             // Use a timer to hide the success message after a few seconds?
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error during refresh: {ex.ToString()}");
+                        // ShowInfoBar should be called by the specific form's load method on error
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Current control does not support refreshing.");
+                    // Maybe show info: ShowInfoBar("Refresh not applicable for this view.", InfoBarType.Info);
+                }
+
+                buttonRefresh.Enabled = true;
+                this.Cursor = Cursors.Default;
+            }
+        }
+
+        /// <summary>
+        /// Activates and loads the UserControl associated with the specified key.
+        /// Simulates clicking the corresponding menu button.
+        /// </summary>
+        /// <param name="viewKey">The key (usually the Tag) associated with the view/button (e.g., "Home", "Maps").</param>
+        public void ShowView(string viewKey)
+        {
+            // Find the button in the menu panel whose Tag matches the viewKey
+            // This assumes you have set the 'Tag' property of your menu IconButtons
+            // in the designer (e.g., buttonHome.Tag = "Home"; buttonMaps.Tag = "Maps"; etc.)
+            IconButton targetButton = panelMenu.Controls.OfType<IconButton>()
+                                          .FirstOrDefault(btn => btn.Tag?.ToString() == viewKey);
+
+            if (targetButton != null)
+            {
+                Console.WriteLine($"BaseForm.ShowView: Found button for key '{viewKey}', performing click.");
+                // Programmatically click the button.
+                // The button's existing Click event handler will call ActivateButton and LoadUserControl.
+                targetButton.PerformClick();
+            }
+            else
+            {
+                Console.WriteLine($"BaseForm.ShowView: Could not find button with Tag '{viewKey}'.");
+                // Optionally show an error or just do nothing
+            }
         }
     }
 }

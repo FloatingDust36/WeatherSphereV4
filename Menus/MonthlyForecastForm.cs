@@ -354,5 +354,19 @@ namespace WeatherSphereV4
             panelInfoBar.Visible = false;
         }
         #endregion
+
+        public async Task RefreshDataAsync()
+        {
+            Console.WriteLine("MonthlyForecastForm RefreshDataAsync called.");
+            // Reload data for the current month/year and current shared location
+            if (!string.IsNullOrEmpty(WeatherSharedData.Latitude) && !string.IsNullOrEmpty(WeatherSharedData.Longitude))
+            {
+                await LoadAndPopulateCalendar(this.currentYear, this.currentMonth);
+            }
+            else
+            {
+                ShowInfoBar("Cannot refresh: Location data missing.", InfoBarType.Warning);
+            }
+        }
     }
 }

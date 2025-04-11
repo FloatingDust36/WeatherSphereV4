@@ -226,9 +226,13 @@ namespace WeatherSphereV4
 
                 UpdateWeatherUI(currentWeather, dailyWeather, location);
 
+                (this.ParentForm as BaseForm)?.UpdateFavoriteButtonState();
+
                 // Optionally show success message briefly:
-                // ShowInfoBar("Current weather updated.", InfoBarType.Success);
-                // Consider using a Timer to hide success message after a few seconds
+                ShowInfoBar("Current weather updated.", InfoBarType.Success);
+                // Hide after a few seconds
+                await Task.Delay(2000);
+                HideInfoBar();
             }
             catch (Exception ex)
             {
@@ -427,6 +431,26 @@ namespace WeatherSphereV4
         private void buttonCloseInfoBar_Click(object sender, EventArgs e)
         {
             HideInfoBar();
+        }
+
+        public async Task RefreshDataAsync()
+        {
+            Console.WriteLine("MapsForm RefreshDataAsync called.");
+            // Reload data for the map's *current* internal location, NOT necessarily WeatherSharedData
+            // Or should it reset to WeatherSharedData? Let's assume reload current view for now.
+            if (!string.IsNullOrEmpty(this.lat) && !string.IsNullOrEmpty(this.lon))
+            {
+                // Reload weather for the coordinates currently centered on the map
+                // We need the location name too. If reverse geocode is expensive, maybe just reload weather?
+                // Let's just reload weather for the current lat/lon/location fields.
+                await LoadCurrentWeatherData(this.lat, this.lon, this.location);
+            }
+            else
+            {
+                // Maybe try reloading based on WeatherSharedData if internal lat/lon are bad?
+                // Or show warning:
+                ShowInfoBar("Cannot refresh: Current map location data missing.", InfoBarType.Warning);
+            }
         }
     }
 }

@@ -297,5 +297,19 @@ namespace WeatherSphereV4
         {
             HideInfoBar();
         }
+
+        public async Task RefreshDataAsync()
+        {
+            Console.WriteLine("HourlyForecastForm RefreshDataAsync called.");
+            // Reload data using the current shared location
+            if (!string.IsNullOrEmpty(WeatherSharedData.Latitude) && !string.IsNullOrEmpty(WeatherSharedData.Longitude))
+            {
+                await LoadHourlyForecast();
+            }
+            else
+            {
+                ShowInfoBar("Cannot refresh: Location data missing.", InfoBarType.Warning);
+            }
+        }
     }
 }

@@ -160,6 +160,7 @@
             buttonRefresh.Size = new Size(100, 73);
             buttonRefresh.TabIndex = 4;
             buttonRefresh.UseVisualStyleBackColor = false;
+            buttonRefresh.Click += buttonRefresh_Click;
             buttonRefresh.MouseLeave += buttonRefresh_MouseLeave;
             buttonRefresh.MouseHover += buttonRefresh_MouseHover;
             // 

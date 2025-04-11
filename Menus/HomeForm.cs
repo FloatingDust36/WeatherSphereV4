@@ -73,6 +73,7 @@ namespace WeatherSphereV4
                         LoadCurrentWeatherData(currentLat, currentLon),
                         LoadForecast7Days(currentLat, currentLon)
                     );
+                    (this.ParentForm as BaseForm)?.UpdateFavoriteButtonState();
                 }
                 catch (Exception ex)
                 {
@@ -334,6 +335,8 @@ namespace WeatherSphereV4
                 // Load data using shared coordinates
                 await LoadCurrentWeatherData(lat, lon);
                 await LoadForecast7Days(lat, lon);
+
+                (this.ParentForm as BaseForm)?.UpdateFavoriteButtonState();
             }
             else
             {
@@ -510,6 +513,32 @@ namespace WeatherSphereV4
                 // Optionally show a message asking user to search, or wait for BaseForm detection
                 // ShowInfoBar("Please search for a location.", InfoBarType.Info);
                 // Or rely on HandleLocationChanged to eventually get called if BaseForm is slow
+            }
+        }
+
+        public async Task RefreshDataAsync()
+        {
+            Console.WriteLine("HomeForm RefreshDataAsync called.");
+            // Reload data using the current shared location
+            if (!string.IsNullOrEmpty(WeatherSharedData.Latitude) && !string.IsNullOrEmpty(WeatherSharedData.Longitude))
+            {
+                // Use Task.WhenAll if appropriate
+                try
+                {
+                    await Task.WhenAll(
+                        LoadCurrentWeatherData(WeatherSharedData.Latitude, WeatherSharedData.Longitude),
+                        LoadForecast7Days(WeatherSharedData.Latitude, WeatherSharedData.Longitude)
+                    );
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error during HomeForm refresh: {ex.Message}");
+                    // Load methods should already show InfoBar on error
+                }
+            }
+            else
+            {
+                ShowInfoBar("Cannot refresh: Location data missing.", InfoBarType.Warning);
             }
         }
     }
