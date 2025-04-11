@@ -36,6 +36,40 @@ namespace WeatherSphereV4
             panelMenu.Controls.Add(leftBorderButton);
             pictureLogo.BringToFront();
             pictureLogo.BackColor = Color.Transparent;
+
+            WeatherSharedData.UserLoggedOut += HandleUserLogout;
+        }
+
+        private void HandleUserLogout(object sender, EventArgs e)
+        {
+            // Ensure execution on the UI thread
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action(() => HandleUserLogout(sender, e)));
+                return;
+            }
+
+            Console.WriteLine("BaseForm Handling UserLogout Event...");
+
+            // 1. Clear cached UserControls to ensure fresh state on next login
+            foreach (UserControl uc in userControls.Values)
+            {
+                uc.Dispose(); // Dispose the cached controls
+            }
+            userControls.Clear(); // Clear the dictionary
+            currentControl = null;
+
+            // 2. Hide this main form
+            this.Hide();
+
+            // 3. Show the login form again
+            // Create a NEW instance of the login form
+            CreateAccountForm loginForm = new CreateAccountForm();
+
+            // 4. Ensure application exits when the login form is closed
+            loginForm.FormClosed += (s, args) => this.Close(); // Add FormClosed handler
+
+            loginForm.Show();
         }
 
         protected override async void OnLoad(EventArgs e)

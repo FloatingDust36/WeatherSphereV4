@@ -60,18 +60,34 @@ namespace WeatherSphereV4.Services
             OnLocationChanged();
         }
 
+        // --- ADD LOGOUT EVENT ---
+        /// <summary>
+        /// Event raised when a user logs out.
+        /// </summary>
+        public static event EventHandler UserLoggedOut;
+
+        /// <summary>
+        /// Safely raises the UserLoggedOut event. Should be called by ClearLoggedInUser.
+        /// </summary>
+        private static void OnUserLoggedOut()
+        {
+            Console.WriteLine("UserLoggedOut Event Raised."); // Debugging
+            UserLoggedOut?.Invoke(null, EventArgs.Empty);
+        }
+
         /// <summary>
         /// Stores the UserID of the currently logged-in user. Null if no user is logged in.
         /// </summary>
         public static int? LoggedInUserID { get; private set; } = null; // Initialize as null
 
         /// <summary>
-        /// Clears the logged-in user ID (used for logout).
+        /// Clears the logged-in user ID and raises the UserLoggedOut event.
         /// </summary>
         public static void ClearLoggedInUser()
         {
             LoggedInUserID = null;
-            Console.WriteLine("Logged out user."); // Optional log
+            Console.WriteLine("Logged out user (ID cleared).");
+            OnUserLoggedOut(); // Raise the event AFTER clearing the ID
         }
 
         /// <summary>

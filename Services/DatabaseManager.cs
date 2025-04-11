@@ -477,5 +477,181 @@ namespace WeatherSphereV4.Services // Or WeatherSphereV4.DataAccess
             }
             return foundFavorite; // Will be null if not found
         }
+
+        /// <summary>
+        /// Retrieves displayable details for a specific user.
+        /// </summary>
+        /// <param name="userID">The ID of the user to retrieve details for.</param>
+        /// <returns>A tuple containing (string Username, DateTime DateCreated, DateTime? LastLogin). Returns (null, DateTime.MinValue, null) if not found or on error.</returns>
+        public static async Task<(string Username, DateTime DateCreated, DateTime? LastLogin)> GetUserDetailsAsync(int userID)
+        {
+            if (!IsInitialized) return (null, DateTime.MinValue, null);
+
+            string sql = "SELECT Username, DateCreated, LastLogin FROM Users WHERE UserID = ?";
+            string username = null;
+            DateTime dateCreated = DateTime.MinValue;
+            DateTime? lastLogin = null; // Nullable DateTime
+
+            using (OleDbConnection conn = GetConnection())
+            {
+                if (conn == null) return (null, DateTime.MinValue, null);
+                using (OleDbCommand cmd = new OleDbCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@pUserID", userID);
+
+                    try
+                    {
+                        await conn.OpenAsync();
+                        using (OleDbDataReader reader = (OleDbDataReader)await cmd.ExecuteReaderAsync())
+                        {
+                            if (await reader.ReadAsync()) // Check if user was found
+                            {
+                                username = reader.IsDBNull(0) ? null : reader.GetString(0);
+                                dateCreated = reader.IsDBNull(1) ? DateTime.MinValue : reader.GetDateTime(1);
+                                // Check for DBNull before getting LastLogin
+                                lastLogin = reader.IsDBNull(2) ? (DateTime?)null : reader.GetDateTime(2);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Database Error getting details for UserID {userID}: {ex.Message}");
+                        return (null, DateTime.MinValue, null); // Return default values on error
+                    }
+                }
+            }
+            return (username, dateCreated, lastLogin);
+        }
+
+        /// <summary>
+        /// Updates the password hash for a specific user.
+        /// </summary>
+        /// <param name="userID">The ID of the user whose password hash to update.</param>
+        /// <param name="newPasswordHash">The new BCrypt password hash.</param>
+        /// <returns>True if update was successful, false otherwise.</returns>
+        public static async Task<bool> UpdatePasswordHashAsync(int userID, string newPasswordHash)
+        {
+            if (!IsInitialized) return false;
+
+            string sql = "UPDATE Users SET PasswordHash = ? WHERE UserID = ?";
+
+            using (OleDbConnection conn = GetConnection())
+            {
+                if (conn == null) return false;
+                using (OleDbCommand cmd = new OleDbCommand(sql, conn))
+                {
+                    cmd.Parameters.Add("@pPasswordHash", OleDbType.LongVarWChar).Value = newPasswordHash;
+                    cmd.Parameters.Add("@pUserID", OleDbType.Integer).Value = userID;
+
+                    try
+                    {
+                        await conn.OpenAsync();
+                        int rowsAffected = await cmd.ExecuteNonQueryAsync();
+                        return rowsAffected == 1; // True if exactly one record was updated
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Database Error updating password for UserID {userID}: {ex.Message}");
+                        return false;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the LastLogin timestamp for a specific user to the current time.
+        /// </summary>
+        /// <param name="userID">The ID of the user to update.</param>
+        /// <returns>True if update was successful, false otherwise.</returns>
+        public static async Task<bool> UpdateLastLoginAsync(int userID)
+        {
+            if (!IsInitialized) return false;
+
+            string sql = "UPDATE Users SET LastLogin = ? WHERE UserID = ?";
+
+            using (OleDbConnection conn = GetConnection())
+            {
+                if (conn == null) return false;
+                using (OleDbCommand cmd = new OleDbCommand(sql, conn))
+                {
+                    cmd.Parameters.Add("@pLastLogin", OleDbType.Date).Value = DateTime.Now;
+                    cmd.Parameters.Add("@pUserID", OleDbType.Integer).Value = userID;
+
+                    try
+                    {
+                        await conn.OpenAsync();
+                        int rowsAffected = await cmd.ExecuteNonQueryAsync();
+                        // We can log success/failure but don't strictly need to return bool unless needed
+                        // Console.WriteLine($"LastLogin updated for UserID {userID}. Rows affected: {rowsAffected}");
+                        return rowsAffected == 1;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Database Error updating LastLogin for UserID {userID}: {ex.Message}");
+                        return false;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deletes a user and their associated favorites from the database.
+        /// </summary>
+        /// <param name="userID">The ID of the user to delete.</param>
+        /// <returns>True if the user was successfully deleted, false otherwise.</returns>
+        public static async Task<bool> DeleteUserAsync(int userID)
+        {
+            if (!IsInitialized) return false;
+
+            // Note: Ideally, this would be in a transaction, but OleDb transactions can be complex.
+            // We'll delete favorites first, then the user. If user delete fails, favorites are still gone.
+
+            string deleteFavoritesSql = "DELETE FROM Favorites WHERE UserID = ?";
+            string deleteUserSql = "DELETE FROM Users WHERE UserID = ?";
+
+            using (OleDbConnection conn = GetConnection())
+            {
+                if (conn == null) return false;
+                OleDbCommand cmd = null; // Declare command outside try blocks
+
+                try
+                {
+                    await conn.OpenAsync();
+
+                    // 1. Delete User's Favorites
+                    cmd = new OleDbCommand(deleteFavoritesSql, conn);
+                    cmd.Parameters.AddWithValue("@pUserID", userID);
+                    int favoritesDeleted = await cmd.ExecuteNonQueryAsync();
+                    Console.WriteLine($"Deleted {favoritesDeleted} favorites for UserID {userID}.");
+                    cmd.Dispose(); // Dispose command before reusing/creating next one
+
+                    // 2. Delete User Record
+                    cmd = new OleDbCommand(deleteUserSql, conn);
+                    cmd.Parameters.AddWithValue("@pUserID", userID);
+                    int userRowsAffected = await cmd.ExecuteNonQueryAsync();
+
+                    if (userRowsAffected == 1)
+                    {
+                        Console.WriteLine($"Successfully deleted UserID {userID}.");
+                        return true; // User deleted successfully
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Failed to delete UserID {userID} (User not found or error). Rows affected: {userRowsAffected}");
+                        return false; // User deletion failed
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Database Error deleting user or favorites for UserID {userID}: {ex.Message}");
+                    return false; // Return false on any error
+                }
+                finally
+                {
+                    cmd?.Dispose(); // Ensure command is disposed if created
+                                    // Connection disposed automatically by 'using' block
+                }
+            }
+        }
     }
 }
